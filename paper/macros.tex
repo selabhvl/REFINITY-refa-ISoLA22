@@ -1,0 +1,86 @@
+\def\myttsize{\fontsize{9}{9.5}}
+\def\codesize{\fontsize{10}{11}}
+\def\rnsize{\fontsize{9}{9}}
+
+\makeatletter
+\newcommand{\onelettername}[1]{#1\aftergroup\@gobble}
+\makeatother
+
+\newcommand{\red}[1] {\textcolor{red}{#1}}
+\newcommand{\blue}[1] {\textcolor{blue}{#1}}
+\newcommand{\green}[1] {\textcolor{green}{#1}}
+\definecolor{lightgray}{gray}{0.9}
+
+\newcommand\object[1]{\Abs{#1}}
+\newcommand\this{\texttt{this}}
+\newcommand\rf[1]{\textsl{#1}}
+% \newcommand\rff[2]{\textsl{#1 (#2)}}
+\newcommand\rff[2]{\textsl{#1}}
+
+\newcommand\srule[1]{\textsc[#1]}
+\newcommand\oprule[1]{{\rnsize\selectfont\textsc{#1}}}
+\newcommand\set[1]{\{#1\}}
+\newcommand\config{\ensuremath{\mathit{cn}}}
+\newcommand\fut[2]{\mathit{fut(#1,#2)}}
+\newcommand\ob[4]{\mathit{ob(#1,#2,#3,#4)}}
+\newcommand\process[2]{\{#1|#2\}}
+\newcommand\invoc[4]{\mathit{invoc(#1,#2,#3,#4)}}
+\newcommand\cog[2]{\mathit{cog(#1,#2)}}
+\newcommand\cont[1]{\textsf{\textbf{cont}}\mathit{(#1)}}
+\newcommand\error{\textsf{\textbf{error}}}
+\newcommand\idle{\textsf{\textbf{idle}}}
+\newcommand\eval[3]{[\![#1]\!]_{#2}^{#3}}
+\newcommand\dom[1]{\text{dom}(#1)}
+\newcommand\without{\backslash}
+\newcommand{\many}[1]{\overline{#1}}
+% \newcommand\obj[4]{\textit{ob}(\textit{#1},\textit{#2},#3,\textit{#4})}
+
+\newcommand\rfeq{\equiv_\mathcal{R}}
+\newcommand\refactoring{\ensuremath{\mathcal{R}\mathit{f}}}
+\newcommand\refactor[1]{\ensuremath{\refactoring(#1)}}
+% \newcommand\Aset{\mathcal{A}}
+% \newcommand\Lset{\mathcal{L}}
+% \newcommand\Sset{\mathcal{L}}
+\newcommand\kw[1]{\textsf{\textbf{#1}}}
+\newcommand\rl{\mathit{rn}}
+
+%%%%%%%% Rules %%%%%%%%%%%
+
+\newcommand{\ncondrule}[3]{ 
+  \begin{array}{c} 
+    \textsc{ ({#1})} \\[1pt] 
+    #2 \\[1pt] 
+    \hline\\[-7pt]
+    #3 
+  \end{array} }
+ 
+\newcommand{\nrule}[2]{ 
+  \begin{array}{c} 
+    \textsc{ ({#1})} \\ 
+    #2  
+  \end{array}} 
+
+%%%%%%%% End of Rules %%%%%%%%%%%
+
+%%%% column type %%%%%
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\tool}[1]{\texttt{#1}}% some executable tool-name
+
+\definecolor{brilliantlavender}{rgb}{0.96, 0.73, 1.0}
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
+
+
+\newcommand{\hlbox}[3]{\fboxsep=#1\colorbox{brilliantlavender!30}{#2#3}%
+}
+\newcommand{\cbox}[1]{\colorbox{brilliantlavender!30}{#1}%
+}
+
+% \framebox(180,9){some text (or keep it empty)}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: ""
+%%% End: 
