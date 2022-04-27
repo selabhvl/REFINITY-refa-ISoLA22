@@ -1,4 +1,4 @@
-Coordinate coordinate = new Coordinate();
+Pos p = new Pos();
 
-coordinate.setLatitude("36.452999");
-coordinate.setLongitude("28.226376");
+p.setLat("36.452999");
+p.setLon("28.226376");

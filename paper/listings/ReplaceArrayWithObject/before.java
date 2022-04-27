@@ -1,4 +1,4 @@
-String[] coordinate = new String[2];
+String[] p = new String[2];
 
-coordinate[0] = "36.452999";
-coordinate[1] = "28.226376";
+p[0] = "36.452999";
+p[1] = "28.226376";
