@@ -5,9 +5,27 @@
 % USED PACKAGES %
 %%%%%%%%%%%%%%%%%
 \usepackage[T1]{fontenc}
+
+% LISTINGS BEGIN 
 \usepackage{listings}
 \lstset{inputpath=listings}
+\lstdefinestyle{smallJava}{
+  language=Java,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries,
+  numbers=left,
+  stepnumber=1,
+  numbersep=8pt,
+  tabsize=2,
+  showspaces=false,
+  showstringspaces=false,
+  frame=single,
+  framexleftmargin=12pt
+}
+% LISTINGS END
 
+\usepackage{graphicx}
+\usepackage{subcaption}
 
 
 %TODO add packages for this if needed
