@@ -1,12 +1,25 @@
+In this section we will discuss some of the limitations of REFINITY restricting the kinds of refactorings one can prove.
+
+Consider a refactoring that replaces an array containing latitude and longitude positions as in fig.~\ref{refa:ReplaceArray-before} with an object that ``indexes'' the same values through setters and getters s.t. what the ``index'' is ``indexing'' is immediately clear as seen in fig.~\ref{refa:ReplaceArray-after}.
+
+For this to be a refactoring we must be certain that indexing only can occur in bounds for the original program as there will be no corresponding out of bounds failure for method calls. There may be usage sites in the original program which in some way rely on the array representation, these must be identified and handled in an equivalent way in the refactored program.
+
 \begin{figure}
-  \label{refa:ReplaceArray}
+      \label{refa:ReplaceArray}
   \begin{subfigure}[h]{.45\linewidth}
+    \label{refa:ReplaceArray-before}    
     \lstinputlisting[style=smallJava]{ReplaceArrayWithObject/before.java}
     \caption{Before}
   \end{subfigure}\hspace{1cm}
   \begin{subfigure}[h]{.45\linewidth}
+    \label{refa:ReplaceArray-after}
     \lstinputlisting[style=smallJava]{ReplaceArrayWithObject/after.java}
     \caption{After}
   \end{subfigure}
   \caption{Replace array with object refactoring}
 \end{figure}
+
+As it is there is no way in REFINITY to specify that given two abstract program fragments $P$ and $Q$ where $P$ contains
+an array used to index some data as seen in fig.~\ref{refa:ReplaceArray} then $Q$ is exactly as $P$ but with
+the array substituted for a data object and any indexing or assignments replaced with appropriate setters
+and getters. 
