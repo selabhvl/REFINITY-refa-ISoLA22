@@ -1,0 +1,6 @@
+int deducted(int balance, int cost) {
+    int result = balance;
+    ...
+    result -= cost;
+    ...
+}
