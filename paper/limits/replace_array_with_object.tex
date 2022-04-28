@@ -3,18 +3,18 @@ Consider a refactoring that replaces an array containing a latitude and longitud
 For this to be a refactoring we must be certain that indexing only can occur in bounds for the original program as there will be no corresponding out of bounds failure for method calls. There may be usage sites in the original program which in some way rely on the array representation, these must be identified and handled in an equivalent way in the refactored program.
 
 \begin{figure}
-      \label{refa:ReplaceArray}
-  \begin{subfigure}[h]{.45\linewidth}
-    \label{refa:ReplaceArray-before}    
+  \begin{subfigure}[h]{.45\linewidth} 
     \lstinputlisting[style=smallJava]{ReplaceArrayWithObject/before.java}
     \caption{Before}
+    \label{refa:ReplaceArray-before}   
   \end{subfigure}\hspace{1cm}
   \begin{subfigure}[h]{.45\linewidth}
-    \label{refa:ReplaceArray-after}
     \lstinputlisting[style=smallJava]{ReplaceArrayWithObject/after.java}
     \caption{After}
+    \label{refa:ReplaceArray-after}
   \end{subfigure}
   \caption{Replace array with object refactoring}
+  \label{refa:ReplaceArray}
 \end{figure}
 
 In REFINITY we would be difficult to even model this because what we would most naturally want to do is to somehow write a LHS with an abstract statement $P$ and a RHS with an abstract statemetn $Q$ and specify that $P$ contains an array used to index some data as seen in fig.~\ref{refa:ReplaceArray}. Then we would want to require somehow that $Q$ is exactly as $P$ but with the array substituted for a data object and any indexing or assignments replaced with appropriate setters and getters. Such things are not possible as on the modeling level the abstract elements operate as black boxes we can't whose contents we can't specify.  
