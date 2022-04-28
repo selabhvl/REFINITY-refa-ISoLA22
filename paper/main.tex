@@ -6,41 +6,8 @@
 %%%%%%%%%%%%%%%%%
 \usepackage[T1]{fontenc}
 \usepackage{color}
-% LISTINGS BEGIN 
 \usepackage{listings}
-\lstset{inputpath=listings}
-\renewcommand{\ttdefault}{pcr}
-\lstdefinestyle{smallJava}{
-  language=Java,
-  basicstyle=\ttfamily\small,
-  keywordstyle=\bfseries,
-  numbers=left,
-  stepnumber=1,
-  numbersep=8pt,
-  tabsize=2,
-  showspaces=false,
-  showstringspaces=false,
-  frame=single,
-  framexleftmargin=12pt,
-  columns=fixed
-}
-\lstdefinestyle{refinity}{
-  language=Java,
-  basicstyle=\ttfamily\small,
-  keywordstyle=\bfseries,
-  alsoletter={\\},
-  morekeywords={\\abstract\_statement},
-  numbers=left,
-  stepnumber=1,
-  numbersep=8pt,
-  tabsize=2,
-  showspaces=false,
-  showstringspaces=false,
-  frame=single,
-  framexleftmargin=12pt,
-  columns=fixed
-}
-% LISTINGS END
+\input{listingssetup}
 
 \usepackage{graphicx}
 \usepackage{subcaption}
