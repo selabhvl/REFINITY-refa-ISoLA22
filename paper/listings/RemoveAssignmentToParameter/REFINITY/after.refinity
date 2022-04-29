@@ -1,0 +1,8 @@
+{
+  int in = mParam;
+  /*@ assignable frameP
+    @ \hasTo(in);
+    @ accessible footprintP;
+    @*/
+  \abstract_statement Q;
+}
