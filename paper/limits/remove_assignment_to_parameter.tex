@@ -1,3 +1,5 @@
+        Let us consider a refactoring that eliminates assignments to method parameters as seen in fig.~\ref{refa:RemoveAssignment-before} and instead introduces a temporary variable initialized to the method parameter's value that replaces the usage of the method parameter at any usage site as seen in fig.~\ref{refa:RemoveAssignment-after}.
+
 \begin{figure}
   \begin{subfigure}[h]{.45\linewidth}
     \lstinputlisting[style=smallJava]{RemoveAssignmentToParameter/Java/before.java}
@@ -6,6 +8,22 @@
   \end{subfigure}\hspace{1cm}
   \begin{subfigure}[h]{.45\linewidth}
     \lstinputlisting[style=smallJava]{RemoveAssignmentToParameter/Java/after.java}
+    \caption{After}
+    \label{refa:RemoveAssignment-after}
+  \end{subfigure}
+  \caption{Replace array with object refactoring}
+  \label{refa:RemovAssignment}
+\end{figure}
+
+
+\begin{figure}
+  \begin{subfigure}[h]{.45\linewidth}
+    \lstinputlisting[style=refinity]{RemoveAssignmentToParameter/Java/before.java}
+    \caption{Before}
+    \label{refa:RemoveAssignment-before}    
+  \end{subfigure}\hspace{1cm}
+  \begin{subfigure}[h]{.45\linewidth}
+    \lstinputlisting[style=refinity]{RemoveAssignmentToParameter/Java/after.java}
     \caption{After}
     \label{refa:RemoveAssignment-after}
   \end{subfigure}

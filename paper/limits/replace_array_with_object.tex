@@ -1,4 +1,4 @@
-Consider a refactoring that replaces an array containing position given by a latitude and longitude as in fig.~\ref{refa:ReplaceArray-java-before} with an object that gives read or write access to the same values through setters and getters that make it immediately clear what is being accessed as seen in fig.~\ref{refa:ReplaceArray-java-after}.
+Let us consider a refactoring that replaces an array containing position given by a latitude and longitude as in fig.~\ref{refa:ReplaceArray-java-before} with an object that gives read or write access to the same values through setters and getters that make it immediately clear what is being accessed as seen in fig.~\ref{refa:ReplaceArray-java-after}.
 
 For this to be a refactoring we must be certain that indexing can only occur in bounds for the original program as there will be no corresponding out of bounds failure for method calls. There may be usage sites in the original program which in some way rely on the array representation, these must be identified and handled in an equivalent way in the refactored program.
 
