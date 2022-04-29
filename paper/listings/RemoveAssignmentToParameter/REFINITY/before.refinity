@@ -1,0 +1,7 @@
+{
+  /*@ assignable frameP,
+    @ \hasTo(mParam);
+    @ accessible footprintP;
+    @*/
+  \abstract_statement P;
+}
