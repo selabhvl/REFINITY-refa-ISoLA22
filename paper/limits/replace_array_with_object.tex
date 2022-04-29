@@ -17,7 +17,7 @@ For this to be a refactoring we must be certain that indexing can only occur in 
   \label{refa:ReplaceArray-java}
 \end{figure}
 
-In REFINITY it would be difficult to even model this because what we would most naturally want to do is to somehow write a LHS with an abstract statement $P$ and a RHS with an abstract statemetn $Q$ and specify that $P$ contains an array used to index some data as seen in fig.~\ref{refa:ReplaceArray}. Then we would want to require somehow that $Q$ is exactly as $P$ but with the array substituted for a data object and any reads or writes to the array replaced with appropriate setters and getters. Such things are not possible as on the modeling level the abstract elements operate as black boxes we can't whose contents we can't specify.
+In REFINITY it would be difficult to even model this because what we would most naturally want to do is to somehow write a LHS with an abstract statement $P$ and a RHS with an abstract statemetn $Q$ and specify that $P$ contains an array used to index some data as seen in fig.~\ref{refa:ReplaceArray-java}. Then we would want to require somehow that $Q$ is exactly as $P$ but with the array substituted for a data object and any reads or writes to the array replaced with appropriate setters and getters. Such things are not possible as on the modeling level the abstract elements operate as black boxes we can't whose contents we can't specify.
 
 If we attempt to specify the refactoring in REFINITY so that it captures all refactorings of the kind shown in fig.~\ref{refa:ReplaceArray-java} the closest we come is as show in fig.~\ref{refa:ReplaceArray-refinity} where valid instatiations
 also include programs that don't contain any arrays at all.
