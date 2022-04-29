@@ -1,0 +1,4 @@
+/*@ assignable frame;
+  @ accessible footprint;
+  @*/
+\abstract_statement P;

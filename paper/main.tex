@@ -8,7 +8,6 @@
 \usepackage{color}
 \usepackage{listings}
 \input{listingssetup}
-
 \usepackage{graphicx}
 \usepackage{subcaption}
 
@@ -16,10 +15,10 @@
 % \input{macros}
 
 \pagestyle{plain}
-\title{Something KeY Something}
+
+\title{Towards practical abstract execution}
 \author{Ole Jørgen Abusdal \and Volker Stolz\inst{1} \and Violet Ka I Pun\inst{1} \and Eduard Kamburjan\inst{2}}
 
-%TODO: check Eduard's desired mail
 \institute{%
 Western Norway University of Applied Sciences, Norway\\
 \email{\{ojab,vsto,vpu\}@hvl.no}
@@ -27,27 +26,44 @@ Western Norway University of Applied Sciences, Norway\\
 \email{eduard@ifi.uio.no}
 }
 
+% What we want
+% Talk about the renaming issue (identify in which cases it's interesting)
+% Talk about relational verification
+% For NPEs:
+%  1. several ways to specify whether two objs. are equiv., need to decide that equiv!
+%  2. Observables, if observ. are event-like then we can do it a history variable (as in KeY-ABS) otherwise we need symbolic-traces
+% 3. For e.g. the array coordinate problem we need relational invariants in addition to relational postconditions (see mathias paper?)
+% 
+
+
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
- ...
+ 
 \end{abstract}
 
 \section{Introduction}
 %\input{intro}
 
-\section{Limitations of REFINITY}
-\input{limits}
+\section{Preliminaries: Abstract Execution}
 
-\section{Fitting refactorings for REFINITY}
+\section{Object creation}
+
+\section{Trace properties}
+
+\section{Relational invariants}
+
+\section{Discussion}
+\input{limits}
 \input{fitting}
 
-
-
-%\section{Related Work and Conclusion}
+\section{Related Work}
 %\input{related}
+
+\section{Conclusion}
+
 %\input{conclusion}
 
 
