@@ -15,6 +15,12 @@ Let us consider a refactoring that eliminates assignments to method parameters a
   \label{refa:RemovAssignment-java}
 \end{figure}
 
+In an attempt to specify this in REFINITY seen in fig~\ref{refa:RemovAssignment-refinity} we again fall short at the modeling level as we are not able to relate the abstract statement $Q$ in fig.~\ref{refa:RemoveAssignment-refinity-after} with the abstract statement $P$ in fig.~\ref{refa:RemoveAssignment-refinity-before} beyond that before $P$ assigned to the method parameter, stated by the \lstinline[style=refinity]|\hasTo(mParam)|, while after $Q$ assigns to a new variable, stated by \lstinline[style=refinity]|\hasTo(in)|. Additionally, by the abstract execution constraint seen in the very beginning, we state that the locations
+assigned to \lstinline[style=refinity]|frP| and \lstinline[style=refinity]|mParam| are disjoint to be able to remove the method parameter \lstinline[style=refinity]|mParam| as an assignable location in the after case.
+
+Naturally REFINITY is unable to prove fig~\ref{refa:RemoveAssignment-refinity-before} and fig~\ref{refa:RemoveAssignment-refinity-after} as equivalent
+as we are not able to further relate $P$ and $Q$; we would need to somehow additionally state that $Q$ is produced through a substitution on $P$.
+
 
 \begin{figure}
   \begin{subfigure}[h]{.45\linewidth}
