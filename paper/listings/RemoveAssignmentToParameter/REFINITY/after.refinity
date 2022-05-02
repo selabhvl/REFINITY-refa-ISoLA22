@@ -1,7 +1,6 @@
 /*@ ae_constraint
   @ \disjoint(frP, mParam);
   @*/
-
 {
   int in = mParam;
   /*@ assignable frP
