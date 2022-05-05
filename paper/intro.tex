@@ -1,0 +1,16 @@
+
+Relational verification through dynamic logic is a promising approach for verification of object oriented programs.
+Recent advances from symbolic to abstract executions have enabled reasoning about incomplete/abstract versions of such programs.
+This has proven fruitful in the exploration of correctness of refactorings primarily related to code blocks in Java.
+In this paper we explore further types of equivalent transformations and refactorings and discuss the challenges that still need to be overcome for full round-trip correctness of refactorings in object-oriented languages.
+
+This paper is structured as follows: we first provide an overview on abstract executions, the main vehicle for correctness- and equivalence proofs.
+Next we discuss issues related to formally correct and constructive handling of object creation to be able to express useful notions of equivalence in Section \ref{sec:objectcreation}.
+
+Section \ref{sec:trace} moves away from only heap-related equivalence and discusses tracking equivalent observable behaviour in a relational framework.
+The final challenge are relational invariants that we discuss in Section \ref{sec:relinv} which are required to track equivalent, yet structurally different representation of data structures.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

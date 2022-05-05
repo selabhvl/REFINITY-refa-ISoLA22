@@ -12,6 +12,16 @@
 \usepackage{subcaption}
 \captionsetup{compatibility=false}
 
+%%%%%%%%%%%%%%%%%%%%%%%% fixme
+\usepackage[draft,silent]{fixme}
+\fxsetup{theme=color,mode=multiuser}
+\definecolor{fxtarget}{rgb}{0.8000,0.0000,0.0000}
+\FXRegisterAuthor{todo}{TODO}{TODO}
+\FXRegisterAuthor{vp}{VP}{\color{violet}\scriptsize{\bf VP}}
+\FXRegisterAuthor{vs}{VS}{\color{cyan}\scriptsize{\bf VS}}
+\FXRegisterAuthor{oa}{OA}{\color{blue}\scriptsize{\bf PA}}
+%%%%%%%%%%%%%%%%%%%%%%%% fixme
+
 %TODO add packages for this if needed
 % \input{macros}
 
@@ -46,11 +56,12 @@ Western Norway University of Applied Sciences, Norway\\
 \end{abstract}
 
 \section{Introduction}
-%\input{intro}
+\input{intro}
 
 \section{Preliminaries: Abstract Execution}
 
-\section{Object creation}
+\section{Object creation}\label{sec:objectcreation}
+\input{objectcreation}
 
 \section{Trace properties}
 

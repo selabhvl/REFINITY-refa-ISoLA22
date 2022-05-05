@@ -1,0 +1,26 @@
+\newcommand\relevant{$\mathrm{relevant}$}
+\newcommand\assignable{$\mathrm{assignable}$}
+\newcommand\accessible{$\mathrm{accessible}$}
+\newcommand\keyrule[1]{\ensuremath{\mathrm{#1}}}
+
+As we have seen in the previous section, REFINITY encodes a rather harsh regimen on program equivalence:
+in absence of a more fine-grained (application-specific) post-condition, it encodes that return values or exceptions must be identical on both sides,
+as must be the objects in the \relevant{} location set (and the observables in this location set must be adequately specified).
+
+This already creates the first hurdle for expressing useful notions of equivalences: as heap updates are symbolically encoded in the proofs, equivalent object-allocations are not directly identified by KeY as such.
+Consider the following two pieces of code in Listing \ref{lst:objectalloc}:\vsnote{TODO Ole}
+if the two allocations are independent from each other, i.e. there is no dependency in their constructors, such as a shared global counter,
+both programs are equivalent, yet cannot be proved automatically due to syntactically different heaps.
+To address this limitation, we need additional rules that allow ignoring heap updates that are irrelevant.
+Surprisingly, the extant literature does not provide much automation there, but rather builds on restrictive specifications wrt.\ \assignable{}/\accessible{} frames.
+
+Coming back to our example, it is syntactically obvious that both sides yield different heaps.
+Before addressing the underlying problem, \vsnote{@Eduard: Let's skip the obvious that KeY didn't know that two objects allocated in identical heaps are hence identical, or?}
+we can immediately contribute a small tactlet that states that two objects are identical, if their arguments to the constructor are equal and if any heap updates between the two allocations do not afffect the allocation of the second object.
+Similar to KeY's \keyrule{dropUpdate_2}, we can easily eliminate these operations on the heap on unrelated \textit{types} and obtain equivalent programs.
+\vsnote*{TODO: Eduard to elaborate a bit here.}{Unrelated types are of course only a shortcut, dropUpdate2 is much more specific, VS thinks}.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
