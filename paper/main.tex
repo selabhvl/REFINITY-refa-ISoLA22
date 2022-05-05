@@ -10,6 +10,7 @@
 \input{listingssetup}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\captionsetup{compatibility=false}
 
 %TODO add packages for this if needed
 % \input{macros}
@@ -17,11 +18,11 @@
 \pagestyle{plain}
 
 \title{Towards practical abstract execution}
-\author{Ole Jørgen Abusdal \and Volker Stolz\inst{1} \and Violet Ka I Pun\inst{1} \and Eduard Kamburjan\inst{2}}
+\author{Ole J{\o}rgen Abusdal\inst{1} \and Eduard Kamburjan\inst{2} \and Violet Ka I Pun\inst{1} \and Volker Stolz\inst{1}}
 
 \institute{%
 Western Norway University of Applied Sciences, Norway\\
-\email{\{ojab,vsto,vpu\}@hvl.no}
+\email{\{ojab,vpu,vsto\}@hvl.no}
 \and University of Oslo, Norway\\
 \email{eduard@ifi.uio.no}
 }
@@ -60,7 +61,15 @@ Western Norway University of Applied Sciences, Norway\\
 \input{fitting}
 
 \section{Related Work}
-%\input{related}
+% \input{related}
+
+\begin{itemize}
+\item formal proofs of correctness for OO program optimisation
+\item formal proofs of OO refactoring
+\item check Dominic’s thesis and papers for the relevant related work
+\item important: correctness on actual Java, not something which looks like Java
+\item also: correctness with respect to OO features
+\end{itemize}
 
 \section{Conclusion}
 
