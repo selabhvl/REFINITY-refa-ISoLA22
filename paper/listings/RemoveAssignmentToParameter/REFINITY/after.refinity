@@ -1,8 +1,11 @@
+/*@ ae_constraint
+  @ \disjoint(frP, mParam);
+  @*/
 {
   int in = mParam;
-  /*@ assignable frameP
+  /*@ assignable frP
     @ \hasTo(in);
-    @ accessible footprintP;
+    @ accessible fpP;
     @*/
   \abstract_statement Q;
 }

@@ -1,4 +1,4 @@
-/*@ assignable frame;
-  @ accessible footprint;
+/*@ assignable frP;
+  @ accessible fpP;
   @*/
 \abstract_statement Q;
