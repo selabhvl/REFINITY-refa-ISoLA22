@@ -18,7 +18,12 @@ Coming back to our example, it is syntactically obvious that both sides yield di
 Before addressing the underlying problem, \vsnote{@Eduard: Let's skip the obvious that KeY didn't know that two objects allocated in identical heaps are hence identical, or?}
 we can immediately contribute a small tactlet that states that two objects are identical, if their arguments to the constructor are equal and if any heap updates between the two allocations do not afffect the allocation of the second object.
 Similar to KeY's \keyrule{dropUpdate_2}, we can easily eliminate these operations on the heap on unrelated \textit{types} and obtain equivalent programs.
-\vsnote*{TODO: Eduard to elaborate a bit here.}{Unrelated types are of course only a shortcut, dropUpdate2 is much more specific, VS thinks}.
+\vsnote*{TODO: Eduard to elaborate a bit here.}{Unrelated types are of course only a shortcut, dropUpdate2 is much more specific, VS thinks -- but I can't decode the side conditions on the rule}.
+
+Let us close with the remark that due to the nature of tactlets, we have not so much proven this refactoring to be correct,
+but rather (only) moved this decision further down the chain: unlike in a formalization of an OO model from ground up e.g.\ in the Coq-theorem prover,
+we do not have a way of proving the tactlets correct (i.e.\ derive them as lemmas) within KeY for \textit{any} program.
+\vsnote{Eduard, pease confirm this claim and maybe adjust formulation to what's palpatable to our audience.}
 
 %%% Local Variables:
 %%% mode: latex
