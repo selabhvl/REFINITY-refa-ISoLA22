@@ -25,6 +25,20 @@ but rather (only) moved this decision further down the chain: unlike in a formal
 we do not have a way of proving the tactlets correct (i.e.\ derive them as lemmas) within KeY for \textit{any} program.
 \vsnote{Eduard, pease confirm this claim and maybe adjust formulation to what's palpatable to our audience.}
 
+\subsection*{Related: Dead Code Elimination}
+Similar considerations of equivalent heap manipulations need to be considered also in the are of optimizations.
+Take for example the trivial fragment in Listing \ref{lst:xisnewxisnew}.
+\begin{lstlisting}
+  C x;
+  x := new C();
+  x := new C();
+\end{lstlisting}
+Again, without any sideeffects upon constructor invocation, the first update is of no consequence.
+The additional rules above however will not yet be sufficient to prove that this version is equivalent to the version without the redundant object creation and assignment.
+The location-set mechanism would still insist that the second object created  in the redundant version is a different object from the first (and only) object created in the optimized version.
+On the one hand this can be addressed through a relaxed post-condition where we accept that we only need \textit{an} object of the right type and arguments, but it relies on the side-condition of the constructor not having side-effects, which we \vsnote*{TODO Eduard: is it?}{cannot easily encode as part of the post-condition}.
+We face the same issue if we would want to encode the absence of side-effects as precondition to a tactlet.
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
