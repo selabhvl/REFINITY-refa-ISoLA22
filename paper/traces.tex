@@ -1,0 +1,23 @@
+In the previous section, we have established that syntactical equality of heaps is too strict as a precondition to equivalent (or rather: identical) behaviour.
+In practice, developers are content if refactored code gives the same observable behaviour \cite{needed}.
+This behaviour is first and foremost encoded through unit-tests, but also on tests on output (e.g.\ via \texttt{print}-statements).
+Here we then have a much more relaxed setting where equivalence is decoupled from the fine-grained program semantics.
+
+Harnessing output as a mechanism to decide equivalence requires instrumentation of both software versions, though:
+we need to extend our code with a (global) variable that accumulates observable behaviour at dedicated locations in the program.
+Making this value the return value on both sides allows us to leverage the colismponent-wise equality in the generic post-condition that REFINITY generates,
+and achieves the desired effect when we completely ignore differences in the relevant locations set by not including any variables in there at all.
+
+We note that this places more burden on the developer, as they have to make sure that their chosen encoding of events in the data structure captures the salient part of equivalence.
+Clearly, this data structure is sensitive to order and any object identities very much in the same way as is the syntactic representation of heap manipulations.
+This explicit encoding of user-defined execution histories has the advantage that it is not only useful for proofs, but can also directly be harnessed in concrete unit-tests.
+\vsnote{Just a minor observation.}
+
+\vsnote*{}{TODO: Any good example here?}
+
+\vsnote*{}{TODO: Idea can't be new. Also see histories in general (Eduard?)}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
