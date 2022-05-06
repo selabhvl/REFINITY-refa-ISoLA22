@@ -3,12 +3,27 @@
 \newcommand\accessible{$\mathrm{accessible}$}
 \newcommand\keyrule[1]{\ensuremath{\mathrm{#1}}}
 
+\begin{figure}
+  \begin{subfigure}[h]{.45\linewidth}
+    \lstinputlisting[style=refinity]{ObjectCreation/REFINITY/before.refinity}
+    \caption{Before}
+    \label{lst:ObjectCreation-refinity-before}    
+  \end{subfigure}\hspace{1cm}
+  \begin{subfigure}[h]{.45\linewidth}
+    \lstinputlisting[style=refinity]{Objectcreation/REFINITY/after.refinity}
+    \caption{After}
+    \label{lst:ObjectCreation-refinity-after}
+  \end{subfigure}
+  \caption{Slide Object creation}
+  \label{lst:ObjectCreation-refinity}
+\end{figure}
+
 As we have seen in the previous section, REFINITY encodes a rather harsh regimen on program equivalence:
 in absence of a more fine-grained (application-specific) post-condition, it encodes that return values or exceptions must be identical on both sides,
 as must be the objects in the \relevant{} location set (and the observables in this location set must be adequately specified).
 
 This already creates the first hurdle for expressing useful notions of equivalences: as heap updates are symbolically encoded in the proofs, equivalent object-allocations are not directly identified by KeY as such.
-Consider the following two pieces of code in Listing \ref{lst:objectalloc}:\vsnote{TODO Ole}
+Consider the following two pieces of code in Listing \ref{lst:ObjectCreation-refinity}:\vsnote{TODO Ole}
 if the two allocations are independent from each other, i.e. there is no dependency in their constructors, such as a shared global counter,
 both programs are equivalent, yet cannot be proved automatically due to syntactically different heaps.
 To address this limitation, we need additional rules that allow ignoring heap updates that are irrelevant.
