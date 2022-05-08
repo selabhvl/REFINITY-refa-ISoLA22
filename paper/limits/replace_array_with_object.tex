@@ -1,4 +1,4 @@
-Let us consider a refactoring that replaces an array containing position given by a latitude and longitude as in fig.~\ref{refa:ReplaceArray-java-before} with an object that gives read or write access to the same values through setters and getters that make it immediately clear what is being accessed as seen in fig.~\ref{refa:ReplaceArray-java-after}.
+Let us consider a refactoring that replaces an array containing position given by a latitude and longitude as in lis.~\ref{refa:ReplaceArray-java-before} with an object that gives read or write access to the same values through setters and getters that make it immediately clear what is being accessed as seen in lis.~\ref{refa:ReplaceArray-java-after}.
 
 For this to be a refactoring we must be certain that indexing can only occur in bounds for the original program as there will be no corresponding out of bounds failure for method calls. There may be usage sites in the original program which in some way rely on the array representation, these must be identified and handled in an equivalent way in the refactored program.
 
@@ -13,13 +13,13 @@ For this to be a refactoring we must be certain that indexing can only occur in 
     \caption{After}
     \label{refa:ReplaceArray-java-after}
   \end{subfigure}
-  \caption{Replace array with object refactoring}
+  \captionof{lstlisting}{Replace array with object refactoring}
   \label{refa:ReplaceArray-java}
 \end{figure}
 
-In REFINITY it would be difficult to even model this because what we would most naturally want to do is to somehow write a LHS with an abstract statement $P$ and a RHS with an abstract statemetn $Q$ and specify that $P$ contains an array used to index some data as seen in fig.~\ref{refa:ReplaceArray-java}. Then we would want to require somehow that $Q$ is exactly as $P$ but with the array substituted for a data object and any reads or writes to the array replaced with appropriate setters and getters. Such things are not possible as on the modeling level the abstract elements operate as black boxes whose contents we can't specify.
+In REFINITY it would be difficult to even model this because what we would most naturally want to do is to somehow write a LHS with an abstract statement $P$ and a RHS with an abstract statemetn $Q$ and specify that $P$ contains an array used to index some data as seen in lis.~\ref{refa:ReplaceArray-java}. Then we would want to require somehow that $Q$ is exactly as $P$ but with the array substituted for a data object and any reads or writes to the array replaced with appropriate setters and getters. Such things are not possible as on the modeling level the abstract elements operate as black boxes whose contents we can't specify.
 
-If we attempt to specify the refactoring in REFINITY so that it captures all refactorings of the kind shown in fig.~\ref{refa:ReplaceArray-java} the closest we come is as show in fig.~\ref{refa:ReplaceArray-refinity} where valid instatiations
+If we attempt to specify the refactoring in REFINITY so that it captures all refactorings of the kind shown in lis.~\ref{refa:ReplaceArray-java} the closest we come is as show in lis.~\ref{refa:ReplaceArray-refinity} where valid instatiations
 also include programs that don't contain any arrays at all.
 
 \begin{figure}
@@ -33,6 +33,6 @@ also include programs that don't contain any arrays at all.
     \caption{After}
     \label{refa:ReplaceArray-refinity--after}
   \end{subfigure}
-  \caption{A too wide pattern}
+  \captionof{lstlisting}{A too wide pattern}
   \label{refa:ReplaceArray-refinity}
 \end{figure}

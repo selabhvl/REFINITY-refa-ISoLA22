@@ -1,38 +1,37 @@
-Let us consider a refactoring that eliminates assignments to method parameters as seen in fig.~\ref{refa:RemoveAssignment-java-before} and instead introduces a temporary variable initialized to the method parameter's value that replaces the usage of the method parameter at any usage site as seen in fig.~\ref{refa:RemoveAssignment-java-after}.
+Let us consider a refactoring that eliminates assignments to method parameters as seen in lis.~\ref{lst:RemoveAssignment-java-before} and instead introduces a temporary variable initialized to the method parameter's value that replaces the usage of the method parameter at any usage site as seen in lis.~\ref{lst:RemoveAssignment-java-after}.
 
 \begin{figure}
-  \begin{subfigure}[h]{.45\linewidth}
+  \begin{subfigure}{.45\linewidth}
     \lstinputlisting[style=smallJava]{RemoveAssignmentToParameter/Java/before.java}
     \caption{Before}
-    \label{refa:RemoveAssignment-java-before}    
+    \label{lst:RemoveAssignment-java-before}
   \end{subfigure}\hspace{1cm}
-  \begin{subfigure}[h]{.45\linewidth}
+  \begin{subfigure}{.45\linewidth}
     \lstinputlisting[style=smallJava]{RemoveAssignmentToParameter/Java/after.java}
     \caption{After}
-    \label{refa:RemoveAssignment-java-after}
+    \label{lst:RemoveAssignment-java-after}
   \end{subfigure}
-  \caption{Replace array with object refactoring}
-  \label{refa:RemovAssignment-java}
+  \captionof{lstlisting}{Replace array with object refactoring}
+  \label{lst:RemovAssignment-java}
 \end{figure}
 
-In an attempt to specify this in REFINITY seen in fig~\ref{refa:RemovAssignment-refinity} we again fall short at the modeling level as we are not able to relate the abstract statement $Q$ in fig.~\ref{refa:RemoveAssignment-refinity-after} with the abstract statement $P$ in fig.~\ref{refa:RemoveAssignment-refinity-before} beyond that before $P$ assigned to the method parameter, stated by the \lstinline[style=refinity]|\hasTo(mParam)|, while after $Q$ assigns to a new variable, stated by \lstinline[style=refinity]|\hasTo(in)|. Additionally, by the abstract execution constraint seen in the very beginning, we state that the locations
+In an attempt to specify this in REFINITY seen in lis.~\ref{lst:RemovAssignment-refinity} we again fall short at the modeling level as we are not able to relate the abstract statement $Q$ in lis.~\ref{lst:RemoveAssignment-refinity-after} with the abstract statement $P$ in lis.~\ref{lst:RemoveAssignment-refinity-before} beyond that before $P$ assigned to the method parameter, stated by the \lstinline[style=refinity]|\hasTo(mParam)|, while after $Q$ assigns to a new variable, stated by \lstinline[style=refinity]|\hasTo(in)|. Additionally, by the abstract execution constraint seen in the very beginning, we state that the locations
 assigned to \lstinline[style=refinity]|frP| and \lstinline[style=refinity]|mParam| are disjoint to be able to remove the method parameter \lstinline[style=refinity]|mParam| as an assignable location in the after case.
 
-Naturally REFINITY is unable to prove fig~\ref{refa:RemoveAssignment-refinity-before} and fig~\ref{refa:RemoveAssignment-refinity-after} as equivalent
+Naturally REFINITY is unable to prove lis.~\ref{lst:RemoveAssignment-refinity-before} and lis.~\ref{lst:RemoveAssignment-refinity-after} as equivalent
 as we are not able to further relate $P$ and $Q$; we would need to somehow additionally state that $Q$ is produced through a substitution on $P$.
 
-
 \begin{figure}
-  \begin{subfigure}[h]{.45\linewidth}
+  \begin{subfigure}{.45\linewidth}
     \lstinputlisting[style=refinity]{RemoveAssignmentToParameter/REFINITY/before.refinity}
     \caption{Before}
-    \label{refa:RemoveAssignment-refinity-before}    
+    \label{lst:RemoveAssignment-refinity-before}
   \end{subfigure}\hspace{1cm}
-  \begin{subfigure}[h]{.45\linewidth}
+  \begin{subfigure}{.45\linewidth}
     \lstinputlisting[style=refinity]{RemoveAssignmentToParameter/REFINITY/after.refinity}
     \caption{After}
-    \label{refa:RemoveAssignment-refinity-after}
+    \label{lst:RemoveAssignment-refinity-after}
   \end{subfigure}
-  \caption{Replace array with object refactoring}
-  \label{refa:RemovAssignment-refinity}
+  \captionof{lstlisting}{Replace array with object refactoring}
+  \label{lst:RemovAssignment-refinity}
 \end{figure}

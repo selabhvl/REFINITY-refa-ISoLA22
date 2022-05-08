@@ -5,15 +5,15 @@
 
 \begin{figure}
   \centering
-  \begin{subfigure}{.3\linewidth}
+  \begin{subfigure}{.2\linewidth}
     \lstinputlisting[style=refinity]{ObjectCreation/REFINITY/before.refinity}
     \caption{Before}
   \end{subfigure}\hspace{1cm}
-  \begin{subfigure}{.3\linewidth}
+  \begin{subfigure}{.2\linewidth}
     \lstinputlisting[style=refinity]{Objectcreation/REFINITY/after.refinity}
     \caption{After}
   \end{subfigure}
-\caption{Object creation}
+\captionof{lstlisting}{Object creation}
 \label{lst:ObjectCreation-refinity}
 \end{figure}
 
@@ -22,7 +22,7 @@ in absence of a more fine-grained (application-specific) post-condition, it enco
 as must be the objects in the \relevant{} location set (and the observables in this location set must be adequately specified).
 
 This already creates the first hurdle for expressing useful notions of equivalences: as heap updates are symbolically encoded in the proofs, equivalent object-allocations are not directly identified by KeY as such.
-Consider the following two pieces of code in Listing \ref{lst:ObjectCreation-refinity}
+Consider the following two pieces of code in listing (lis.)~\ref{lst:ObjectCreation-refinity}
 if the two allocations are independent from each other, i.e. there is no dependency in their constructors, such as a shared global counter,
 both programs are equivalent, yet cannot be proved automatically due to syntactically different heaps.
 To address this limitation, we need additional rules that allow ignoring heap updates that are irrelevant.
@@ -41,17 +41,17 @@ we do not have a way of proving the taclets correct (i.e.\ derive them as lemmas
 
 \subsection*{Related: Dead Code Elimination}
 Similar considerations of equivalent heap manipulations need to be considered also in the are of optimizations.
-Take for example the trivial fragment in fig. \ref{lst:xisnewxisnew}.
+Take for example the trivial fragment in lis.~\ref{lst:xisnewxisnew}.
 \begin{figure}
 \centering
-\begin{subfigure}{.3\linewidth}
+\begin{minipage}{.2\linewidth}
 \begin{lstlisting}[style=refinity]
-  C x;
-  x = new C();
-  x = new C();
+C x;
+x = new C();
+x = new C();
 \end{lstlisting}
-\end{subfigure}
-\caption{Dead Object}
+\end{minipage}
+\captionof{lstlisting}{Dead Object}
 \label{lst:xisnewxisnew}
 \end{figure}
 Again, without any sideeffects upon constructor invocation, the first update is of no consequence.
