@@ -23,7 +23,7 @@ in absence of a more fine-grained (application-specific) post-condition, it enco
 as must be the objects in the \relevant{} location set (and the observables in this location set must be adequately specified).
 
 This already creates the first hurdle for expressing useful notions of equivalences: as heap updates are symbolically encoded in the proofs, equivalent object-allocations are not directly identified by KeY as such.
-Consider the following two pieces of code in Listing \ref{lst:ObjectCreation-refinity}:\vsnote{TODO Ole}
+Consider the following two pieces of code in Listing \ref{lst:ObjectCreation-refinity}
 if the two allocations are independent from each other, i.e. there is no dependency in their constructors, such as a shared global counter,
 both programs are equivalent, yet cannot be proved automatically due to syntactically different heaps.
 To address this limitation, we need additional rules that allow ignoring heap updates that are irrelevant.
@@ -31,13 +31,13 @@ Surprisingly, the extant literature does not provide much automation there, but 
 
 Coming back to our example, it is syntactically obvious that both sides yield different heaps.
 Before addressing the underlying problem, \vsnote{@Eduard: Let's skip the obvious that KeY didn't know that two objects allocated in identical heaps are hence identical, or?}
-we can immediately contribute a small tactlet that states that two objects are identical, if their arguments to the constructor are equal and if any heap updates between the two allocations do not afffect the allocation of the second object.
+we can immediately contribute a small taclet that states that two objects are identical, if their arguments to the constructor are equal and if any heap updates between the two allocations do not afffect the allocation of the second object.
 Similar to KeY's \keyrule{dropUpdate_2}, we can easily eliminate these operations on the heap on unrelated \textit{types} and obtain equivalent programs.
 \vsnote*{TODO: Eduard to elaborate a bit here.}{Unrelated types are of course only a shortcut, dropUpdate2 is much more specific, VS thinks -- but I can't decode the side conditions on the rule}.
 
-Let us close with the remark that due to the nature of tactlets, we have not so much proven this refactoring to be correct,
+Let us close with the remark that due to the nature of taclets, we have not so much proven this refactoring to be correct,
 but rather (only) moved this decision further down the chain: unlike in a formalization of an OO model from ground up e.g.\ in the Coq-theorem prover,
-we do not have a way of proving the tactlets correct (i.e.\ derive them as lemmas) within KeY for \textit{any} program.
+we do not have a way of proving the taclets correct (i.e.\ derive them as lemmas) within KeY for \textit{any} program.
 \vsnote{Eduard, pease confirm this claim and maybe adjust formulation to what's palpatable to our audience.}
 
 \subsection*{Related: Dead Code Elimination}
@@ -52,7 +52,7 @@ Again, without any sideeffects upon constructor invocation, the first update is 
 The additional rules above however will not yet be sufficient to prove that this version is equivalent to the version without the redundant object creation and assignment.
 The location-set mechanism would still insist that the second object created  in the redundant version is a different object from the first (and only) object created in the optimized version.
 On the one hand this can be addressed through a relaxed post-condition where we accept that we only need \textit{an} object of the right type and arguments, but it relies on the side-condition of the constructor not having side-effects, which we \vsnote*{TODO Eduard: is it?}{cannot easily encode as part of the post-condition}.
-We face the same issue if we would want to encode the absence of side-effects as precondition to a tactlet.
+We face the same issue if we would want to encode the absence of side-effects as precondition to a taclet.
 
 %%% Local Variables:
 %%% mode: latex
