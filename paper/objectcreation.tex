@@ -4,18 +4,17 @@
 \newcommand\keyrule[1]{\ensuremath{\mathrm{#1}}}
 
 \begin{figure}
-  \begin{subfigure}[h]{.45\linewidth}
+  \centering
+  \begin{subfigure}{.3\linewidth}
     \lstinputlisting[style=refinity]{ObjectCreation/REFINITY/before.refinity}
     \caption{Before}
-    \label{lst:ObjectCreation-refinity-before}    
   \end{subfigure}\hspace{1cm}
-  \begin{subfigure}[h]{.45\linewidth}
+  \begin{subfigure}{.3\linewidth}
     \lstinputlisting[style=refinity]{Objectcreation/REFINITY/after.refinity}
     \caption{After}
-    \label{lst:ObjectCreation-refinity-after}
   \end{subfigure}
-  \caption{Slide Object creation}
-  \label{lst:ObjectCreation-refinity}
+\caption{Object creation}
+\label{lst:ObjectCreation-refinity}
 \end{figure}
 
 As we have seen in the previous section, REFINITY encodes a rather harsh regimen on program equivalence:
@@ -42,12 +41,19 @@ we do not have a way of proving the taclets correct (i.e.\ derive them as lemmas
 
 \subsection*{Related: Dead Code Elimination}
 Similar considerations of equivalent heap manipulations need to be considered also in the are of optimizations.
-Take for example the trivial fragment in Listing \ref{lst:xisnewxisnew}.
-\begin{lstlisting}
+Take for example the trivial fragment in fig. \ref{lst:xisnewxisnew}.
+\begin{figure}
+\centering
+\begin{subfigure}{.3\linewidth}
+\begin{lstlisting}[style=refinity]
   C x;
-  x := new C();
-  x := new C();
+  x = new C();
+  x = new C();
 \end{lstlisting}
+\end{subfigure}
+\caption{Dead Object}
+\label{lst:xisnewxisnew}
+\end{figure}
 Again, without any sideeffects upon constructor invocation, the first update is of no consequence.
 The additional rules above however will not yet be sufficient to prove that this version is equivalent to the version without the redundant object creation and assignment.
 The location-set mechanism would still insist that the second object created  in the redundant version is a different object from the first (and only) object created in the optimized version.
