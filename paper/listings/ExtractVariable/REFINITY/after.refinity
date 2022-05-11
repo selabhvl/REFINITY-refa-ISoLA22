@@ -1,0 +1,16 @@
+/*@ ae_constraint
+  @ \disjoint(x, frameM) && \disjoint(x, frameP);
+  @*/
+
+/*@ assignable \hasTo(x);
+  @ accessible x;
+  @ normal_behaviour ensures x instanceof X;
+  @ return_behavior requires false;
+  @ exceptional_behavior requires false;
+  @*/
+\abstract_statement Q;
+  
+X temp = (X)x;
+temp.n();
+m();
+return temp;
