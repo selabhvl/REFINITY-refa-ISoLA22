@@ -1,6 +1,12 @@
-Let us consider a refactoring that replaces an array containing position given by a latitude and longitude as in lis.~\ref{refa:ReplaceArray-java-before} with an object that gives read or write access to the same values through setters and getters that make it immediately clear what is being accessed as seen in lis.~\ref{refa:ReplaceArray-java-after}.
+Let us consider a refactoring that replaces an array containing a geographical position given by a latitude and longitude as in Listing~\ref{refa:ReplaceArray-java-before} with an object that gives read or write access to the same values through setters and getters that make it immediately clear what is being accessed as seen in Listing~\ref{refa:ReplaceArray-java-after}.
+In either direction of this refactoring, we must be certain that indexing can only occur within the bounds of the original program as there will be no corresponding out of bounds failure for method calls.
+We note the added (syntactical) complication that in the direction from array to object, that if array offsets are computed, there is no direct correspondence to a setter/getter,
+and the refactored code needs to dispatch on the corresponding component.
+In the following, for simplification, we assume that the array is only used with constants.
 
-For this to be a refactoring we must be certain that indexing can only occur in bounds for the original program as there will be no corresponding out of bounds failure for method calls. There may be usage sites in the original program which in some way rely on the array representation, these must be identified and handled in an equivalent way in the refactored program.
+% There may be usage sites in the original program which in some way rely on the array representation.
+%These must be identified and handled in an equivalent way in the refactored program.
+
 
 \begin{figure}
   \begin{subfigure}[h]{.45\linewidth} 
@@ -17,9 +23,55 @@ For this to be a refactoring we must be certain that indexing can only occur in 
   \label{refa:ReplaceArray-java}
 \end{figure}
 
+Having established that both programs are not equal, but should be considered equivalent, ... .
+To avoid having to establish the correspondence in all uses (of either setter/getter or the array),
+we can assume that accesses in either case are wrapped in a method --- if we assume that Extract Method/Inline Method are already proven as correct.
+This reliance on other refactorings allows us to compartmentalise the reasoning, and mostly focus on contracts for the involved methods.
+While abstract execution is good at reasoning about placeholders for abstract behaviour, a similar mechanism for abstract structures is missing.
+Through some intermediate steps, we can offload most of the reasoning to a history-based mechanism with some static assumptions on the code that can be easily checked.
+The first is to encapsulate all accesses in methods; setters/getters on the object-side, and static helpers on the array-side.\vsnote{Proved by Dom, kinda.}
+We can then formulate the question to REFINITY as given in Fig.~\ref{refa:ReplaceArray-REF} for each of the operations in the API, here the matching pairs of setters/getters:
+
+\begin{figure}
+  \begin{subfigure}[h]{.45\linewidth} 
+    \begin{lstlisting}[style=smallJava]
+String[] p = new String[2];
+/* M only uses the static
+method API to modify `p` and
+does not assign a new value
+to `p`. */
+\abstract_statement M
+setX(p,value);
+    \end{lstlisting}
+    \caption{Before}
+    \label{lst:ArrayBefore}
+  \end{subfigure}\hspace{1cm}
+  \begin{subfigure}[h]{.45\linewidth}
+        \begin{lstlisting}[style=smallJava]
+Pos p = new Pos();
+/* ditto */
+\abstract_statement M
+p.setX(value);
+    \end{lstlisting}
+    \caption{After}
+    \label{lst:ArrayAfter}
+  \end{subfigure}
+  \captionof{lstlisting}{Replace array with object refactoring}
+  \label{refa:ReplaceArray-REF}
+\end{figure}
+
+It remains to show that a) neither abstract statement overwrites \texttt{p}, that b) the histories of API operations called on either side match pairwise,
+and that c) in the post-condition the values in their respective components match.
+
+\vsnote*{}{After spelling this out, it looks like we should just start with Encapsulate Value or how it is called.}
+
+\noindent\rule{\textwidth}{2pt}
+
+%%%%%%%%%%%%%
+
 In REFINITY it would be difficult to even model this because what we would most naturally want to do is to somehow write a LHS with an abstract statement $P$ and a RHS with an abstract statemetn $Q$ and specify that $P$ contains an array used to index some data as seen in lis.~\ref{refa:ReplaceArray-java}. Then we would want to require somehow that $Q$ is exactly as $P$ but with the array substituted for a data object and any reads or writes to the array replaced with appropriate setters and getters. Such things are not possible as on the modeling level the abstract elements operate as black boxes whose contents we can't specify.
 
-If we attempt to specify the refactoring in REFINITY so that it captures all refactorings of the kind shown in lis.~\ref{refa:ReplaceArray-java} the closest we come is as show in lis.~\ref{refa:ReplaceArray-refinity} where valid instatiations
+If we attempt to specify the refactoring in REFINITY so that it captures all refactorings of the kind shown in lis.~\ref{refa:ReplaceArray-java} the closest we come is as show in lis.~\ref{refa:ReplaceArray-refinity} where valid instantiations
 also include programs that don't contain any arrays at all.
 
 \begin{figure}
@@ -36,3 +88,8 @@ also include programs that don't contain any arrays at all.
   \captionof{lstlisting}{A too wide pattern}
   \label{refa:ReplaceArray-refinity}
 \end{figure}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End:

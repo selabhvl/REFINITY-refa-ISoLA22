@@ -1,0 +1,13 @@
+Another area of interest for equivalence is replacing one data structure with another,
+e.g.\ Fowler's \cite{needed}\vsnote{TODO: @Ole, I'm sure Fowler had something, can you check please?}.
+As an example, in the following we look at a piece of code where an array is replaced with an object (or vice versa).
+Again, from the strict default perspective of ``equal return values, equal heaps'', any two programs using the data structures are obviously not equal.
+Encoding observability as per the previous section will obviously solve this issue, as the observables would ideally talk about the constituent parts.
+
+\input{limits/replace_array_with_object}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
