@@ -1,0 +1,16 @@
+public class Resource {
+    private Owner owner;
+    public Owner getOwner() { 
+        /*@ 
+          @ assignable owner, frameF;
+          @ accessible footprintF;
+          @ return_behavior requires false;
+          @ exceptional_behavior requires false;
+          @*/
+        \abstract_statement F;
+        return owner;       
+    }
+  public Resource hiddenDelegate() {
+   return this.getOwner().getResource();    
+  }
+}

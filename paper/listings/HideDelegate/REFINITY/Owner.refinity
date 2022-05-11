@@ -1,0 +1,12 @@
+public class Owner {
+    private Resource resource;
+    public Resource getResource() { 
+        /*@ assignable resource, frameG;
+          @ accessible footprintG;
+          @ return_behavior requires false;
+          @ exceptional_behavior requires false;
+          @*/
+        \abstract_statement G;       
+        return resource;
+    }
+}
