@@ -1,0 +1,43 @@
+The Hide Delegate refactoring is can be explained as an Extract Method refactoring on a call chain of \lstinline[style=smallJava]|Y y = o.f().g()| where
+the call chain is extracted to a method on \lstinline[style=smallJava]|o| such that we can replace the chain with \lstinline[style=smallJava]|o.h()|
+where \lstinline[style=smallJava]|h()| now has a body of \lstinline[style=smallJava]|Y h(){ return this.f().g(); }|. The refactoring can enable less
+coupling as the class that contained the call chain afterwards does not need to know of the type returned by \lstinline[style=smallJava]|f()|.
+
+\subsection{Hide Delegate - without fields}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}{.4\linewidth}
+    \lstinputlisting[style=refinity]{HideDelegate/REFINITY/before.refinity}
+    \caption{Before}
+  \end{subfigure}\hspace{1cm}
+  \begin{subfigure}{.4\linewidth}
+    \lstinputlisting[style=refinity]{HideDelegate/REFINITY/after.refinity}
+    \caption{After}
+  \end{subfigure}
+\captionof{lstlisting}{Hide Delegate}
+\label{lst:HideDelegate-refinity}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}{.4\linewidth}
+    \lstinputlisting[style=refinity]{HideDelegate/REFINITY/Resource.refinity}
+    \caption{Before}
+  \end{subfigure}\hspace{1cm}
+  \begin{subfigure}{.4\linewidth}
+    \lstinputlisting[style=refinity]{HideDelegate/REFINITY/Owner.refinity}
+    \caption{After}
+  \end{subfigure}
+\captionof{lstlisting}{Hide Delegate Classes}
+\label{lst:HideDelegate-refinity}
+\end{figure}
+
+Similarily a minor variation of the  Hide Delegate refactoring also applies to a call chain which assigns to temporaries or fields such that
+we have e.g. \lstinline[style=smallJava]|x = o.f(); Y y = x.g()|. Here we must beware that in our replacement we may observe a difference
+if \lstinline[style=smallJava]|g()| can leave \lstinline[style=smallJava]|x| in an altered state which is then eliminated by applying
+the refactoring \lstinline[style=smallJava]|h()|
+
+\subsection{Hide Delegate - with fields}
+
+%TODO this is not yet done
