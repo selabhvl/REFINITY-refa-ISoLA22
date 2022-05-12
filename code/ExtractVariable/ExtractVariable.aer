@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:aeRelationalModel xmlns:ns2="http://www.key-project.org/abstractexecution" preCondition="" postCondition="\result_1 == \result_2">
-    <programOne>// 1. In the original presentation we have 
-// void m() { x = new X(); } in other words
-// m() may change the reference the value x holds
-
-
-/*@ ae_constraint
-  @ \disjoint(x, frM) &amp;&amp; 
+    <programOne>/*@ ae_constraint
   @ \disjoint(x, frN);
   @*/
 
@@ -19,17 +13,10 @@
 \abstract_statement Q;
 
 ((X)x).n();
-m();
+((X)x).n();
 return x;
 </programOne>
-    <programTwo>// 2. Thus the extract local refactoring here
-// can introduce a semantic change as now
-// in the second temp.n() we are calling n()
-// on a new object instead of on the one 
-// referred to by x originally.
-
-/*@ ae_constraint
-  @ \disjoint(x, frM) &amp;&amp;
+    <programTwo>/*@ ae_constraint
   @ \disjoint(x, frN);
   @*/
 
@@ -43,20 +30,10 @@ return x;
   
 X temp = (X)x;
 temp.n();
-m();
+temp.n();
 return temp;
 </programTwo>
-    <methodLevelContext>public void m() {       
-       /*@ assignable frM;
-         @ accessible fpM;
-         @ return_behavior requires false;
-         @ exceptional_behavior requires false;
-         @ 
-         @*/
-       \abstract_statement M;
-}
-
-public class X {
+    <methodLevelContext>public class X {
 
     public void n() {
         
@@ -71,16 +48,6 @@ public class X {
 }
 </methodLevelContext>
     <locationSets>
-        <locationSet funcName="frM">
-            <relevantOne>-1</relevantOne>
-            <relevantTwo>-1</relevantTwo>
-            <resultSortName>LocSet</resultSortName>
-        </locationSet>
-        <locationSet funcName="fpM">
-            <relevantOne>-1</relevantOne>
-            <relevantTwo>-1</relevantTwo>
-            <resultSortName>LocSet</resultSortName>
-        </locationSet>
         <locationSet funcName="frN">
             <relevantOne>-1</relevantOne>
             <relevantTwo>-1</relevantTwo>
