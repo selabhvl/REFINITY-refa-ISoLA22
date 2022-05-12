@@ -1,8 +1,31 @@
-Let us consider the Extract Local Variable refactoring which has had dynamic detection considered \ref{stolz:isolarefa} for one of its pitfalls.
+Let us consider the Extract Local Variable refactoring seen in lis.~\ref{lst:ExtractVariable-java} which has had dynamic detection
+considered~\ref{stolz:isolarefa} for one of its pitfalls. Suppose \lstinline[style=smallJava]|m()| changes the reference
+\lstinline[style=smallJava]|x| holds and let us rewrite the method calls of \lstinline[style=smallJava]|n()| to show unique
+object identities explicitly; before we would have \lstinline[mathescape=true,style=smallJava]|o$_1$.n()| and then
+\lstinline[mathescape=true,style=smallJava]|o$_2$.n()| whereas after we would have \lstinline[mathescape=true,style=smallJava]|o$_1$.n()|
+and then \lstinline[mathescape=true,style=smallJava]|o$_1$.n()|.
 
-%%TODO: Add motivating java code and dynamic fix
 
-\begin{figure}
+\begin{figure}[!htb]
+  \centering
+  \begin{subfigure}{.2\linewidth}
+    \lstinputlisting[style=refinity]{ExtractVariable/Java/before.java}
+    \caption{Before}
+  \end{subfigure}\hspace{1cm}
+  \begin{subfigure}{.3\linewidth}
+    \lstinputlisting[style=refinity]{ExtractVariable/Java/after.java}
+    \caption{After}
+  \end{subfigure}
+\captionof{lstlisting}{Extract Local Variable}
+\label{lst:ExtractVariable-java}
+\end{figure}
+
+The dynamic check for such a change detailed in other work~\ref{stolz:isolarefa} codified the neccessity that the reference \lstinline[style=smallJava]|x|
+holds remain unchanged by the introduction of an assertion \lstinline[style=smallJava]|asssert temp == x;| to uncover violations.
+
+
+
+\begin{figure}[!htb]
   \centering
   \begin{subfigure}{.4\linewidth}
     \lstinputlisting[style=refinity]{ExtractVariable/REFINITY/before.refinity}
