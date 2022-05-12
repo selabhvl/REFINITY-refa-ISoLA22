@@ -1,16 +1,15 @@
-public class Resource {
-    private Owner owner;
-    public Owner getOwner() { 
-        /*@ 
-          @ assignable owner, frF;
-          @ accessible fpF;
-          @ return_behavior requires false;
-          @ exceptional_behavior requires false;
-          @*/
-        \abstract_statement F;
-        return owner;       
-    }
-  public Resource hiddenDelegate() {
-   return this.getOwner().getResource();    
+class Resource {
+ Owner o;
+ Owner getOwner() {
+ /*@ assignable o,frF;
+   @ accessible fpF;
+   @ ...
+   @*/
+   \abstract_statement F;
+   return o;
+  }
+  Resource hDelegate() {
+   return this.getOwner()
+          .getResource();    
   }
 }

@@ -1,12 +1,11 @@
-public class Owner {
-    private Resource resource;
-    public Resource getResource() { 
-        /*@ assignable resource, frG;
-          @ accessible fpG;
-          @ return_behavior requires false;
-          @ exceptional_behavior requires false;
-          @*/
-        \abstract_statement G;       
-        return resource;
-    }
+class Owner {
+ Resource r;
+ Resource getResource() { 
+/*@ assignable r, frG;
+  @ accessible fpG;
+  @ ...
+  @*/
+  \abstract_statement G;       
+  return r;
+ }
 }
