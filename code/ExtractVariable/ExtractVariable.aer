@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:aeRelationalModel xmlns:ns2="http://www.key-project.org/abstractexecution" preCondition="" postCondition="\result_1 == \result_2">
+<ns2:aeRelationalModel xmlns:ns2="http://www.key-project.org/abstractexecution" preCondition="" postCondition="\result_1[0] == \result_2[0] &amp;&amp; &#10;(&#10;\result_1[1] instanceof java.lang.NullPointerException &amp;&amp; \result_2[1] instanceof java.lang.NullPointerException&#10;) ||&#10;\result_1[1] == \result_1[1]">
     <programOne>/*@ ae_constraint
   @ \disjoint(x, frN);
   @*/
@@ -39,8 +39,6 @@ return temp;
         
         /*@ assignable frN;
           @ accessible fpN;
-          @ return_behavior requires false;
-          @ exceptional_behavior requires false;
           @*/
         \abstract_statement N;
     }
