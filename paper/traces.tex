@@ -1,21 +1,47 @@
-In the previous section, we have established that syntactical equality of heaps is too strict as a precondition to equivalent (or rather: identical) behaviour.
-In practice, developers are content if refactored code gives the same observable behaviour \cite{needed}.
-This behaviour is first and foremost encoded through unit-tests, but also on tests on output (e.g.\ via \texttt{print}-statements).
+In the previous section, we have established that relational verification using abstract execution
+must take care of general effects of language semantics outside the abstract statements.
+In this section, we illustrate a different obstacle to practical abstract execution, which touches on its core specification principles: sequences of side effects.
+
+%In the previous section, we have established that syntactical equality of heaps is too strict as a precondition to equivalent (or rather: identical) behaviour.
+%In practice, 
+In general, developers are content if refactored code gives the same observable behaviour \cite{needed}.
+This behaviour is first and foremost encoded through unit-tests, but also on tests on side-effects and their order (e.g.\ output via \texttt{print}-statements).
 Here we then have a much more relaxed setting where equivalence is decoupled from the fine-grained program semantics.
+More realistically, one may want to establish that after refactoring, certain operations happened in the same order.
 
-Harnessing output as a mechanism to decide equivalence requires instrumentation of both software versions, though:
-we need to extend our code with a (global) variable that accumulates observable behaviour at dedicated locations in the program.
-Making this value the return value on both sides allows us to leverage the colismponent-wise equality in the generic post-condition that REFINITY generates,
-and achieves the desired effect when we completely ignore differences in the relevant locations set by not including any variables in there at all.
+Abstract execution supports the specification of read and write events, via dynamic frames, but does not specify their order or give a general possibility to
+specify the order of side-effects/events. The most straightforward approach is to use a special model variable to keep track of the events explicitly in a trace, 
+and specify properties using the surrounding logic, in our case, JavaDL. This approach has been taken for dynamics logics (without investigating relation verification) in, e.g., ABSDL~\cite{DBLP:journals/jlp/DinO14} and for relational verification (albeit without using a dynamic logic) by, e.g., Barthe et al.~\cite{DBLP:conf/fmcad/BartheEGGKM19}.
 
-We note that this places more burden on the developer, as they have to make sure that their chosen encoding of events in the data structure captures the salient part of equivalence.
-Clearly, this data structure is sensitive to order and any object identities very much in the same way as is the syntactic representation of heap manipulations.
-This explicit encoding of user-defined execution histories has the advantage that it is not only useful for proofs, but can also directly be harnessed in concrete unit-tests.
-\vsnote{Just a minor observation.}
+\begin{example}
+\eknote*{illustrate AE by giving a contract that says that trace T of program P does not contain a certain event and use it in the relational post-condition}{fill me}
+\end{example}
 
-\vsnote*{}{TODO: Any good example here?}
+However, first-order specifications of temporal properties have been proven to be unweildly, large and hard to understand. 
+This places even more burden on the developer, as they have to make sure that their chosen encoding of events in the data structure captures the salient part of equivalence.
+%Clearly, this data structure is sensitive to order and any object identities very much in the same way as is the syntactic representation of heap manipulations.
+\eknote*{don't understand}{This explicit encoding of user-defined execution histories has the advantage that it is not only useful for proofs, but can also directly be harnessed in concrete unit-tests.}
+This led to the development of other dynamic logics which interact with novel trace specifications, such as BPL~\cite{DBLP:conf/tableaux/Kamburjan19} and symbolic traces~\cite{DBLP:conf/tableaux/BubelDHN15}. %, as well as the
+%integration of other, more standard trace specification into dynamic logic, such as LTL~\cite{beckert} or session types~\cite{ifm}.
+For none of these approaches, abstract statements have been investigated. %it is clear how abstract statement can be specified.
 
-\vsnote*{}{TODO: Idea can't be new. Also see histories in general (Eduard?)}
+Let us illustrate some challenges using a simplified version of local Session Types for Active Objects~\cite{DBLP:journals/jacm/HondaYC16,DBLP:journals/csur/BoerSHHRDJSKFY17,DBLP:conf/ifm/KamburjanC18}, which are an example for BPL specifications.
+
+\begin{example}
+\eknote*{actually come up with an example}{fill me}
+\end{example}
+
+
+%Harnessing output as a mechanism to decide equivalence requires instrumentation of both software versions, though:
+%we need to extend our code with a (global) variable that accumulates observable behaviour at dedicated locations in the program.
+%Making this value the return value on both sides allows us to leverage the colismponent-wise equality in the generic post-condition that REFINITY generates,
+%and achieves the desired effect when we completely ignore differences in the relevant locations set by not including any variables in there at all.
+
+%\vsnote{Just a minor observation.}
+
+%\vsnote*{}{TODO: Any good example here?}
+
+%\vsnote*{}{TODO: Idea can't be new. Also see histories in general (Eduard?)}
 
 %%% Local Variables:
 %%% mode: latex
