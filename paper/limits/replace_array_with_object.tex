@@ -68,10 +68,14 @@ and that c) in the post-condition the values in their respective components matc
 \subsection*{Replacing interface-based implementations}
 
 \begin{figure}
+      \begin{lstlisting}[style=smallJava]
+IFace p /* global free program variable */
+post: true
+    \end{lstlisting}
+
   \begin{subfigure}[h]{.45\linewidth} 
     \begin{lstlisting}[style=smallJava]
-IFace p; /* free global variable */
-assert p instanceof ImplLHS();
+assert p instanceof ImplLHS;
 \abstract_statement M
     \end{lstlisting}
     \caption{Before}
@@ -79,7 +83,7 @@ assert p instanceof ImplLHS();
   \end{subfigure}\hspace{1cm}
   \begin{subfigure}[h]{.45\linewidth}
         \begin{lstlisting}[style=smallJava]
-assert p instanceof ImplRHS();
+assert p instanceof ImplRHS;
 \abstract_statement M
     \end{lstlisting}
     \caption{After}
@@ -88,21 +92,23 @@ assert p instanceof ImplRHS();
   \captionof{lstlisting}{Replace interface implementation}
   \label{lst:refa-ibased}
 \end{figure}
-\vsnote{TODO: Find a better way to show global context like $p$ and class-diagram already here (like REFINITY's split views!}
 
 Changing implementations, i.e., replacing one class with another and the same interface,
 should face no technical issues: we can declare a free object variable of the corresponding type,
 and use in contrast to above \textit{identical abstract statements}.
+However, we need to rely on \textit{method contracts} for operations in the interface, and that the implementations actually respect this interface.
 Furthermore, again due to the identical interfaces, we do not need separate cases for each operation in the interface,
 however, this relies on \textit{only} manipulating object \texttt{p} through the interface.
 Listing~\ref{lst:refa-ibased} illustrates the corresponding verification task for REFINITY.
 It remains to handle the relevant location set correctly, as nonetheless we are changing the object and hence have to restrict the types accordingly.
-\vsnote*{TODO: Ole/Eduard figure out postcondition?}{}
+\vsnote*{TODO: Ole/Eduard figure out/check specification of $M$ \& postcondition?}{}
 
+REFINITY currently does \vsnote*{TODO: Ole reporting current state of affairs here}{or does not} succeed in proving \vsnote*{Exactly what are we asking REFINITY, see above}{this}.
 
 \noindent\rule{\textwidth}{2pt}
 
 %%%%%%%%%%%%%
+\vsnote*{}{Older text to be adapted/reused.}
 
 In REFINITY it would be difficult to even model this because what we would most naturally want to do is to somehow write a LHS with an abstract statement $P$ and a RHS with an abstract statemetn $Q$ and specify that $P$ contains an array used to index some data as seen in lis.~\ref{refa:ReplaceArray-java}. Then we would want to require somehow that $Q$ is exactly as $P$ but with the array substituted for a data object and any reads or writes to the array replaced with appropriate setters and getters. Such things are not possible as on the modeling level the abstract elements operate as black boxes whose contents we can't specify.
 
