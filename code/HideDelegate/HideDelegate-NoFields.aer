@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:aeRelationalModel xmlns:ns2="http://www.key-project.org/abstractexecution" preCondition="" postCondition="\result_1==\result_2">
+    <programOne>return ((Resource)in)
+       .getOwner()
+       .getResource();
+
+</programOne>
+    <programTwo>return ((Resource)in)
+       .hiddenDelegate();</programTwo>
+    <methodLevelContext>public class Resource {
+
+    Owner owner;
+          
+    public Owner getOwner() {
+
+        /*@ 
+          @ assignable owner, frF;
+          @ accessible fpF;
+          @ return_behavior requires false;
+          @ exceptional_behavior requires false;
+          @*/
+        \abstract_statement F;
+        return owner;
+        
+    }
+  public Resource hiddenDelegate() {
+   return this.getOwner().getResource();
+    
+  }
+
+}
+
+public class Owner {
+
+    Resource resource; 
+   
+    public Resource getResource() {
+        
+        
+        /*@ assignable resource, frG;
+          @ accessible fpG;
+          @ return_behavior requires false;
+          @ exceptional_behavior requires false;
+          @*/
+        \abstract_statement G;
+        
+        return resource;
+    }
+}</methodLevelContext>
+    <locationSets>
+        <locationSet funcName="fpG">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+            <resultSortName>LocSet</resultSortName>
+        </locationSet>
+        <locationSet funcName="frF">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+            <resultSortName>LocSet</resultSortName>
+        </locationSet>
+        <locationSet funcName="frG">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+            <resultSortName>LocSet</resultSortName>
+        </locationSet>
+        <locationSet funcName="fpF">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+            <resultSortName>LocSet</resultSortName>
+        </locationSet>
+    </locationSets>
+    <functions/>
+    <predicates/>
+    <programVariables>
+        <programVariable typeName="java.lang.Object" varName="in">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+        </programVariable>
+    </programVariables>
+</ns2:aeRelationalModel>
