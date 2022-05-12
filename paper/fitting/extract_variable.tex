@@ -44,7 +44,7 @@ returned references of the before and after sides are identical.
 \end{figure}
 
 One can consider Refinity the encoding we have managed to perform and prove in lis.~\ref{lst:ExtractVariable-refinity} a partial success. Indeed if the constraints on
-\lstinline[style=refinity]|x| not being assigned to by \lstinline[style=refinity]|m()| and \lstinline[style=refinity]|n()| are removed Refinity fails to prove that
-the return values are always identical. Yet this is a slightly unnatural encoding if we are to consider concrete instatiations of what we have here expressed. We do
-not really intend to encode that return statements must occur at the end as shown, but that from that point onwards the reference \lstinline[style=refinity]|x| and
-\lstinline[style=refinity]|temp| hold are identical. Thus we manage to encode our condition, but not capture the desired concrete instantiation.
+\lstinline[style=refinity]|x| not being assigned to by \lstinline[style=refinity]|n()| is removed Refinity fails to prove that the return values are always identical.
+Yet this is a slightly unnatural encoding if we are to consider concrete instatiations of what we have here expressed. We do not really intend to encode that return
+statements must occur at the end as shown, but that from that point onwards the reference \lstinline[style=refinity]|x| and \lstinline[style=refinity]|temp| hold
+are identical. Thus we manage to encode our desired postcondition, but not capture the desired concrete instantiation with our fragment.
