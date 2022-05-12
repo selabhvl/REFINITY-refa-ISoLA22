@@ -1,7 +1,3 @@
-\newcommand\relevant{$\mathrm{relevant}$}
-\newcommand\assignable{$\mathrm{assignable}$}
-\newcommand\accessible{$\mathrm{accessible}$}
-\newcommand\keyrule[1]{\ensuremath{\mathrm{#1}}}
 
 \begin{figure}
   \centering
@@ -21,27 +17,100 @@ As we have seen in the previous section, REFINITY encodes a rather harsh regimen
 in absence of a more fine-grained (application-specific) post-condition, it encodes that return values or exceptions must be identical on both sides,
 as must be the objects in the \relevant{} location set (and the observables in this location set must be adequately specified).
 
-This already creates the first hurdle for expressing useful notions of equivalences: as heap updates are symbolically encoded in the proofs, equivalent object-allocations are not directly identified by KeY as such.
-Consider the following two pieces of code in listing (lis.)~\ref{lst:ObjectCreation-refinity}
-if the two allocations are independent from each other, i.e. there is no dependency in their constructors, such as a shared global counter,
-both programs are equivalent, yet cannot be proved automatically due to syntactically different heaps.
-To address this limitation, we need additional rules that allow ignoring heap updates that are irrelevant.
-Surprisingly, the extant literature does not provide much automation there, but rather builds on restrictive specifications wrt.\ \assignable{}/\accessible{} frames.
+This, in combination with the symbolic execution of both programs, create a hurdle for programs that contain object creations (and, subsequently exceptions).
+An object allocation in JavaDL is, roughly sketched, symbolically executed by creating a fresh function symbol for the allocated object and storing it on the symbolic heap.
 
-Coming back to our example, it is syntactically obvious that both sides yield different heaps.
-Before addressing the underlying problem, \vsnote{@Eduard: Let's skip the obvious that KeY didn't know that two objects allocated in identical heaps are hence identical, or?}
-we can immediately contribute a small taclet that states that two objects are identical, if their arguments to the constructor are equal and if any heap updates between the two allocations do not afffect the allocation of the second object.
-Similar to KeY's \keyrule{dropUpdate_2}, we can easily eliminate these operations on the heap on unrelated \textit{types} and obtain equivalent programs.
-\vsnote*{TODO: Eduard to elaborate a bit here.}{Unrelated types are of course only a shortcut, dropUpdate2 is much more specific, VS thinks -- but I can't decode the side conditions on the rule}.
 
-Let us close with the remark that due to the nature of taclets, we have not so much proven this refactoring to be correct,
-but rather (only) moved this decision further down the chain: unlike in a formalization of an OO model from ground up e.g.\ in the Coq-theorem prover,
-we do not have a way of proving the taclets correct (i.e.\ derive them as lemmas) within KeY for \textit{any} program.
-\vsnote{Eduard, pease confirm this claim and maybe adjust formulation to what's palpatable to our audience.}
+The question of equivalence for created objects is not specific to abstract execution, yet important for its practicability: 
+Abstract statements are embedded in concrete programs which change as well, and more complex and application specific refactorings must all language features of the
+host language into account.
 
-\subsection*{Related: Dead Code Elimination}
-Similar considerations of equivalent heap manipulations need to be considered also in the are of optimizations.
-Take for example the trivial fragment in lis.~\ref{lst:xisnewxisnew}.
+
+At its core, the challenge lies in the fact that, as both programs are executed in the same proof, all objects created within them are not equal to each other: it is not possible to prove that the program \lstinline[style=refinity]|return new C();| is equivalent to itself.
+Indeed, it is not obvious whether the program should be considered equivalent to itself in the first place.
+The program is executed twice from the same state, but this does not suffice for the two created objects to be equal -- the allocation must, additionally, be deterministic.
+In the following we make the assumption that this is indeed the case and use this information in the symbolic execution as follows.
+
+\begin{definition}
+\eknote*{todo}{rule and allocate in general go here}
+\end{definition}
+
+This suffices to show the simple equivalence from above. Continuing our investigation of when objects are considered equal, 
+where the two allocations are independent from each other, i.e., the side-effects of the constructors are not visible to each other, \codein{C} is not a subtype of \codein{D} and vice versa. Again the question where the two \codein{C} (resp.\ \codein{D}) objects are equal arises. They are not equal in the sense that, if there is a global (implicit) counter
+that counts all allocation, they get the same number from this counter. They are equal in the sense that there is no explicit way to distinguish them in the program.
+
+They are, however, distinguishable in the proof system. If we choose to consider them equal, we must adapt our \codein{allocate} mechanism:
+First, it must be able to distinguish between the allocation of difference classes and, second, it must be able to simplify the heap to ignore irrelevant operations on it.
+\begin{definition}
+\eknote*{todo}{rule and allocate go here}
+\end{definition}
+Intuitively, this implements a different counter for each class in the type hierarchy and two objects are considered equal if the counters of their classes are equal.
+Creating an object of a class, increases the counter of this class and all its superclasses.
+This suffices to prove the programs in Lst.~\ref{lst:ObjectCreation-refinity} to be equivalent. If \codein{C} is a sub type of \codein{D}, then the proof fails.
+
+Note that we ignore the state of fields in the heap, meaning that equivalence of two objects is determined only by their counters. 
+This requires to be careful with specification: it does not suffice for each notion of equivalence to specify that two objects are equal, but also \emph{their} fields must be equal.
+For example, consider the class and programs in Lst.~\ref{lst:ObjectCreation-refinity-2}. To weaken the assumption and take the whole into account to determine  
+
+\begin{figure}[tb]
+\centering
+\begin{subfigure}{.3\linewidth}
+\begin{lstlisting}[style=refinity]
+class C {
+  private int j;
+  public C(int j){
+    this.j = j;
+  }
+}
+\end{lstlisting}
+\caption{Class}
+\end{subfigure}\hspace{2mm}
+\begin{subfigure}{.3\linewidth}
+\begin{lstlisting}[style=refinity]
+return new C(1);
+\end{lstlisting}
+\caption{Before}
+\end{subfigure}\hspace{2mm}
+\begin{subfigure}{.3\linewidth}
+\begin{lstlisting}[style=refinity]
+return new C(2);
+\end{lstlisting}
+    \caption{After}
+  \end{subfigure}
+\captionof{lstlisting}{Object creation}
+\label{lst:ObjectCreation-refinity-2}
+\end{figure}
+
+%both programs are equivalent, yet cannot be proved automatically due to syntactically different heaps.
+%To address this limitation, we need additional rules that allow ignoring heap updates that are irrelevant.
+%Surprisingly, the extant literature does not provide much automation there, but rather builds on restrictive specifications wrt.\ \assignable{}/\accessible{} frames.
+
+%Coming back to our example, it is syntactically obvious that both sides yield different heaps.
+%Before addressing the underlying problem, \vsnote{@Eduard: Let's skip the obvious that KeY didn't know that two objects allocated in identical heaps are hence identical, or?}
+%we can immediately contribute a small taclet that states that two objects are identical, if their arguments to the constructor are equal and if any heap updates between the two allocations do not afffect the allocation of the second object.
+%Similar to KeY's \keyrule{dropUpdate_2}, we can easily eliminate these operations on the heap on unrelated \textit{types} and obtain equivalent programs.
+%\vsnote*{TODO: Eduard to elaborate a bit here.}{Unrelated types are of course only a shortcut, dropUpdate2 is much more specific, VS thinks -- but I can't decode the side conditions on the rule}.
+
+Let us close with three remarks. First, the solutions we described here are enabling the programmer (or refactoring designer) to fine tune its notion of equivalence, which must be specified additionally to the refactoring itself. Realizing the choice, however, is rather simple by enabling and disabling rules, resp.\ taclets.
+
+Second, while we only discussed object creation here, it is crucial for \emph{exceptions}, which must be created before being thrown. 
+Exceptions are special in the sense that they have access to the program beyond the parts that are exposed to (non-reflective) programs.
+For example, they can access the line number of the throwing statement for their stack trace. Thus, to consider two thrown exceptions equivalent, 
+one may want 
+As the stack trace is not modeled in JavaDL, its treatment for verification is an open research question in itself, and because we consider exhibiting the stack trace
+within the program a dubious practice in the first place, we chose to ignore it in this paper.
+
+Third, one could argue that we have not so much proven the refactoring to be correct,
+but rather moved this decision further down the chain: unlike in a full formalization of the Java object model from ground up, % e.g.\ in the Coq-theorem prover,
+we do not have a way of proving the taclets correct (i.e.\ derive them as lemmas) within KeY, as they model our assumptions about object identity when running two Java programs in the exact same state, which is not described by the Java semantics.
+%for \textit{any} program.
+
+%\paragraph{Abstract Object Allocation Sites.}
+%As discussed, the above solutions interact with abstract execution only indirectly by providing techniques to handle equivalences in the program surrounding the abstract statements and abstract expressions. 
+
+\paragraph*{Excursus: Dead Code Elimination}
+Similar considerations of equivalent heap manipulations need to be considered also in the are of optimizations, whose soundness proofs rely on relation verification as well.
+Take for example the program in Lst.~\ref{lst:xisnewxisnew}.
 \begin{figure}
 \centering
 \begin{minipage}{.2\linewidth}
@@ -54,11 +123,13 @@ x = new C();
 \captionof{lstlisting}{Dead Object}
 \label{lst:xisnewxisnew}
 \end{figure}
-Again, without any sideeffects upon constructor invocation, the first update is of no consequence.
+Again, we assume that the constructor of \codein{C} has no side-effects (except object creation) upon constructor invocation.
+In this case, the first object creation is of no consequence.
 The additional rules above however will not yet be sufficient to prove that this version is equivalent to the version without the redundant object creation and assignment.
 The location-set mechanism would still insist that the second object created  in the redundant version is a different object from the first (and only) object created in the optimized version.
-On the one hand this can be addressed through a relaxed post-condition where we accept that we only need \textit{an} object of the right type and arguments, but it relies on the side-condition of the constructor not having side-effects, which we \vsnote*{TODO Eduard: is it?}{cannot easily encode as part of the post-condition}.
-We face the same issue if we would want to encode the absence of side-effects as precondition to a taclet.
+On the one hand this can be addressed through a relaxed post-condition where we accept that we only need \textit{an} object of the right type and arguments, but it relies on the side-condition of the constructor not having side-effects, which requires a very restrictive method contract for the constructor.
+Alternatively, the notion of equivalence becomes even more specification-heavy for optimizations, as it may be more fine-grained. 
+%We face the same issue if we would want to encode the absence of side-effects as precondition to a taclet.
 
 %%% Local Variables:
 %%% mode: latex
