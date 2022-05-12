@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:aeRelationalModel xmlns:ns2="http://www.key-project.org/abstractexecution" preCondition="" postCondition="\result_1[0]==\result_2[0]">
     <programOne>/*@ ae_constraint
-  @   \disjoint(temp, footprintF) &amp;&amp; 
-  @   \disjoint(temp, frameG) &amp;&amp;
-  @   \disjoint(temp, footprintG) &amp;&amp;
-  @   \disjoint(temp, frameF);
+  @   \disjoint(temp, fpF) &amp;&amp; 
+  @   \disjoint(temp, frG) &amp;&amp;
+  @   \disjoint(temp, fpG) &amp;&amp;
+  @   \disjoint(temp, frF);
   @*/
 
 if(in instanceof Resource &amp;&amp; temp instanceof Container) {
@@ -14,10 +14,10 @@ if(in instanceof Resource &amp;&amp; temp instanceof Container) {
 }
 </programOne>
     <programTwo>/*@ ae_constraint
-  @   \disjoint(temp, footprintF) &amp;&amp; 
-  @   \disjoint(temp, frameG) &amp;&amp;
-  @   \disjoint(temp, footprintG) &amp;&amp;
-  @   \disjoint(temp, frameF);
+  @   \disjoint(temp, fpF) &amp;&amp; 
+  @   \disjoint(temp, frG) &amp;&amp;
+  @   \disjoint(temp, fpG) &amp;&amp;
+  @   \disjoint(temp, frF);
   @*/
         
 if(in instanceof Resource &amp;&amp; temp instanceof Container) {
@@ -36,8 +36,8 @@ public class Resource {
 
 
         /*@ 
-          @ assignable owner, frameF;
-          @ accessible footprintF;
+          @ assignable owner, frF;
+          @ accessible fpF;
           @ return_behavior requires false;
           @ exceptional_behavior requires false;
           @*/
@@ -59,8 +59,8 @@ public class Owner {
     public Resource getResource() {
         
 
-        /*@ assignable resource, frameG;
-          @ accessible footprintG;
+        /*@ assignable resource, frG;
+          @ accessible fpG;
           @ return_behavior requires false;
           @ exceptional_behavior requires false;
           @*/
@@ -70,22 +70,22 @@ public class Owner {
     }
 }</methodLevelContext>
     <locationSets>
-        <locationSet funcName="footprintF">
+        <locationSet funcName="fpF">
             <relevantOne>-1</relevantOne>
             <relevantTwo>-1</relevantTwo>
             <resultSortName>LocSet</resultSortName>
         </locationSet>
-        <locationSet funcName="footprintG">
+        <locationSet funcName="fpG">
             <relevantOne>-1</relevantOne>
             <relevantTwo>-1</relevantTwo>
             <resultSortName>LocSet</resultSortName>
         </locationSet>
-        <locationSet funcName="frameF">
+        <locationSet funcName="frF">
             <relevantOne>-1</relevantOne>
             <relevantTwo>-1</relevantTwo>
             <resultSortName>LocSet</resultSortName>
         </locationSet>
-        <locationSet funcName="frameG">
+        <locationSet funcName="frG">
             <relevantOne>-1</relevantOne>
             <relevantTwo>-1</relevantTwo>
             <resultSortName>LocSet</resultSortName>
