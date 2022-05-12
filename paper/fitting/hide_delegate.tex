@@ -1,4 +1,4 @@
-The Hide Delegate refactoring is can be explained as an Extract Method refactoring on a call chain of \lstinline[style=smallJava]|Y y = o.f().g()| where
+The Hide Delegate refactoring can be described as an Extract Method refactoring on a call chain of \lstinline[style=smallJava]|Y y = o.f().g()| where
 the call chain is extracted to a method on \lstinline[style=smallJava]|o| such that we can replace the chain with \lstinline[style=smallJava]|o.h()|
 where \lstinline[style=smallJava]|h()| now has a body of \lstinline[style=smallJava]|Y h(){ return this.f().g(); }|. The refactoring can enable less
 coupling as the class that contained the call chain afterwards does not need to know of the type returned by \lstinline[style=smallJava]|f()|.
