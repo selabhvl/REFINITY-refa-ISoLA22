@@ -1,15 +1,8 @@
 /*@ ae_constraint
-  @ \disjoint(x, frameM) && \disjoint(x, frameP);
+  @ \disjoint(x, frM) &&
+  @ \disjoint(x, frP);
   @*/
-
-/*@ assignable \hasTo(x);
-  @ accessible x;
-  @ normal_behaviour ensures x instanceof X;
-  @ return_behavior requires false;
-  @ exceptional_behavior requires false;
-  @*/
-\abstract_statement Q;
-
+...
 ((X)x).n();
 m();
 return x;
