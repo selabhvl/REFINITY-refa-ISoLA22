@@ -1,6 +1,6 @@
 Let us consider the Extract Local Variable refactoring seen in lis.~\ref{lst:ExtractVariable-java} which has had dynamic detection
-considered~\ref{stolz:isolarefa} for one of its pitfalls. Suppose \lstinline[style=smallJava]|m()| changes the reference
-\lstinline[style=smallJava]|x| holds whereas \lstinline[style=smallJava]|n()| does not and let us rewrite the method calls of \lstinline[style=smallJava]|n()| to show unique
+considered~\ref{stolz:isolarefa} for one of its pitfalls in prior work. Suppose \lstinline[style=smallJava]|n()| changes the reference
+\lstinline[style=smallJava]|x| holds and let us rewrite the method calls of \lstinline[style=smallJava]|n()| to show unique
 object identities explicitly; before we would have \lstinline[mathescape=true,style=smallJava]|o$_1$.n()| and then
 \lstinline[mathescape=true,style=smallJava]|o$_2$.n()| whereas after we would have \lstinline[mathescape=true,style=smallJava]|o$_1$.n()|
 and then \lstinline[mathescape=true,style=smallJava]|o$_1$.n()|.
@@ -23,14 +23,11 @@ and then \lstinline[mathescape=true,style=smallJava]|o$_1$.n()|.
 The dynamic check for such a change detailed in other work~\ref{stolz:isolarefa} codified the neccessity that the reference \lstinline[style=smallJava]|x|
 holds remain unchanged by the introduction of an assertion \lstinline[style=smallJava]|asssert temp == x;| to uncover violations.
 
-In Refinity we encode this condition as seen in lis.~\ref{lst:ExtractVariable-refinity} where we explicitly constrain \lstinline[style=refinity]|m()| and
-\lstinline[style=refinity]|n()| such that they may not assign to \lstinline[style=refinity]|x|; this is done through the abstract execution constraint
-specification that contains the conjunction of \lstinline[style=refinity]|\disjoint(x,frM)| and \lstinline[style=refinity]|\disjoint(x,frN)| where respectively
-\lstinline[style=refinity]|frM| and \lstinline[style=refinity]|frN| specify the location sets \lstinline[style=refinity]|m()| and \lstinline[style=refinity]|n()| may
-assign to. The specification of the methods and the location sets they assign to and access are omitted here for brevity, as is part of the specification shown
-with the ellipsis that relates to ensuring that \lstinline[style=refinity]|x| is an instance of its intended type. The specified postcondition here is that the
+In Refinity we encode this condition as seen in lis.~\ref{lst:ExtractVariable-refinity} where we explicitly constrain \lstinline[style=refinity]|n()| and
+such that it may not assign to \lstinline[style=refinity]|x|; this is done through the abstract execution constraint specification \lstinline[style=refinity]|\disjoint(x,frN)|
+where \lstinline[style=refinity]|frN| specifies the location set \lstinline[style=refinity]|n()| may assign to. Part of the specifciation relating to
+ensuring that \lstinline[style=refinity]|x| is an instance of its intended type is omitted (the ellipsis) for brevity. The specified postcondition here is that the
 return reference of the before and after are identical.
-
 
 \begin{figure}[!htb]
   \centering

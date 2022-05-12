@@ -1,8 +1,7 @@
 /*@ ae_constraint
-  @ \disjoint(x, frM) &&
   @ \disjoint(x, frN);
   @*/
 ...
 ((X)x).n();
-m();
+((X)x).n();
 return x;
