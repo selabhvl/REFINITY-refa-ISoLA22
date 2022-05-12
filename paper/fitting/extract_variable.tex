@@ -6,7 +6,6 @@ object identities explicitly; before we would have \lstinline[mathescape=true,st
 and then \lstinline[mathescape=true,style=smallJava]|o$_1$.n()|; in this case if e.g. \lstinline[mathescape=true,style=smallJava]|n()|
 simply prints \lstinline[mathescape=true,style=smallJava]|this.toString()| we will observe a difference in the two programs.
 
-
 \begin{figure}[!h]
   \centering
   \begin{subfigure}{.2\linewidth}
@@ -27,9 +26,8 @@ holds remain unchanged by the introduction of an assertion \lstinline[style=smal
 In Refinity we encode this condition as seen in lis.~\ref{lst:ExtractVariable-refinity} where we explicitly constrain \lstinline[style=refinity]|n()| and
 such that it may not assign to \lstinline[style=refinity]|x|; this is done through the abstract execution constraint specification \lstinline[style=refinity]|\disjoint(x,frN)|
 where \lstinline[style=refinity]|frN| specifies the location set \lstinline[style=refinity]|n()| may assign to. Part of the specifciation relating to
-ensuring that \lstinline[style=refinity]|x| is an instance of its intended type is omitted (the ellipsis) for brevity. The specified postcondition here is that the
-returned references of the before and after sides are identical.
-
+ensuring that \lstinline[style=refinity]|x| is an instance of its intended type is omitted (the ellipsis) for brevity. The  postcondition we ask that Refinity
+verify is that the returned references of the before and after sides are identical, that excep.
 \begin{figure}[!h]
   \centering
   \begin{subfigure}[b]{.34\linewidth}
@@ -47,7 +45,6 @@ returned references of the before and after sides are identical.
 \captionof{lstlisting}{Extract Local Variable}
 \label{lst:ExtractVariable-refinity}
 \end{figure}
-
 One can consider Refinity the encoding we have managed to perform and prove in lis.~\ref{lst:ExtractVariable-refinity} a partial success. Indeed if the constraints on
 \lstinline[style=refinity]|x| not being assigned to by \lstinline[style=refinity]|n()| is removed Refinity fails to prove that the return values are always identical.
 Yet this is a slightly unnatural encoding if we are to consider concrete instatiations of what we have here expressed. We do not really intend to encode that return
