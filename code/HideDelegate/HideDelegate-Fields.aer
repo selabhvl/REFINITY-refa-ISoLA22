@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:aeRelationalModel xmlns:ns2="http://www.key-project.org/abstractexecution" preCondition="" postCondition="\result_1==\result_2">
-    <programOne>return ((Resource)in).getOwner().getResource();
+<ns2:aeRelationalModel xmlns:ns2="http://www.key-project.org/abstractexecution" preCondition="" postCondition="\result_1[0]==\result_2[0]">
+    <programOne>/*@ ae_constraint
+  @   \disjoint(temp, footprintF) &amp;&amp; 
+  @   \disjoint(temp, frameG) &amp;&amp;
+  @   \disjoint(temp, footprintG) &amp;&amp;
+  @   \disjoint(temp, frameF);
+  @*/
 
+if(in instanceof Resource &amp;&amp; temp instanceof Container) {
+  ((Container)temp).owner = ((Resource)in).getOwner();
+  ((Container)temp).resource = ((Container) temp).owner.getResource();
+  return temp;
+}
 </programOne>
-    <programTwo>return ((Resource)in).hiddenDelegate();</programTwo>
-    <methodLevelContext>public class Resource {
-
-    private Owner owner;
-       
-    public Owner getOwner() {
+    <programTwo>/*@ ae_constraint
+  @   \disjoint(temp, footprintF) &amp;&amp; 
+  @   \disjoint(temp, frameG) &amp;&amp;
+  @   \disjoint(temp, footprintG) &amp;&amp;
+  @   \disjoint(temp, frameF);
+  @*/
         
+if(in instanceof Resource &amp;&amp; temp instanceof Container) {
+  return ((Resource)in).hiddenDelegate((Container)temp);
+}
+
+</programTwo>
+    <methodLevelContext>class Container {
+    Owner owner;
+    Resource resource;
+}
+
+public class Resource {
+    private Owner owner;   
+    public Owner getOwner() {
+
 
         /*@ 
           @ assignable owner, frameF;
@@ -20,17 +44,18 @@
         \abstract_statement F;
         return owner;
         
-    }
-  public Resource hiddenDelegate() {
-   return this.getOwner().getResource();
+    }    
+  public Container hiddenDelegate(Container temp) {
     
+    temp.owner = this.getOwner(); 
+    temp.resource = temp.owner.getResource();
+    return temp;
   }
 
 }
 
 public class Owner {
-    private Resource resource;
-   
+    private Resource resource;  
     public Resource getResource() {
         
 
@@ -72,6 +97,10 @@ public class Owner {
         <programVariable typeName="java.lang.Object" varName="in">
             <relevantOne>-1</relevantOne>
             <relevantTwo>-1</relevantTwo>
+        </programVariable>
+        <programVariable typeName="java.lang.Object" varName="temp">
+            <relevantOne>0</relevantOne>
+            <relevantTwo>0</relevantTwo>
         </programVariable>
     </programVariables>
 </ns2:aeRelationalModel>
