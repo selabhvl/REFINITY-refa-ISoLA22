@@ -33,8 +33,8 @@ coupling as the class that contained the call chain afterwards does not need to 
 \label{lst:HideDelegate-refinity}
 \end{figure}
 
-Similarily a minor variation of the  Hide Delegate refactoring also applies to a call chain which assigns to temporaries or fields such that
-we have e.g. \lstinline[style=smallJava]|x = o.f(); Y y = x.g()|. Here we must beware that in our replacement we may observe a difference
+Similarily a minor variation of the  Hide Delegate refactoring also applies to a call chain which assigns to temporaries or fields
+e.g. \lstinline[style=smallJava]|x = o.f(); Y y = x.g()|. Here we must beware that in our replacement we may observe a difference
 if \lstinline[style=smallJava]|g()| can leave \lstinline[style=smallJava]|x| in an altered state which is then eliminated by applying
 the refactoring \lstinline[style=smallJava]|Y y = h();|
 
