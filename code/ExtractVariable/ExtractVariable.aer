@@ -6,7 +6,8 @@
 
 
 /*@ ae_constraint
-  @ \disjoint(x, frameM) &amp;&amp; \disjoint(x, frameP);
+  @ \disjoint(x, frM) &amp;&amp; 
+  @ \disjoint(x, frP);
   @*/
 
 /*@ assignable \hasTo(x);
@@ -28,7 +29,8 @@ return x;
 // referred to by x originally.
 
 /*@ ae_constraint
-  @ \disjoint(x, frameM) &amp;&amp; \disjoint(x, frameP);
+  @ \disjoint(x, frM) &amp;&amp;
+  @ \disjoint(x, frP);
   @*/
 
 /*@ assignable \hasTo(x);
@@ -45,8 +47,8 @@ m();
 return temp;
 </programTwo>
     <methodLevelContext>public void m() {       
-       /*@ assignable frameM;
-         @ accessible footprintM;
+       /*@ assignable frM;
+         @ accessible fpM;
          @ return_behavior requires false;
          @ exceptional_behavior requires false;
          @ 
@@ -58,8 +60,8 @@ public class X {
 
     public void n() {
         
-        /*@ assignable frameP;
-          @ accessible footprintP;
+        /*@ assignable frP;
+          @ accessible fpP;
           @ return_behavior requires false;
           @ exceptional_behavior requires false;
           @*/
@@ -69,22 +71,22 @@ public class X {
 }
 </methodLevelContext>
     <locationSets>
-        <locationSet funcName="frameM">
+        <locationSet funcName="frM">
             <relevantOne>-1</relevantOne>
             <relevantTwo>-1</relevantTwo>
             <resultSortName>LocSet</resultSortName>
         </locationSet>
-        <locationSet funcName="footprintM">
+        <locationSet funcName="fpM">
             <relevantOne>-1</relevantOne>
             <relevantTwo>-1</relevantTwo>
             <resultSortName>LocSet</resultSortName>
         </locationSet>
-        <locationSet funcName="frameP">
+        <locationSet funcName="frP">
             <relevantOne>-1</relevantOne>
             <relevantTwo>-1</relevantTwo>
             <resultSortName>LocSet</resultSortName>
         </locationSet>
-        <locationSet funcName="footprintP">
+        <locationSet funcName="fpP">
             <relevantOne>-1</relevantOne>
             <relevantTwo>-1</relevantTwo>
             <resultSortName>LocSet</resultSortName>
