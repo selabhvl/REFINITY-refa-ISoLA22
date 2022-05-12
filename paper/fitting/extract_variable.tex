@@ -1,12 +1,13 @@
-Let us consider the Extract Local Variable refactoring seen in lis.~\ref{lst:ExtractVariable-java} which has had dynamic detection
-considered~\ref{stolz:isolarefa} for one of its pitfalls in prior work. Suppose \lstinline[style=smallJava]|n()| changes the reference
-\lstinline[style=smallJava]|x| holds and let us rewrite the method calls of \lstinline[style=smallJava]|n()| to show unique
+Let us consider the Extract Local Variable refactoring seen in lis.~\ref{lst:ExtractVariable-java} which has had dynamic detection of
+possible behavioral preservation violations considered in prior work by Eilertsen et al.~\cite{stolz:isolarefa}. Suppose \lstinline[style=smallJava]|n()|
+changes the reference \lstinline[style=smallJava]|x| holds and let us rewrite the method calls of \lstinline[style=smallJava]|n()| to show unique
 object identities explicitly; before we would have \lstinline[mathescape=true,style=smallJava]|o$_1$.n()| and then
 \lstinline[mathescape=true,style=smallJava]|o$_2$.n()| whereas after we would have \lstinline[mathescape=true,style=smallJava]|o$_1$.n()|
-and then \lstinline[mathescape=true,style=smallJava]|o$_1$.n()|.
+and then \lstinline[mathescape=true,style=smallJava]|o$_1$.n()|; in this case if e.g. \lstinline[mathescape=true,style=smallJava]|n()|
+simply prints \lstinline[mathescape=true,style=smallJava]|this.toString()| we will observe a difference in the two programs.
 
 
-\begin{figure}[!htb]
+\begin{figure}[!h]
   \centering
   \begin{subfigure}{.2\linewidth}
     \lstinputlisting[style=refinity]{ExtractVariable/Java/before.java}
@@ -29,7 +30,7 @@ where \lstinline[style=refinity]|frN| specifies the location set \lstinline[styl
 ensuring that \lstinline[style=refinity]|x| is an instance of its intended type is omitted (the ellipsis) for brevity. The specified postcondition here is that the
 returned references of the before and after sides are identical.
 
-\begin{figure}[!htb]
+\begin{figure}[!h]
   \centering
   \begin{subfigure}[b]{.34\linewidth}
     \lstinputlisting[style=refinity]{ExtractVariable/REFINITY/before.refinity}
