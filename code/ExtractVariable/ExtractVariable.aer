@@ -7,7 +7,7 @@
 
 /*@ ae_constraint
   @ \disjoint(x, frM) &amp;&amp; 
-  @ \disjoint(x, frP);
+  @ \disjoint(x, frN);
   @*/
 
 /*@ assignable \hasTo(x);
@@ -30,7 +30,7 @@ return x;
 
 /*@ ae_constraint
   @ \disjoint(x, frM) &amp;&amp;
-  @ \disjoint(x, frP);
+  @ \disjoint(x, frN);
   @*/
 
 /*@ assignable \hasTo(x);
@@ -60,12 +60,12 @@ public class X {
 
     public void n() {
         
-        /*@ assignable frP;
-          @ accessible fpP;
+        /*@ assignable frN;
+          @ accessible fpN;
           @ return_behavior requires false;
           @ exceptional_behavior requires false;
           @*/
-        \abstract_statement P;
+        \abstract_statement N;
     }
     
 }
@@ -81,12 +81,12 @@ public class X {
             <relevantTwo>-1</relevantTwo>
             <resultSortName>LocSet</resultSortName>
         </locationSet>
-        <locationSet funcName="frP">
+        <locationSet funcName="frN">
             <relevantOne>-1</relevantOne>
             <relevantTwo>-1</relevantTwo>
             <resultSortName>LocSet</resultSortName>
         </locationSet>
-        <locationSet funcName="fpP">
+        <locationSet funcName="fpN">
             <relevantOne>-1</relevantOne>
             <relevantTwo>-1</relevantTwo>
             <resultSortName>LocSet</resultSortName>

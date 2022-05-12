@@ -1,6 +1,6 @@
 /*@ ae_constraint
   @ \disjoint(x, frM) &&
-  @ \disjoint(x, frP);
+  @ \disjoint(x, frN);
   @*/
 ...
 ((X)x).n();
