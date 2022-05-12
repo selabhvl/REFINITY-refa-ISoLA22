@@ -63,7 +63,42 @@ p.setX(value);
 It remains to show that a) neither abstract statement overwrites \texttt{p}, that b) the histories of API operations called on either side match pairwise,
 and that c) in the post-condition the values in their respective components match.
 
-\vsnote*{}{After spelling this out, it looks like we should just start with Encapsulate Value or how it is called.}
+\vsnote*{}{After spelling this out, it looks like we should just start with \href{https://memberservices.informit.com/my_account/webedition/9780135425664/html/replaceprimitivewithobject.html}{``Replace Data Value with Object''}.}
+
+\subsection*{Replacing interface-based implementations}
+
+\begin{figure}
+  \begin{subfigure}[h]{.45\linewidth} 
+    \begin{lstlisting}[style=smallJava]
+IFace p; /* free global variable */
+assert p instanceof ImplLHS();
+\abstract_statement M
+    \end{lstlisting}
+    \caption{Before}
+    \label{lst:IFaceBefore}
+  \end{subfigure}\hspace{1cm}
+  \begin{subfigure}[h]{.45\linewidth}
+        \begin{lstlisting}[style=smallJava]
+assert p instanceof ImplRHS();
+\abstract_statement M
+    \end{lstlisting}
+    \caption{After}
+    \label{lst:iFaceAfter}
+  \end{subfigure}
+  \captionof{lstlisting}{Replace interface implementation}
+  \label{lst:refa-ibased}
+\end{figure}
+\vsnote{TODO: Find a better way to show global context like $p$ and class-diagram already here (like REFINITY's split views!}
+
+Changing implementations, i.e., replacing one class with another and the same interface,
+should face no technical issues: we can declare a free object variable of the corresponding type,
+and use in contrast to above \textit{identical abstract statements}.
+Furthermore, again due to the identical interfaces, we do not need separate cases for each operation in the interface,
+however, this relies on \textit{only} manipulating object \texttt{p} through the interface.
+Listing~\ref{lst:refa-ibased} illustrates the corresponding verification task for REFINITY.
+It remains to handle the relevant location set correctly, as nonetheless we are changing the object and hence have to restrict the types accordingly.
+\vsnote*{TODO: Ole/Eduard figure out postcondition?}{}
+
 
 \noindent\rule{\textwidth}{2pt}
 
