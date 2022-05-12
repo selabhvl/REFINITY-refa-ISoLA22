@@ -1,8 +1,8 @@
 public class Owner {
     private Resource resource;
     public Resource getResource() { 
-        /*@ assignable resource, frameG;
-          @ accessible footprintG;
+        /*@ assignable resource, frG;
+          @ accessible fpG;
           @ return_behavior requires false;
           @ exceptional_behavior requires false;
           @*/
