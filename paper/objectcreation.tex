@@ -32,6 +32,11 @@ The program is executed twice from the same state, but this does not suffice for
 In the following we make the assumption that this is indeed the case and use this information in the symbolic execution as follows.
 
 \begin{definition}
+We assume that in every state of the Kripke structure, for every heap $h$, all objects are ordered by some order $<_h$, such that there is some
+object $o_h$, such that (1) for all $o' < o$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true in the heap mapped from the unique \codein{heap} variable), and
+(2) for all $o \leq o''$ the object $o''$ is not allocated. 
+We introduce a unary function symbol \codein{allocate} with the signature $\mathtt{Heap} \rightarrow \mathtt{Object}$,
+whose interpretation must adher to $\mathcal{I}(\mathtt{allocate})(h) = o_h$.
 \eknote*{todo}{rule and allocate in general go here}
 \end{definition}
 
@@ -110,7 +115,7 @@ we do not have a way of proving the taclets correct (i.e.\ derive them as lemmas
 
 \paragraph*{Excursus: Dead Code Elimination}
 Similar considerations of equivalent heap manipulations need to be considered also in the are of optimizations, whose soundness proofs rely on relation verification as well.
-Take for example the program in Lst.~\ref{lst:xisnewxisnew}.\eknote*{@VS: please fix the example}{}
+Take for example the program in Lst.~\ref{lst:xisnewxisnew}.%\eknote*{@VS: please fix the example}{}
 \begin{figure}
   \centering
   \begin{subfigure}[b]{.2\linewidth}
