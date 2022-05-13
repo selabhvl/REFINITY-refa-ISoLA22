@@ -37,12 +37,13 @@ The specification facilities for either Java constructs or abstact program fragm
 We describe the refactoring to Refinity as shown with a left side (Before) in Listing~\ref{lst:ExtractVariable-refinity-before},
 a right side (After) in Listing~\ref{lst:ExtractVariable-refinity-after} and a method level context (Method) in Listing~\ref{lst:ExtractVariable-refinity-method}.
 
-Additionally some information is declared in parts of Refinity's interface that are not
-shown here: Free program variables, here \rcode{x}; abstract location sets, here \rcode{frN} and \rcode{fpN}; relevant locations for the before and after code, here empty;
-the desired precondition, here empty; the desired postcondition, here \rcode{\\result\_1 == \\result\_2}.
-The equation seen in the postcondition is simply a structural equality between two sequences \rcode{\\result\_1} and \rcode{\\result\_2} belonging to the before and after
-side respectively where the components correspond to the return value of the side (null if nothing), then any exceptions thrown and onwards any of the relevant locations for
-the respective  before or after side.
+Additionally some information is declared in parts of Refinity's interface that are not shown here:
+Free program variables, here \rcode{x}; abstract location sets, here \rcode{frN} and \rcode{fpN}; relevant locations for the before and after code, here empty;
+the desired precondition, here empty, and the desired postcondition.
+
+The pre- and postcondition are specified in terms of equations that may relate the effects of the before and after side such as return values, exceptions thrown and any
+of the relevant locations declared.
+In our case we simply specify the postcondition that \rcode{x} returned in Before must be identical to \rcode{temp} returned in After and that any exception thrown must be identical for the two sides.
 
 What can be seen in the first three lines of the Before and After sides is an \emph{abstract execution constraint} on \rcode{x}.
 Namely that \rcode{x} should be disjoint from the abstract location set \rcode{frN}.
@@ -83,8 +84,8 @@ We use an assertion to ensure we consider only the refactoring when \rcode{x} is
 \label{lst:ExtractVariable-refinity}
 \end{figure}
 
-Refinity manages to prove automatically that the postcondition \rcode{\\result\_1 == \\result\_2} holds after abstract execution of both side; here meaning that
-\rcode{x == temp} is the same reference and that any execptions thrown are identical.
+Refinity manages to prove automatically that the postcondition holds after abstract execution of both side; here meaning that
+\rcode{x} and \rcode{temp} hold the same reference and that any execptions thrown are identical.
 
 One can consider what we have managed to encode and prove a partial success.
 Indeed if we remove the constraint on \rcode{x} not being assigned to as a side-effect of executing \rcode{n()}  Refinity fails to prove our postcondition end up holding.
