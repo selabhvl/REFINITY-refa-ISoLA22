@@ -112,17 +112,19 @@ we do not have a way of proving the taclets correct (i.e.\ derive them as lemmas
 Similar considerations of equivalent heap manipulations need to be considered also in the are of optimizations, whose soundness proofs rely on relation verification as well.
 Take for example the program in Lst.~\ref{lst:xisnewxisnew}.
 \begin{figure}
-\centering
-\begin{minipage}{.2\linewidth}
-\begin{lstlisting}[style=refinity]
-C x;
-x = new C();
-x = new C();
-\end{lstlisting}
-\end{minipage}
+  \centering
+  \begin{subfigure}[b]{.2\linewidth}
+    \lstinputlisting[style=refinity]{DeadCode/Java/before.java}
+    \caption{Before}
+  \end{subfigure}\hspace{1cm}
+  \begin{subfigure}[b]{.2\linewidth}
+    \lstinputlisting[style=refinity]{DeadCode/Java/after.java}
+    \caption{After}
+  \end{subfigure}
 \captionof{lstlisting}{Dead Object}
 \label{lst:xisnewxisnew}
 \end{figure}
+
 Again, we assume that the constructor of \codein{C} has no side-effects (except object creation) upon constructor invocation.
 In this case, the first object creation is of no consequence.
 The additional rules above however will not yet be sufficient to prove that this version is equivalent to the version without the redundant object creation and assignment.
