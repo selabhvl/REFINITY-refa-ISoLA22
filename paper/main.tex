@@ -65,19 +65,28 @@ need to be overcome for full round-trip correctness of refactorings in object-or
 \input{intro}
 
 \section{Preliminaries: Abstract Execution}
+\begin{itemize}
+\item \vsnote*{}{Ole}
+\item difference SE/AE
+\item AE constructs (statements, expression, blocks, constraints)
+\item short subsection on how R. works (lhs/rhs setup, generating PO
+  for KeY, KeY proves mostly automatic).
+\end{itemize}
 
-\section{Object creation}\label{sec:objectcreation}
+\section{Challenges}\label{sec:challenges}
+\subsection{Object creation}\label{sec:objectcreation}
 \input{objectcreation}
 
-\section{Trace properties}
+\subsection{Trace properties}
 \input{traces}
 
-\section{Relational invariants}
+\subsection{Relational invariants}
 \input{relational}
 
-\section{Discussion}
-\input{limits}
-\input{fitting}
+\section{Discussion}\label{sec:discussion}
+\begin{itemize}
+\item Challenge: capturing the most general instance of a pattern (example: Extract Local Variable, with the duplicate call to \texttt{n()}).
+\end{itemize}
 
 \section{Related Work}
 \input{related}
@@ -94,6 +103,10 @@ need to be overcome for full round-trip correctness of refactorings in object-or
 
 %\input{conclusion}
 
+\section{Leftovers}
+\textit{Use if space/time/useful.}
+\subsection{Remove assignment to parameter}
+\input{limits/remove_assignment_to_parameter}
 
 \bibliographystyle{splncs04}
 \bibliography{refs}

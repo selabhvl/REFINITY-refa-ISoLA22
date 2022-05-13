@@ -4,11 +4,18 @@ Recent advances from symbolic to abstract executions have enabled reasoning abou
 This has proven fruitful in the exploration of correctness of refactorings primarily related to code blocks in Java.
 In this paper we explore further types of equivalent transformations and refactorings and discuss the challenges that still need to be overcome for full round-trip correctness of refactorings in object-oriented languages.
 
-This paper is structured as follows: we first provide an overview on abstract executions, the main vehicle for correctness- and equivalence proofs.
-Next we discuss issues related to formally correct and constructive handling of object creation to be able to express useful notions of equivalence in Section \ref{sec:objectcreation}.
+\vsnote*{}{TODO: Eduard}
 
-Section \ref{sec:trace} moves away from only heap-related equivalence and discusses tracking equivalent observable behaviour in a relational framework.
-The final challenge are relational invariants that we discuss in Section \ref{sec:relinv} which are required to track equivalent, yet structurally different representation of data structures.
+This paper is structured as follows: we first provide an overview on abstract executions, the main vehicle for correctness- and equivalence proofs, and their use in REFINITY.
+Next, we provide an encoding of the Hide Delegating refactoring for REFINITY that moves away from statement-based refactorings to object-oriented refactorings in Section \ref{sec:hideDelegate}.
+After that in Section \ref{sec:challenges}, we explore (and address, where possible) \vsnote*{Not really limitations...better word?}{limitations} in REFINITY that we have discovered by investigating further refactorings.
+Our main goal is to extend the notion of \textit{equal} programs to \textit{equivalent} programs, e.g. by replacing data types.
+\vsnote{Mention possible application to optimizations already in intro? Probably.}
+We conclude with a discussion in Section \ref{sec:discussion} on the feasibility of necessary developments \vsnote*{esp. if we want to use histories in subsequent proofs.}{and their dependencies}.
+% VS: This will then be included in the section above:
+% Next we discuss issues related to formally correct and constructive handling of object creation to be able to express useful notions of equivalence in Section \ref{sec:objectcreation}.
+% Section \ref{sec:trace} moves away from only heap-related equivalence and discusses tracking equivalent observable behaviour in a relational framework.
+% The final challenge are relational invariants that we discuss in Section \ref{sec:relinv} which are required to track equivalent, yet structurally different representation of data types.
 
 %%% Local Variables:
 %%% mode: latex

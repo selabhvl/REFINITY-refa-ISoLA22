@@ -1,9 +1,14 @@
-\subsection{Hide Delegate - without fields}
+\section{Encoding the Hide Delegate refactoring}\label{sec:hideDelegate}
 
 The Hide Delegate refactoring can be described as an Extract Method refactoring on a call chain such as \lstinline[style=smallJava]|Y y = o.f().g()|
 the call chain is extracted to a method on \lstinline[style=smallJava]|o| such that we can replace the chain with \lstinline[style=smallJava]|o.h()|
-where \lstinline[style=smallJava]|h()| now has a body of \lstinline[style=smallJava]|Y h(){ return this.f().g(); }|. The refactoring can enable less
+where \lstinline[style=smallJava]|h()| now has a body of \lstinline[style=smallJava]|Y h(){ return this.f().g(); }|.
+The refactoring can enable less
 coupling as the class that contained the call chain afterwards does not need to know of the type returned by \lstinline[style=smallJava]|f()|.
+\vsnote{Q: Generalize to \lstinline{o = AE; z = o.g(); return z;} ?}
+\vsnote{Three things on the nature of encoding things in R.: i) this is an example that R. is bad at \textit{names}: we need concrete names \texttt{f/g} (with concrete parameters), but want placeholders. ii) we don't really remove/replace anything, since we need all the code that we want to use in the same class, i.e., the ``new'' method \lstinline{hideDelegate()} was already present before -- but that's okay because it's obviously correct to introduce methods that are not called -- another example of syntactical requirements on encodings in R. iii) This is the example for our abuse of R.\ for OO-based refactorings.}
+
+\vsnote*{}{Full example with all annotations, AE constraints etc. explained here.}
 
 \begin{figure}
   \centering
@@ -33,7 +38,7 @@ coupling as the class that contained the call chain afterwards does not need to 
 \label{lst:HideDelegate-refinity}
 \end{figure}
 
-\subsection{Hide Delegate - with fields}
+\subsection*{Hide Delegate --- once more with fields}
 
 Similarily a minor variation of the  Hide Delegate refactoring also applies to a call chain which assigns to temporaries or fields
 e.g. \lstinline[style=smallJava]|x = o.f(); Y y = x.g()|. Here we must beware that in our replacement we may observe a difference
@@ -43,3 +48,8 @@ the refactoring \lstinline[style=smallJava]|Y y = h();|
 
 
 %TODO this is not yet done
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End:
