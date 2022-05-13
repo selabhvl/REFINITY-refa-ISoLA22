@@ -1,17 +1,15 @@
-\newcommand\mcall[1]{\lstinline[style=smallJava]|#1|}
+\newcommand\jcode[1]{\lstinline[style=smallJava]|#1|}
+\newcommand\rcode[1]{\lstinline[style=refinity]|#1|}
+\newcommand\jmcode[1]{\lstinline[mathescape=true,style=smallJava]|#1|}
+\newcommand\rmcode[1]{\lstinline[mathescape=true,style=refinity]|#1|}
 
-Let us consider the Extract Local Variable refactoring seen in Listing~\ref{lst:ExtractVariable-java} which has had dynamic detection of
-possible behavioural preservation violations considered in prior work by Eilertsen et al.~\cite{stolz:isolarefa}.
+Let us consider the Extract Local Variable refactoring seen in Listing~\ref{lst:ExtractVariable-java}.
 The example is an instance of a more general case, where preserving the behaviour of the program depends on other parts of the code.
-The behaviour of the program changes if the method call \mcall{n()} has access to the attribute \mcall{x} and overwrites it.
-% VS: trimmed a bit convoluted explanation here.
-% Suppose \lstinline[style=smallJava]|n()| % TODO: use macro, waaaay too long!!!
-% changes the reference \lstinline[style=smallJava]|x| holds and let us rewrite the
-%We use the second method call to \mcall{n()} to show unique object identities,
-Before we would have \vsnote*{}{calls to} \lstinline[mathescape=true,style=smallJava]|o$_1$.n()| and then
-\lstinline[mathescape=true,style=smallJava]|o$_2$.n()| whereas after applying \vsnote*{}{the refactoring} we would have \lstinline[mathescape=true,style=smallJava]|o$_1$.n()|
-\vsnote*{}{followed by} \lstinline[mathescape=true,style=smallJava]|o$_1$.n()|; in this case if e.g. \lstinline[mathescape=true,style=smallJava]|n()|
-simply prints \lstinline[mathescape=true,style=smallJava]|this.toString()| we will observe a difference in the two programs.
+The behaviour of the program changes if the method call \jcode{n()} has access to the attribute \jcode{x} and overwrites it.
+
+Before we would have calls to \jmcode{o$_1$.n()} and then \jmcode{o$_2$.n()} whereas after applying the refactoring we would
+have \jmcode{o$_1$.n()} followed by \jmcode{o$_1$.n()}. In this case if e.g. \jcode{n()} simply prints \jcode{this.toString()} we will
+observe a difference in the two programs.
 
 \begin{figure}[!h]
   \centering
@@ -27,53 +25,72 @@ simply prints \lstinline[mathescape=true,style=smallJava]|this.toString()| we wi
 \label{lst:ExtractVariable-java}
 \end{figure}
 
-The dynamic check for such a change detailed in other work~\ref{stolz:isolarefa} codified the necessity that the reference \lstinline[style=smallJava]|x|
-remains unchanged through the introduction of an assertion \lstinline[style=smallJava]|assert temp == x;| to uncover violations after the fact,
-which is useful e.g.\ when checking the refactored code against its suite of unit tests.
+The dynamic check for such a change detailed in other work~\ref{stolz:isolarefa} codified the necessity that the reference \jcode{x}
+remains unchanged through the introduction of an assertion \jcode{assert temp == x;} to uncover violations after the fact,
+which is useful e.g. when checking the refactored code against its suite of unit tests.
 
 In Refinity one proceeds to verify a refactoring as correct by supplying the code before and after refactoring and supplying a desired precondition and postcondition to relate
 the two programs. One essentially asks Refinity: Given these preconditions does the postcondition hold after abstract execution of these two programs? Refinity accepts a restricted
-subset of Java, the same restriction present in KeY, with extensions for abstract program fragments; pieces that are ``placeholders'' for concrete Java code.
+subset of Java, the same restrictions present in KeY, with extensions for abstract program fragments; pieces that are ``placeholders'' for concrete Java code.
 The specification facilities for either Java constructs or abstact program fragments are described in the Java Modelling Language (JML) with some extensions.
 
-While not shown here we state through Refinity's interface that there exists a free program variable \lstinline[style=refinity]|x| and in the first three lines we describe
-an \emph{abstract execution constraint} on \lstinline[style=refinity]|x|; namely that \lstinline[style=refinity]|x| should be disjoint from the abstract location set \lstinline[style=refinity]|frN|.
-An abstract location set represents a fixed set of memory locations a program may read or write to. The set is fixed through a program's duration but the values at these locations may change.
-The abstract location sets are declared to exist as desired through Refinity's interface and then specified as assignable or accessible as seen in lis.~\ref{lst:ExtractVariable-refinity}.
-When a location set is placed in an assignable or accessible specification it is to be understood as an upper bound; the locations may possibly all be accessed or assigned to, not at all or
-anything inbetween. While inspecting the method \lstinline[style=refinity]|n()| you will discover an \emph{Abstract Statement} (AS) \lstinline[style=refinity]|\abstract\_statement S;|
-immediately trailing the assignable and accessible specification for it.
+We describe the refactoring to Refinity as shown with a left side (Before) in Listing~\ref{lst:ExtractVariable-refinity-before},
+a right side (After) in Listing~\ref{lst:ExtractVariable-refinity-after} and a method level context (Method) in Listing~\ref{lst:ExtractVariable-refinity-method}.
 
-We explicitly constrain \lstinline[style=refinity]|n()| and such that it may not assign to \lstinline[style=refinity]|x|; this is done through the abstract execution constraint specification \lstinline[style=refinity]|\disjoint(x,frN)|
-where \lstinline[style=refinity]|frN| specifies the location set \lstinline[style=refinity]|n()| may assign to. We use an assertion to ensure we consider only the refactoring
-when \lstinline[style=refinity]|x| is an instance of its intended type. The postcondition we ask that Refinity verify is that the returned references of the before and after
-sides are identical and that any exceptions if thrown are identical.
+Additionally some information is declared in parts of Refinity's interface that are not
+shown here: Free program variables, here \rcode{x}; abstract location sets, here \rcode{frN} and \rcode{fpN}; relevant locations for the before and after code, here empty;
+the desired precondition, here empty; the desired postcondition, here \rcode{\\result\_1 == \\result\_2}.
+The equation seen in the postcondition is simply a structural equality between two sequences \rcode{\\result\_1} and \rcode{\\result\_2} belonging to the before and after
+side respectively where the components correspond to the return value of the side (null if nothing), then any exceptions thrown and onwards any of the relevant locations for
+the respective  before or after side.
+
+What can be seen in the first three lines of the Before and After sides is an \emph{abstract execution constraint} on \rcode{x}.
+Namely that \rcode{x} should be disjoint from the abstract location set \rcode{frN}.
+
+An abstract location set represents a fixed set of memory locations a program may read or write to. The set is fixed through a program's duration but the values at these locations may change.
+Abstract location sets can be specified as assignable or accessible at various program locations as seen in Listing~\ref{lst:ExtractVariable-refinity-method}.
+When a location set is placed in an assignable or accessible specification it is to be understood as an upper bound; the locations may possibly all be accessed or assigned to, not at all or
+anything inbetween.
+
+While inspecting the method \rcode{n()} you will discover an \emph{Abstract Statement} (AS) \rcode{\\abstract\_statement S;} immediately trailing the assignable and accessible specification for it.
+This reprecent a ``placeholder'' for any statement that adheres to the specification given for it, here we only specified that whatever statement that executes there \emph{could} assign to the abstract
+location set \rcode{frN} and \emph{could} access \rcode{fpN}.
+
+What we have done by specifying the \emph{abstract execution constraint}, the first three lines in Before and After, is to place an additional restriction on the assignable abstract
+location set \rcode{frN} of the AS present in \recode{n()} stating that \rcode{x} is not an element of \rcode{frN}. As such \recode{n()} should not be able to alter the value (a reference)
+\recode{x} holds.
+
+We use an assertion to ensure we consider only the refactoring when \rcode{x} is an instance of its intended type.
+
 \begin{figure}[!h]
   \centering
   \begin{subfigure}[b]{.34\linewidth}
     \lstinputlisting[style=refinity]{ExtractVariable/REFINITY/before.refinity}
     \caption{Before}
+    \label{lst:ExtractVariable-refinity-before}
   \end{subfigure}\hspace{1cm}
   \begin{subfigure}[b]{.34\linewidth}
     \lstinputlisting[style=refinity]{ExtractVariable/REFINITY/after.refinity}
     \caption{After}
+    \label{lst:ExtractVariable-refinity-after}
   \end{subfigure}\vspace{1mm}
-  \begin{subfigure}[b]{.39\linewidth}
+  \begin{subfigure}[b]{.65\linewidth}
     \lstinputlisting[style=refinity]{ExtractVariable/REFINITY/method.refinity}
     \caption{Method}
+    \label{lst:ExtractVariable-refinity-method}
   \end{subfigure}
 \captionof{lstlisting}{Extract Local Variable}
 \label{lst:ExtractVariable-refinity}
 \end{figure}
 
+Refinity manages to prove automatically that the postcondition \rcode{\\result\_1 == \\result\_2} holds after abstract execution of both side; here meaning that
+\rcode{x == temp} is the same reference and that any execptions thrown are identical.
 
-
-
-One can consider Refinity the encoding we have managed to perform and prove in lis.~\ref{lst:ExtractVariable-refinity} a partial success. Indeed if the constraints on
-\lstinline[style=refinity]|x| not being assigned to by \lstinline[style=refinity]|n()| is removed Refinity fails to prove that the return values are always identical.
-Yet this is a slightly unnatural encoding if we are to consider concrete instantiations of what we have here expressed. We do not really intend to encode that return
-statements must occur at the end as shown, but that from that point onwards the reference \lstinline[style=refinity]|x| and \lstinline[style=refinity]|temp| hold
-are identical. Thus we manage to encode our desired postcondition, but not capture the desired concrete instantiation with our fragment.
+One can consider what we have managed to encode and prove a partial success.
+Indeed if we remove the constraint on \rcode{x} not being assigned to as a side-effect of executing \rcode{n()}  Refinity fails to prove our postcondition end up holding.
+Yet this is a slightly unnatural encoding if we are to consider concrete instantiations of what we have expressed here.
+We do not really intend to encode that return statements must occur at the end as shown, but that from that point onwards the reference \rcode{x} and \rcode{temp} hold
+are identical. Thus we manage to encode our desired postcondition, but not capture the desired concrete instantiation with our fragments.
 
 %%% Local Variables:
 %%% mode: latex
