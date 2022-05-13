@@ -7,6 +7,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
 \usepackage{color}
+\usepackage[normalem]{ulem}
 \usepackage{listings}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -68,16 +69,24 @@ need to be overcome for full round-trip correctness of refactorings in object-or
 \input{intro}
 
 \section{Preliminaries: Abstract Execution}\label{sec:prelim}
-\begin{itemize}
-\item \vsnote*{}{Ole}
-\item difference SE/AE
-\item AE constructs (statements, expression, blocks, constraints)
-\item short subsection on how R. works (lhs/rhs setup, generating PO
-  for KeY, KeY proves mostly automatic).
-\end{itemize}
+\input{preliminaries}
+
 \input{fitting/extract_variable}
 
 \section{Challenges}\label{sec:challenges}
+In this section we explore the possibilities of \Refinity{} beyond the original work.
+In particular, we are interested in moving away from statement-based refactorings to more complex changes that also affect the structure of the code.
+The first new refactoring, Hide Delegate, harnesses Java inner classes to express the desired behaviour of \Refinity{} in a straight-forward manner
+and KeY automatically completes the proof once the right preconditions are identified.
+
+After that, we present a refactoring that is related to Dead Code Elimination.
+This requires introduction of additional constructs for object-construction within KeY,
+which are then harnessed in tactlets that express that certain non-identical heaps guarantee equivalent behaviour.
+
+We continue our wishlist for further flexibility in expressing equivalent program behaviour based on the execution history of user-defined observable actions,
+and finally discuss challenges related to expressing equivalence in the face of different data types.
+
+\input{fitting/hide_delegate}
 \subsection{Object creation}\label{sec:objectcreation}
 \input{objectcreation}
 
@@ -121,5 +130,6 @@ need to be overcome for full round-trip correctness of refactorings in object-or
 
 %%% Local Variables:
 %%% mode: latex
+%%% eval: (auto-fill-mode -1)
 %%% TeX-master: t
 %%% End:

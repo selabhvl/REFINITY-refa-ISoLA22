@@ -20,7 +20,7 @@ and specify properties using the surrounding logic, in our case, JavaDL. This ap
 However, first-order specifications of temporal properties have been proven to be unweildly, large and hard to understand. 
 This places even more burden on the developer, as they have to make sure that their chosen encoding of events in the data structure captures the salient part of equivalence.
 %Clearly, this data structure is sensitive to order and any object identities very much in the same way as is the syntactic representation of heap manipulations.
-\eknote*{don't understand}{This explicit encoding of user-defined execution histories has the advantage that it is not only useful for proofs, but can also directly be harnessed in concrete unit-tests.}
+\vsnote*{Clarified, I hope.}{This explicit encoding of user-defined execution histories has the advantage that it is not only useful for proofs, but can also directly be harnessed in concrete unit-tests where we can explicitly compare the recorded history of an earlier execution of a test with the history of the same test but on the refactored codebase.}
 This led to the development of other dynamic logics which interact with novel trace specifications, such as BPL~\cite{DBLP:conf/tableaux/Kamburjan19} and symbolic traces~\cite{DBLP:conf/tableaux/BubelDHN15}. %, as well as the
 %integration of other, more standard trace specification into dynamic logic, such as LTL~\cite{beckert} or session types~\cite{ifm}.
 For none of these approaches, abstract statements have been investigated. %it is clear how abstract statement can be specified.
@@ -45,5 +45,6 @@ Let us illustrate some challenges using a simplified version of local Session Ty
 
 %%% Local Variables:
 %%% mode: latex
+%%% eval: (auto-fill-mode -1)
 %%% TeX-master: "main"
 %%% End:
