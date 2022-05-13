@@ -1,5 +1,4 @@
-Let us consider the Extract Local Variable refactoring seen in lis.~\ref{lst:ExtractVariable-java} which has had dynamic detection of
-possible behavioral preservation violations considered in prior work by Eilertsen et al.~\cite{stolz:isolarefa}. Suppose \lstinline[style=smallJava]|n()|
+Let us consider the Extract Local Variable refactoring seen in lis.~\ref{lst:ExtractVariable-java}. Suppose \lstinline[style=smallJava]|n()|
 changes the reference \lstinline[style=smallJava]|x| holds and let us rewrite the method calls of \lstinline[style=smallJava]|n()| to show unique
 object identities explicitly; before we would have \lstinline[mathescape=true,style=smallJava]|o$_1$.n()| and then
 \lstinline[mathescape=true,style=smallJava]|o$_2$.n()| whereas after we would have \lstinline[mathescape=true,style=smallJava]|o$_1$.n()|
@@ -20,14 +19,26 @@ simply prints \lstinline[mathescape=true,style=smallJava]|this.toString()| we wi
 \label{lst:ExtractVariable-java}
 \end{figure}
 
-The dynamic check for such a change detailed in other work~\ref{stolz:isolarefa} codified the neccessity that the reference \lstinline[style=smallJava]|x|
-holds remain unchanged by the introduction of an assertion \lstinline[style=smallJava]|asssert temp == x;| to uncover violations.
+The dynamic check for such a change detailed in prior work by Eilertsen et al.~\ref{stolz:isolarefa} codified the neccessity that the reference \lstinline[style=smallJava]|x|
+holds remain unchanged by the introduction of an assertion \lstinline[style=smallJava]|asssert temp == x;| to signal possible behavioral preservation violations.
 
-In Refinity we encode this condition as seen in lis.~\ref{lst:ExtractVariable-refinity} where we explicitly constrain \lstinline[style=refinity]|n()| and
-such that it may not assign to \lstinline[style=refinity]|x|; this is done through the abstract execution constraint specification \lstinline[style=refinity]|\disjoint(x,frN)|
+In Refinity one proceeds to verify a refactoring as correct by supplying the code before and after refactoring and supplying a desired precondition and postcondition to relate
+the two programs. One essentially asks Refinity: Given these preconditions does the postcondition hold after abstract execution of these two programs? Refinity accepts a restricted
+subset of Java, the same restriction present in KeY, with extensions for abstract program fragments; pieces that are ``placeholders'' for concrete Java code.
+The specification facilities for either Java constructs or abstact program fragments are described in the Java Modelling Language (JML) with some extensions.
+
+While not shown here we state through Refinity's interface that there exists a free program variable \lstinline[style=refinity]|x| and in the first three lines we describe
+an \emph{abstract execution constraint} on \lstinline[style=refinity]|x|; namely that \lstinline[style=refinity]|x| should be disjoint from the abstract location set \lstinline[style=refinity]|frN|.
+An abstract location set represents a fixed set of memory locations a program may read or write to. The set is fixed through a program's duration but the values at these locations may change.
+The abstract location sets are declared to exist as desired through Refinity's interface and then specified as assignable or accessible as seen in lis.~\ref{lst:ExtractVariable-refinity}.
+When a location set is placed in an assignable or accessible specification it is to be understood as an upper bound; the locations may possibly all be accessed or assigned to, not at all or
+anything inbetween. While inspecting the method \lstinline[style=refinity]|n()| you will discover an \emph{Abstract Statement} (AS) \lstinline[style=refinity]|\abstract\_statement S;|
+immediately trailing the assignable and accessible specification for it.
+
+and in . We explicitly constrain \lstinline[style=refinity]|n()| and such that it may not assign to \lstinline[style=refinity]|x|; this is done through the abstract execution constraint specification \lstinline[style=refinity]|\disjoint(x,frN)|
 where \lstinline[style=refinity]|frN| specifies the location set \lstinline[style=refinity]|n()| may assign to. We use an assertion to ensure we consider only the refactoring
-when \lstinline[style=refinity]|x| is an instance of its intended type. The  postcondition we ask that Refinity
-verify is that the returned references of the before and after sides are identical, that excep.
+when \lstinline[style=refinity]|x| is an instance of its intended type. The postcondition we ask that Refinity verify is that the returned references of the before and after
+sides are identical and that any exceptions if thrown are identical.
 \begin{figure}[!h]
   \centering
   \begin{subfigure}[b]{.34\linewidth}
@@ -45,6 +56,10 @@ verify is that the returned references of the before and after sides are identic
 \captionof{lstlisting}{Extract Local Variable}
 \label{lst:ExtractVariable-refinity}
 \end{figure}
+
+
+
+
 One can consider Refinity the encoding we have managed to perform and prove in lis.~\ref{lst:ExtractVariable-refinity} a partial success. Indeed if the constraints on
 \lstinline[style=refinity]|x| not being assigned to by \lstinline[style=refinity]|n()| is removed Refinity fails to prove that the return values are always identical.
 Yet this is a slightly unnatural encoding if we are to consider concrete instatiations of what we have here expressed. We do not really intend to encode that return
