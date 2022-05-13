@@ -7,6 +7,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
 \usepackage{color}
+\usepackage[normalem]{ulem}
 \usepackage{listings}
 \input{listingssetup}
 \usepackage{graphicx}
@@ -75,6 +76,8 @@ need to be overcome for full round-trip correctness of refactorings in object-or
 \input{fitting/extract_variable}
 
 \section{Challenges}\label{sec:challenges}
+\subsection{Statement- vs. class-based refactorings}\label{sec:hideDelegate}
+\input{fitting/hide_delegate}
 \subsection{Object creation}\label{sec:objectcreation}
 \input{objectcreation}
 
@@ -116,5 +119,6 @@ need to be overcome for full round-trip correctness of refactorings in object-or
 
 %%% Local Variables:
 %%% mode: latex
+%%% eval: (auto-fill-mode -1)
 %%% TeX-master: t
 %%% End:
