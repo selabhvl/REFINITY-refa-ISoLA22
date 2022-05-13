@@ -8,8 +8,11 @@
 \usepackage{hyperref}
 \usepackage{color}
 \usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
 \input{listingssetup}
 \usepackage{graphicx}
+\usepackage{bussproofs}
 \usepackage{subcaption}
 \usepackage{xcolor}
 \captionsetup{compatibility=false}
@@ -64,7 +67,7 @@ need to be overcome for full round-trip correctness of refactorings in object-or
 \section{Introduction}
 \input{intro}
 
-\section{Preliminaries: Abstract Execution}
+\section{Preliminaries: Abstract Execution}\label{sec:prelim}
 \begin{itemize}
 \item \vsnote*{}{Ole}
 \item difference SE/AE
@@ -84,12 +87,14 @@ need to be overcome for full round-trip correctness of refactorings in object-or
 \subsection{Relational invariants}
 \input{relational}
 
+\section{Hide Delegate}\label{sec:hide}
+
 \section{Discussion}\label{sec:discussion}
 \begin{itemize}
 \item Challenge: capturing the most general instance of a pattern (example: Extract Local Variable, with the duplicate call to \texttt{n()}).
 \end{itemize}
 
-\section{Related Work}
+\section{Related Work}\label{sec:related}
 \input{related}
 
 \begin{itemize}
@@ -100,7 +105,7 @@ need to be overcome for full round-trip correctness of refactorings in object-or
 \item also: correctness with respect to OO features
 \end{itemize}
 
-\section{Conclusion}
+\section{Conclusion}\label{sec:conclusion}
 
 %\input{conclusion}
 

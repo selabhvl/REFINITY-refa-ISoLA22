@@ -1,17 +1,53 @@
 
-Relational verification through dynamic logic is a promising approach for verification of object oriented programs.
-Recent advances from symbolic to abstract executions have enabled reasoning about incomplete/abstract versions of such programs.
-This has proven fruitful in the exploration of correctness of refactorings primarily related to code blocks in Java.
-In this paper we explore further types of equivalent transformations and refactorings and discuss the challenges that still need to be overcome for full round-trip correctness of refactorings in object-oriented languages.
+Relational verification through dynamic logic is a promising approach for verification of refactorings in object oriented programs.
+Recent advances from symbolic to Abstract Execution (AE)~\cite{DBLP:conf/fm/SteinhofelH19} have enabled reasoning about incomplete/abstract versions of such programs.
+This has proven fruitful in the exploration of correctness of refactorings primarily related to code blocks in Java:
+%In this paper we explore further types of equivalent transformations and refactorings and discuss the challenges that still need to be overcome for full round-trip correctness of refactorings in object-oriented languages.
+%
+AE introduces abstract statements (and expressions), which act as named and specified placeholders for some statement of the host language.
+A refactoring proof is a relational verification (RV) proof that compares two programs, which have the \emph{same} abstract statements. One of the programs represents the schema of the code before the refactoring, and the other one the code afterwards, with respect to some relational post-condition that defines the notion of \emph{program equivalence}.
 
-\vsnote*{}{TODO: Eduard}
+\paragraph{Beyond Statement-Based Refactorings.}
+Abstract statements have been used to verify the correctness of refactorings that are based on moving code within a method and on extracting some statements into an own method (the \texttt{Extract Method} refactoring). 
+\eknote*{@VS please extend and provide a reference.}{However, refactorings a rarely confined into single methods~\cite{???}, but also require to restructure classes and data structures.}
 
-This paper is structured as follows: we first provide an overview on abstract executions, the main vehicle for correctness- and equivalence proofs, and their use in REFINITY.
-Next, we provide an encoding of the Hide Delegating refactoring for REFINITY that moves away from statement-based refactorings to object-oriented refactorings in Section \ref{sec:hideDelegate}.
-After that in Section \ref{sec:challenges}, we explore (and address, where possible) \vsnote*{Not really limitations...better word?}{limitations} in REFINITY that we have discovered by investigating further refactorings.
-Our main goal is to extend the notion of \textit{equal} programs to \textit{equivalent} programs, e.g. by replacing data types.
-\vsnote{Mention possible application to optimizations already in intro? Probably.}
-We conclude with a discussion in Section \ref{sec:discussion} on the feasibility of necessary developments \vsnote*{esp. if we want to use histories in subsequent proofs.}{and their dependencies}.
+
+Here, we investigate more complex refactorings that combine code movement beyond multiple methods. 
+\eknote*{@VS please extend }{For one, we investigate the \texttt{Hide Delegate} refactoring.}
+
+
+\paragraph{Challenges.}
+More complex refactorings need more elaborate specification and verification techniques for RV. 
+The reason is that the programs surrounding the abstract statements, as well as the notion of equivalence becomes more involved.
+For example, if the surrounding programs throw exceptions, under which conditions are the exceptions considered equivalent? 
+As the exceptions are just objects, there are possible choices when newly created objects are considered equal in RV using dynamic logic, 
+first investigated by Becker et al.~\cite{DBLP:conf/lopstr/BeckertBKSSU13}.
+
+
+
+For exceptions and object creations, we describe several possibilities when newly created objects (resp.\ thrown exceptions) are considered equal
+and how this information can be used in dynamic logic proofs. The different possibilities are implemented as different rule sets and must not be encoded
+in the relational post-condition. This reduces the size of the required specification, a notorious bottleneck in formal verification~\cite{DBLP:journals/corr/abs-1211-6186,DBLP:series/lncs/HahnleH19}.
+
+
+Furthermore, we discuss the necessary extensions needed to prove the equivalence where one data strucute is replaced by another, e.g., an array by a special record.
+Here, the main challenge lies in the encoding that the structures are used correctly \emph{throughout} the execution. This could, for example, be handled by coupled invariants~\cite{DBLP:conf/birthday/BeckertU18}, whose connection to AE is unclear. 
+Lastly, we discuss the connection of AE to more novel specification approaches for \emph{traces} which aim to simplify the specification of temporal properties for expressive properties, but whose use for RV is unexplored.
+
+\paragraph{Contributions and Structure.}
+Our contributions are (1) a proof of the correctness of the hide-delegate refactoring, that uses a refactoring beyond the move of code within a method, highlights the interaction of AE with general RV challenges, as well as (2) a discussion of possible extensions that would be required for the use of abstract execution for further refactorings.
+
+%This paper is structured as follows. 
+We first describe AE and RV using the \texttt{Extract Local Variable} refactoring in Sec.~\ref{sec:prelim}, before we discuss the challenges for AE in Sec.~\ref{sec:challenges}. Sec.~\ref{sec:hide} describes and proves the \texttt{Hide Delegate} refactoring(s). Sec.~\ref{sec:discussion} discusses our results and Sec.~\ref{sec:related} gives the related work. Lastly, Sec.~\ref{sec:conclusion} concludes.
+
+
+
+%This paper is structured as follows: we first provide an overview on abstract executions, the main vehicle for correctness- and equivalence proofs, and their use in REFINITY.
+%Next, we provide an encoding of the Hide Delegating refactoring for REFINITY that moves away from statement-based refactorings to object-oriented refactorings in Section \ref{sec:hideDelegate}.
+%After that in Section \ref{sec:challenges}, we explore (and address, where possible) \vsnote*{Not really limitations...better word?}{limitations} in REFINITY that we have discovered by investigating further refactorings.
+%Our main goal is to extend the notion of \textit{equal} programs to \textit{equivalent} programs, e.g. by replacing data types.
+%\vsnote{Mention possible application to optimizations already in intro? Probably.}
+%We conclude with a discussion in Section \ref{sec:discussion} on the feasibility of necessary developments \vsnote*{esp. if we want to use histories in subsequent proofs.}{and their dependencies}.
 % VS: This will then be included in the section above:
 % Next we discuss issues related to formally correct and constructive handling of object creation to be able to express useful notions of equivalence in Section \ref{sec:objectcreation}.
 % Section \ref{sec:trace} moves away from only heap-related equivalence and discusses tracking equivalent observable behaviour in a relational framework.
