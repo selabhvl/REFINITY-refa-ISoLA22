@@ -1,4 +1,4 @@
-\section{Encoding the Hide Delegate refactoring}\label{sec:hideDelegate}
+\subsection{Encoding the Hide Delegate refactoring}\label{sec:hideDelegate}
 
 The Hide Delegate refactoring can be described as an Extract Method refactoring on a call chain such as \lstinline[style=smallJava]|Y y = o.f().g()|
 the call chain is extracted to a method on \lstinline[style=smallJava]|o| such that we can replace the chain with \lstinline[style=smallJava]|o.h()|
@@ -51,5 +51,6 @@ the refactoring \lstinline[style=smallJava]|Y y = h();|
 
 %%% Local Variables:
 %%% mode: latex
+%%% eval: (auto-fill-mode -1)
 %%% TeX-master: "../main"
 %%% End:
