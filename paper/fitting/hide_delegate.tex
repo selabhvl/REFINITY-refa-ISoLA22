@@ -1,9 +1,9 @@
-The Hide Delegate refactoring can be described as an Extract Method refactoring on a call chain of \lstinline[style=smallJava]|Y y = o.f().g()| where
+\subsection{Hide Delegate - without fields}
+
+The Hide Delegate refactoring can be described as an Extract Method refactoring on a call chain such as \lstinline[style=smallJava]|Y y = o.f().g()|
 the call chain is extracted to a method on \lstinline[style=smallJava]|o| such that we can replace the chain with \lstinline[style=smallJava]|o.h()|
 where \lstinline[style=smallJava]|h()| now has a body of \lstinline[style=smallJava]|Y h(){ return this.f().g(); }|. The refactoring can enable less
 coupling as the class that contained the call chain afterwards does not need to know of the type returned by \lstinline[style=smallJava]|f()|.
-
-\subsection{Hide Delegate - without fields}
 
 \begin{figure}
   \centering
@@ -33,11 +33,13 @@ coupling as the class that contained the call chain afterwards does not need to 
 \label{lst:HideDelegate-refinity}
 \end{figure}
 
+\subsection{Hide Delegate - with fields}
+
 Similarily a minor variation of the  Hide Delegate refactoring also applies to a call chain which assigns to temporaries or fields
 e.g. \lstinline[style=smallJava]|x = o.f(); Y y = x.g()|. Here we must beware that in our replacement we may observe a difference
 if \lstinline[style=smallJava]|g()| can leave \lstinline[style=smallJava]|x| in an altered state which is then eliminated by applying
 the refactoring \lstinline[style=smallJava]|Y y = h();|
 
-\subsection{Hide Delegate - with fields}
+
 
 %TODO this is not yet done
