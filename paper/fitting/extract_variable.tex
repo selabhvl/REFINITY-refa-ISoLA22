@@ -25,8 +25,8 @@ holds remain unchanged by the introduction of an assertion \lstinline[style=smal
 
 In Refinity we encode this condition as seen in lis.~\ref{lst:ExtractVariable-refinity} where we explicitly constrain \lstinline[style=refinity]|n()| and
 such that it may not assign to \lstinline[style=refinity]|x|; this is done through the abstract execution constraint specification \lstinline[style=refinity]|\disjoint(x,frN)|
-where \lstinline[style=refinity]|frN| specifies the location set \lstinline[style=refinity]|n()| may assign to. Part of the specifciation relating to
-ensuring that \lstinline[style=refinity]|x| is an instance of its intended type is omitted (the ellipsis) for brevity. The  postcondition we ask that Refinity
+where \lstinline[style=refinity]|frN| specifies the location set \lstinline[style=refinity]|n()| may assign to. We use an assertion to ensure we consider only the refactoring
+when \lstinline[style=refinity]|x| is an instance of its intended type. The  postcondition we ask that Refinity
 verify is that the returned references of the before and after sides are identical, that excep.
 \begin{figure}[!h]
   \centering

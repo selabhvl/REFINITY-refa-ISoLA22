@@ -1,7 +1,7 @@
 /*@ ae_constraint
   @ \disjoint(x, frN);
   @*/
-...
+assert x instance X;
 ((X)x).n();
 ((X)x).n();
 return x;
