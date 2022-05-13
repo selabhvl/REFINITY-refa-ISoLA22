@@ -57,8 +57,8 @@ This reprecent a ``placeholder'' for any statement that adheres to the specifica
 location set \rcode{frN} and \emph{could} access \rcode{fpN}.
 
 What we have done by specifying the \emph{abstract execution constraint}, the first three lines in Before and After, is to place an additional restriction on the assignable abstract
-location set \rcode{frN} of the AS present in \recode{n()} stating that \rcode{x} is not an element of \rcode{frN}. As such \recode{n()} should not be able to alter the value (a reference)
-\recode{x} holds.
+location set \rcode{frN} of the AS present in \rcode{n()} stating that \rcode{x} is not an element of \rcode{frN}. As such \rcode{n()} should not be able to alter the value (a reference)
+\rcode{x} holds.
 
 We use an assertion to ensure we consider only the refactoring when \rcode{x} is an instance of its intended type.
 
