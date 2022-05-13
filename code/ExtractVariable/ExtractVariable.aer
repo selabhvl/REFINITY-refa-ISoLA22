@@ -4,13 +4,7 @@
   @ \disjoint(x, frN);
   @*/
 
-/*@ assignable \hasTo(x);
-  @ accessible x;
-  @ normal_behaviour ensures x instanceof X;
-  @ return_behavior requires false;
-  @ exceptional_behavior requires false;
-  @*/
-\abstract_statement Q;
+assert x instanceof X;
 
 ((X)x).n();
 ((X)x).n();
@@ -20,13 +14,7 @@ return x;
   @ \disjoint(x, frN);
   @*/
   
-/*@ assignable \hasTo(x);
-  @ accessible x;
-  @ normal_behaviour ensures x instanceof X;
-  @ return_behavior requires false;
-  @ exceptional_behavior requires false;
-  @*/
-\abstract_statement Q;
+assert x instanceof X;
   
 X temp = (X)x;
 temp.n();
