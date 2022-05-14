@@ -14,7 +14,7 @@ specify the order of side-effects/events. The most straightforward approach is t
 and specify properties using the surrounding logic, in our case, JavaDL. This approach has been taken for dynamics logics (without investigating relation verification) in, e.g., ABSDL~\cite{DBLP:journals/jlp/DinO14} and for relational verification (albeit without using a dynamic logic) by, e.g., Barthe et al.~\cite{DBLP:conf/fmcad/BartheEGGKM19}.
 This explicit encoding of user-defined execution histories has the advantage that it is not only useful for proofs, but can also directly be harnessed in concrete unit-tests where we can explicitly compare the recorded history of an earlier execution of a test with the history of the same test but on the refactored code base.
 
-A main advantage of encoding the trace in the post state, is that relational verification (either based on product programs~\cite{product} or using the proof obligation described above),
+A main advantage of encoding the trace in the post state, is that relational verification (either based on self-composition or its variants~\cite{DBLP:conf/spc/DarvasHS05,DBLP:conf/csfw/BartheDR04,DBLP:conf/fm/BartheCK11} or using the proof obligation described above),
 can use the state logic to describe both states.
 However, first-order specifications of temporal properties have been proven to be unwieldy, large and hard to understand. 
 %This places even more burden on the developer, as they have to make sure that their chosen encoding of events in the data structure captures the salient part of equivalence.
