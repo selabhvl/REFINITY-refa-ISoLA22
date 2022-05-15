@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:aeRelationalModel xmlns:ns2="http://www.key-project.org/abstractexecution" preCondition="" postCondition="\result_1 == \result_2">
-    <programOne>/*@ ae_constraint
-  @ \disjoint(x, frN);
-  @*/
-
+    <programOne>//@ ae_constraint \disjoint(x, frN);
 assert x instanceof X;
-
 ((X)x).n();
 ((X)x).n();
 return x;
 </programOne>
-    <programTwo>/*@ ae_constraint
-  @ \disjoint(x, frN);
-  @*/
-  
+    <programTwo>//@ ae_constraint \disjoint(x, frN); 
 assert x instanceof X;
-  
 X temp = (X)x;
 temp.n();
 temp.n();
