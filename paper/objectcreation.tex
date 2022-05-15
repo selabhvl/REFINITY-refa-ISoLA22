@@ -14,7 +14,7 @@
 \end{figure}
 
 As we have seen in the previous section, REFINITY encodes a rather harsh regimen on program equivalence:
-in absence of a more fine-grained (application-specific) post-condition, it encodes that return values or exceptions must be identical on both sides,
+in the absence of a more fine-grained (application-specific) post-condition, it encodes that return values or exceptions must be identical on both sides,
 as must be the objects in the \relevant{} location set (and the observables in this location set must be adequately specified).
 
 This, in combination with the symbolic execution of both programs, create a hurdle for programs that contain object creations (and, subsequently exceptions).
@@ -22,7 +22,7 @@ An object allocation in JavaDL is, roughly sketched, symbolically executed by cr
 
 
 The question of equivalence for created objects is not specific to abstract execution, yet important for its practicability: 
-Abstract statements are embedded in concrete programs which change as well, and more complex and application specific refactorings must all language features of the
+abstract statements are embedded in concrete programs which change as well, and more complex and application specific refactorings must all language features of the
 host language into account.
 
 
@@ -36,7 +36,7 @@ We assume that in every state of the Kripke structure, for every heap $h$, all o
 object $o_h$, such that (1) for all $o' <_h o$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
 (2) for all $o \leq_h o''$ the object $o''$ is not allocated. 
 We introduce a unary function symbol \codein{allocate} with the signature $\mathtt{Heap} \rightarrow \mathtt{Object}$,
-whose interpretation must adher to $\mathcal{I}(\mathtt{allocate})(h) = o_h$. The (slightly prettified) rule is as follows:
+whose interpretation must adhere to $\mathcal{I}(\mathtt{allocate})(h) = o_h$. The (slightly prettified) rule is as follows:
 
 \begin{prooftree}
 \AxiomC{$\Gamma,\{U\}(\mathtt{v} \not\doteq \mathtt{null} \wedge \mathtt{v} \doteq \mathtt{allocate(heap)} \wedge \mathtt{C::exactInstance(v)}\doteq\mathtt{TRUE})$}
@@ -71,8 +71,8 @@ They are, however, distinguishable in the proof system. If we choose to consider
 First, it must be able to distinguish between the allocation of difference classes and, second, it must be able to simplify the heap to ignore irrelevant operations on it.
 \begin{definition}
 We assume that in every state of the Kripke structure, for every heap $h$ and every class $C$, all objects of $C$ are ordered by some order $<_h^C$, such that there is some
-object $o_h^C$, such that (1) for all $o' <^C_h o$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
-(2) for all $o \leq_h^C o''$ the object $o''$ is not allocated. Additionally, if $D$ is a subtype of $C$ then $<_h^D$ must be a suborder of $<_h^C$.
+object $o_h^C$, where (1) for all $o' <^C_h o$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
+(2) for all $o \leq_h^C o''$ the object $o''$ is not allocated. Additionally, if $D$ is a subtype of $C$, then $<_h^D$ must be a suborder of $<_h^C$.
 For each class $C$, we introduce a unary function symbol $C::$\codein{allocate} with the signature $\mathtt{Heap} \rightarrow \mathtt{Object}$,
 whose interpretation must adher to $\mathcal{I}(C::\mathtt{allocate})(h) = o_h^C$. The (slightly prettified) rule is as follows:
 
@@ -100,7 +100,7 @@ For example, consider the class and programs in Lst.~\ref{lst:ObjectCreation-ref
 
 \begin{figure}[tb]
 \centering
-\begin{subfigure}{.3\linewidth}
+\begin{subfigure}[b]{.3\linewidth}
 \begin{lstlisting}[style=refinity]
 class C {
   private int j;
@@ -110,14 +110,14 @@ class C {
 }
 \end{lstlisting}
 \caption{Class}
-\end{subfigure}\hspace{2mm}
-\begin{subfigure}{.3\linewidth}
+\end{subfigure}\hspace{3mm}
+\begin{subfigure}[b]{.3\linewidth}
 \begin{lstlisting}[style=refinity]
 return new C(1);
 \end{lstlisting}
 \caption{Before}
-\end{subfigure}\hspace{2mm}
-\begin{subfigure}{.3\linewidth}
+\end{subfigure}\hspace{3mm}
+\begin{subfigure}[b]{.3\linewidth}
 \begin{lstlisting}[style=refinity]
 return new C(2);
 \end{lstlisting}

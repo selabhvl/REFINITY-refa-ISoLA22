@@ -1,7 +1,7 @@
 \subsection{Encoding the Hide Delegate refactoring}\label{sec:hideDelegate}
 
-The Hide Delegate refactoring can be described as an Extract Method refactoring on a call chain such as \lstinline[style=smallJava]|Y y = o.f().g()|
-the call chain is extracted to a method on \lstinline[style=smallJava]|o| such that we can replace the chain with a call to the new method \lstinline[style=smallJava]|o.h()|
+The Hide Delegate refactoring can be described as an Extract Method refactoring on a call chain such as \lstinline[style=smallJava]|Y y = o.f().g()|, where
+the call chain is extracted to a method on \lstinline[style=smallJava]|o| such that we can replace the chain with a call to the new method \lstinline[style=smallJava]|o.h()|, 
 which we declare as \lstinline[style=smallJava]|Y h(){ return this.f().g(); }|.
 The refactoring can enable less
 coupling as the class that contained the call chain afterwards does not need to know the return type of \lstinline[style=smallJava]|f()|.
@@ -13,11 +13,11 @@ We note that this is just one example and intermediate, dotted, expressions can 
 
 \begin{figure}
   \centering
-  \begin{subfigure}{.4\linewidth}
+  \begin{subfigure}[b]{.4\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/before.refinity}
     \caption{Before}
   \end{subfigure}\hspace{1cm}
-  \begin{subfigure}{.4\linewidth}
+  \begin{subfigure}[b]{.4\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/after.refinity}
     \caption{After}
   \end{subfigure}
@@ -27,11 +27,11 @@ We note that this is just one example and intermediate, dotted, expressions can 
 
 \begin{figure}
   \centering
-  \begin{subfigure}{.4\linewidth}
+  \begin{subfigure}[b]{.4\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/Resource.refinity}
     \caption{Before}
   \end{subfigure}\hspace{1cm}
-  \begin{subfigure}{.4\linewidth}
+  \begin{subfigure}[b]{.4\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/Owner.refinity}
     \caption{After}
   \end{subfigure}
