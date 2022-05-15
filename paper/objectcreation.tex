@@ -96,7 +96,7 @@ Let $\sqsubseteq$ be the subtype relation and $T(t)$ the type of a term.
 The first rule uses the assumption that the orders are only sensitive to the \codein{<allocated>} field and the second one that they are independent, besides the subtyping relation.
 Intuitively, this implements a different counter for each class in the type hierarchy and two objects are considered equal if the counters of their classes are equal.
 Creating an object of a class, increases the counter of this class and all its superclasses.
-This suffices to prove the programs in Listing.~\ref{lst:ObjectCreation-refinity} to be equivalent. If \codein{C} is a sub type of \codein{D}, then the proof fails.
+This suffices to prove the programs in Listing~\ref{lst:ObjectCreation-refinity} to be equivalent. If~\codein{C} is a sub type of~\codein{D}, then the proof fails.
 \eknote*{updated}{%
 The second rule is able to remove intermittent operations that are symbolically represented on the heap, e.g.\ in \lstinline{x = new C(); x.set(1); y = new D();} versus \lstinline{y = new D(); x = new C(); x.set(1);}, but are not relevant to object creation.
 }
