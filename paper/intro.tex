@@ -5,40 +5,47 @@ This has proven fruitful in the exploration of correctness of refactorings prima
 %In this paper we explore further types of equivalent transformations and refactorings and discuss the challenges that still need to be overcome for full round-trip correctness of refactorings in object-oriented languages.
 %
 AE introduces abstract statements (and expressions), which act as named and specified placeholders for some statement of the host language.
-A refactoring proof is a relational verification (RV) proof that compares two programs, which have the \emph{same} abstract statements. One of the programs represents the schema of the code before the refactoring, and the other one the code afterwards, with respect to some relational post-condition that defines the notion of \emph{program equivalence}.
-
-\paragraph{Beyond Statement-Based Refactorings.}
-Abstract statements have been used to verify the correctness of refactorings that are based on moving code within a method and on extracting some statements into an own method (the \texttt{Extract Method} refactoring). 
-\eknote*{@VS please extend and provide a reference.}{However, refactorings a rarely confined into single methods~\cite{???}, but also require to restructure classes and data structures.}
-
-
-Here, we investigate more complex refactorings that combine code movement beyond multiple methods. 
-\eknote*{@VS please extend }{For one, we investigate the \texttt{Hide Delegate} refactoring.}
+A refactoring proof is a relational verification proof that compares two programs, \vsnote*{TODO: We'll have to rephrase this, I think.}{which have the \emph{same} abstract statements}.
+One of the programs represents the schema of the code before the refactoring, and the other one the code afterwards, with respect to some relational post-condition that defines the notion of \emph{program equivalence}.
 
 
 \paragraph{Challenges.}
-More complex refactorings need more elaborate specification and verification techniques for RV. 
-The reason is that the programs surrounding the abstract statements, as well as the notion of equivalence becomes more involved.
-For example, if the surrounding programs throw exceptions, under which conditions are the exceptions considered equivalent? 
-As the exceptions are just objects, there are possible choices when newly created objects are considered equal in RV using dynamic logic, 
+More complex refactorings need more elaborate specification and verification techniques for relational verification. 
+The reason is that the programs surrounding the abstract statements, as well as the notion of equivalence, become more involved.
+This holds for both structure and behaviour:
+\Refinity{} \cite{steinhoefel:ae}, the tool supporting verification on top of the KeY system,
+has been primarily designed to verify the correctness of refactorings that are based on moving code within a method, or on extracting some statements into their own method (i.e., the \rname{Extract Method} refactoring).
+However, refactorings are not limited to single methods or statement-blocks, but may also restructure classes and data structures \cite{fowler:refactoring}.
+We investigate the \rname{Hide Delegate} refactoring that moves code between classes and show how it can be encoded in \Refinity{}.
+\vsnote{Note to self: technically our encoding in R. doesn't actually move anything ;-)}
+
+
+As for behaviour, we discuss the interpretation of \textit{equivalence} from the perspective of the user and how to encode this --- for example, if the surrounding programs throw exceptions, under which conditions are the exceptions considered equivalent?
+\vsnote{TODO @Ole: check that in HD we explain the ``equivalence'' of the NPEs --- I don't see this yet in the example in 3.1}
+We illustrate that this issue goes beyond exceptions:
+as they are just objects, there are possible choices when newly created objects are considered equal in relational verification using dynamic logic, 
 first investigated by Beckert et al.~\cite{DBLP:conf/lopstr/BeckertBKSSU13}.
 
 
 
 For exceptions and object creations, we describe several possibilities when newly created objects (resp.\ thrown exceptions) are considered equal
-and how this information can be used in dynamic logic proofs. The different possibilities are implemented as different rule sets and must not be encoded
-in the relational post-condition. This reduces the size of the required specification, a notorious bottleneck in formal verification~\cite{DBLP:journals/corr/abs-1211-6186,DBLP:series/lncs/HahnleH19}.
+and how this information can be used in dynamic logic proofs. The different possibilities are implemented as different rule sets and \vsnote*{@EK? Unclear to VS. ``Cannot''? Or?}{must not} be encoded in the relational post-condition.
+\vsnote*{Weird phrasing, rewrite? Isn't reducing size of the spec a good thing?}{%
+  This reduces the size of the required specification, a notorious bottleneck} in formal verification~\cite{DBLP:journals/corr/abs-1211-6186,DBLP:series/lncs/HahnleH19}.
 
 
-Furthermore, we discuss the necessary extensions needed to prove the equivalence where one data strucute is replaced by another, e.g., an array by a special record.
-Here, the main challenge lies in the encoding that the structures are used correctly \emph{throughout} the execution. This could, for example, be handled by coupled invariants~\cite{DBLP:conf/birthday/BeckertU18}, whose connection to AE is unclear. 
-Lastly, we discuss the challenge to apply AE to novel specification approaches for \emph{traces} which aim to simplify the specification of temporal properties for expressive properties, but whose use for RV is unexplored.
+Furthermore, we discuss the necessary extensions needed to prove equivalent behaviour where one data structure is replaced by another, e.g., an array or any primitive type by a \vsnote*{}{class \sout{special record}}.
+Here, the main challenge lies in the encoding that the structures are used correctly throughout the execution.
+This could, for example, be handled by coupled invariants~\cite{DBLP:conf/birthday/BeckertU18}, whose connection to AE is yet unclear. 
+Lastly, we discuss the challenge to apply AE to novel specification approaches for \emph{traces} which aim to simplify the specification of temporal properties for expressive properties, but whose use for relational verification is unexplored.
 
 \paragraph{Contributions and Structure.}
-Our contributions are (1) a proof of the correctness of the hide-delegate refactoring, that uses a refactoring beyond the move of code within a method, highlights the interaction of AE with general RV challenges, as well as (2) a discussion of possible extensions that would be required for the use of abstract execution for further refactorings.
+Our contributions are firstly an investigation into the necessary side conditions to be able to proof of the correctness of the \rname{Extract Local Variable}- and \rname{Hide Delegate} refactorings, extending the collection of proven refactorings.
+The latter is a refactoring beyond code motion within a method and highlights the interaction of AE with general relational verification challenges.
+Secondly, we discuss possible extensions that would be required to address further refactorings with AE.
 
 %This paper is structured as follows. 
-We first describe AE and RV using the \texttt{Extract Local Variable} refactoring in Sec.~\ref{sec:prelim}, before we discuss the challenges for AE in Sec.~\ref{sec:challenges}. Sec.~\ref{sec:hide} describes and proves the \texttt{Hide Delegate} refactoring(s). Sec.~\ref{sec:discussion} discusses our results and Sec.~\ref{sec:related} gives the related work. Lastly, Sec.~\ref{sec:conclusion} concludes.
+We first describe AE and relational verification using the \rname{Extract Local Variable} refactoring in Sec.~\ref{sec:prelim}, before we discuss the challenges for AE in Sec.~\ref{sec:challenges}. Sec.~\ref{sec:hide} describes and proves the \rname{Hide Delegate} refactoring(s). Sec.~\ref{sec:discussion} discusses our results and Sec.~\ref{sec:related} gives the related work. Lastly, Sec.~\ref{sec:conclusion} concludes.
 
 
 
