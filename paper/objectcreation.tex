@@ -13,7 +13,7 @@
 \label{lst:ObjectCreation-refinity}
 \end{figure}
 
-As we have seen in the previous section, REFINITY encodes a rather harsh regimen on program equivalence:
+As we have seen in the previous section, \Refinity{} encodes a rather harsh regimen on program equivalence:
 in the absence of a more fine-grained (application-specific) post-condition, it encodes that return values or exceptions must be identical on both sides,
 as must be the objects in the \relevant{} location set (and the observables in this location set must be adequately specified).
 
@@ -33,7 +33,7 @@ In the following we make the assumption that this is indeed the case and use thi
 
 \begin{definition}
 We assume that in every state of the Kripke structure, for every heap $h$, all objects are ordered by some order $<_h$, such that there is some
-object $o_h$, such that (1) for all $o' <_h o$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
+object \vsnote*{@EK: forgot to use $o_h$?}{$o_h$}, such that (1) for all $o' <_h o$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
 (2) for all $o \leq_h o''$ the object $o''$ is not allocated. 
 We introduce a unary function symbol \codein{allocate} with the signature $\mathtt{Heap} \rightarrow \mathtt{Object}$,
 whose interpretation must adhere to $\mathcal{I}(\mathtt{allocate})(h) = o_h$. The (slightly prettified) rule is as follows:
@@ -61,20 +61,25 @@ whose interpretation must adhere to $\mathcal{I}(\mathtt{allocate})(h) = o_h$. T
 %\end{figure}
 
 \end{definition}
-The modification is the addition of $v = \mathtt{allocate(heap)}$ to the antecedent.
+The modification \vsnote*{@EK?}{of KeY's rule \texttt{allocateInstance}} is the addition of $v = \mathtt{allocate(heap)}$ to the antecedent.
 
-The modified rule suffices to show the simple equivalence from above. Continuing our investigation of when objects are considered equal, 
-where the two allocations are independent from each other, i.e., the side-effects of the constructors are not visible to each other, \codein{C} is not a subtype of \codein{D} and vice versa. Again the question where the two \codein{C} (resp.\ \codein{D}) objects are equal arises. They are not equal in the sense that, if there is a global (implicit) counter
+The modified rule suffices to show the simple equivalence from above.\vsnote{@EK: Not directly, since we still need the 2nd def.? Rephrase?}
+Continuing our investigation of when objects are considered equal, 
+where the two allocations are independent from each other, i.e., any side-effects of the constructors are not visible to each other, \codein{C} is not a subtype of \codein{D} and vice versa.
+Again the question where the two \codein{C} (resp.\ \codein{D}) objects are equal arises.
+They are not equal in the sense that, if there is a global \vsnote*{Wouldn't call this implicit, quite the contrary?}{\sout{(implicit)}} counter
 that counts all allocation, they get the same number from this counter. They are equal in the sense that there is no explicit way to distinguish them in the program.
 
-They are, however, distinguishable in the proof system. If we choose to consider them equal, we must adapt our \codein{allocate} mechanism:
-First, it must be able to distinguish between the allocation of difference classes and, second, it must be able to simplify the heap to ignore irrelevant operations on it.
+They are, however, distinguishable in the proof system \vsnote*{}{due to the term-representation of the heap?}.
+If we choose to consider them equal, we must adapt our \codein{allocate} mechanism:
+First, it must be able to distinguish between the allocation of different classes and, second, it must be able to simplify the heap to ignore irrelevant operations on it.
+\vsnote{@EK: on the one hand I agree, on the other, the way I see it, it's not that we want to ignore something, but we want the implicit partial order of independent changes? Anyway, no action required, and ignoring achieves this.}
 \begin{definition}
-We assume that in every state of the Kripke structure, for every heap $h$ and every class $C$, all objects of $C$ are ordered by some order $<_h^C$, such that there is some
-object $o_h^C$, where (1) for all $o' <^C_h o$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
-(2) for all $o \leq_h^C o''$ the object $o''$ is not allocated. Additionally, if $D$ is a subtype of $C$, then $<_h^D$ must be a suborder of $<_h^C$.
-For each class $C$, we introduce a unary function symbol $C::$\codein{allocate} with the signature $\mathtt{Heap} \rightarrow \mathtt{Object}$,
-whose interpretation must adher to $\mathcal{I}(C::\mathtt{allocate})(h) = o_h^C$. The (slightly prettified) rule is as follows:
+We assume that in every state of the Kripke structure, for every heap $h$ and every class $C$, all objects of type $C$ are ordered by some order $<_h^C$, such that there is some
+object $o_h^C$, such that (1) for all $o' <^C_h o$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
+(2) for all $o \leq_h^C o''$ the object $o''$ is not allocated. Additionally, if $D$ is a subtype of $C$ then $<_h^D$ must be a suborder of $<_h^C$.
+For each class $C$, we introduce a unary function symbol \codein{C::allocate} with the signature $\mathtt{Heap} \rightarrow \mathtt{Object}$,
+whose interpretation must adhere to $\mathcal{I}(C::\mathtt{allocate})(h) = o_h^C$. The (slightly prettified) rule is as follows:
 
 \begin{prooftree}
 \AxiomC{$\Gamma,\{U\}(\mathtt{v} \not\doteq \mathtt{null} \wedge \mathtt{v} \doteq \mathtt{C::allocate(heap)} \wedge \mathtt{C::exactInstance(v)}\doteq\mathtt{TRUE})$}
@@ -89,16 +94,15 @@ Let $\sqsubseteq$ be the subtype relation and $T(t)$ the type of a term.
 \mathtt{C::allocate(create(h, o))}\rightsquigarrow\mathtt{C::allocate(h)}& &&\text{if $C \not\sqsubseteq T(o)$}
 \end{align*}
 \end{definition}
-The first rule uses the assumption that the orders are only sensitive to the \codein{<allocated>} field and the second one that they are indendent, besides the subtyping relation.
+The first rule uses the assumption that the orders are only sensitive to the \codein{<allocated>} field and the second one that they are independent, besides the subtyping relation.
 Intuitively, this implements a different counter for each class in the type hierarchy and two objects are considered equal if the counters of their classes are equal.
 Creating an object of a class, increases the counter of this class and all its superclasses.
-This suffices to prove the programs in Lst.~\ref{lst:ObjectCreation-refinity} to be equivalent. If \codein{C} is a sub type of \codein{D}, then the proof fails.
+This suffices to prove the programs in Listing.~\ref{lst:ObjectCreation-refinity} to be equivalent. If \codein{C} is a sub type of \codein{D}, then the proof fails.
+\vsnote*{Added. @EK Please check -- also for relevance!}{%
+Note that this rule is still unaware of intermittent operations that are symbolically represented on the heap, e.g.\ in \lstinline{x = new C(); x.set(1); y = new D();} versus \lstinline{y = new D(); x = new C(); x.set(1);}.
+}
 
-Note that we ignore the state of fields in the heap, meaning that equivalence of two objects is determined only by their counters. 
-This requires to be careful with specification: it does not suffice for each notion of equivalence to specify that two objects are equal, but also \emph{their} fields must be equal.
-For example, consider the class and programs in Lst.~\ref{lst:ObjectCreation-refinity-2}. To weaken the assumption and take the whole into account to determine  
-
-\begin{figure}[tb]
+\begin{figure}[tbp]
 \centering
 \begin{subfigure}[b]{.3\linewidth}
 \begin{lstlisting}[style=refinity]
@@ -127,6 +131,11 @@ return new C(2);
 \label{lst:ObjectCreation-refinity-2}
 \end{figure}
 
+Note that we ignore the state of fields in the heap, meaning that equivalence of two objects is determined only by their counters. 
+This requires to be careful with specification: it does not suffice for each notion of equivalence to specify that two objects are equal, but also \emph{their} fields must be equal.
+For example, consider the class and programs in Listing.~\ref{lst:ObjectCreation-refinity-2}.
+To weaken the assumption and take the whole into account to determine  \vsnote*{@EK}{incomplete sentence}.
+
 %both programs are equivalent, yet cannot be proved automatically due to syntactically different heaps.
 %To address this limitation, we need additional rules that allow ignoring heap updates that are irrelevant.
 %Surprisingly, the extant literature does not provide much automation there, but rather builds on restrictive specifications wrt.\ \assignable{}/\accessible{} frames.
@@ -137,19 +146,21 @@ return new C(2);
 %Similar to KeY's \keyrule{dropUpdate_2}, we can easily eliminate these operations on the heap on unrelated \textit{types} and obtain equivalent programs.
 %\vsnote*{TODO: Eduard to elaborate a bit here.}{Unrelated types are of course only a shortcut, dropUpdate2 is much more specific, VS thinks -- but I can't decode the side conditions on the rule}.
 
-Let us close with three remarks. First, the solutions we described here are enabling the programmer (or refactoring designer) to fine tune its notion of equivalence, which must be specified additionally to the refactoring itself. Realizing the choice, however, is rather simple by enabling and disabling rules, resp.\ taclets.
+Let us close with three remarks. First, the solutions we described here are enabling the programmer (or refactoring designer) to fine tune their notion of equivalence, which must be specified additionally to the refactoring itself.
+Realizing the choice, however, is rather simple by enabling and disabling rules, resp.\ taclets.
+\vsnote{VERY interesting point, I completely disagree! Maybe what you're saying is that adding potentially unsound/not capturing taclets is easier than formulating an adequate post-condition? Having unsound taclets is the only reason I can see for disabling them -- that any strategy-search could be misguided is a different issue.}
 
-Second, while we only discussed object creation here, it is crucial for \emph{exceptions}, which must be created before being thrown. 
+Second, while we only discussed object creation here, \vsnote*{@EK: what?}{it} is crucial for \emph{exceptions}, which must be created before being thrown. 
 Exceptions are special in the sense that they have access to the program beyond the parts that are exposed to (non-reflective) programs.
-For example, they can access the line number of the throwing statement for their stack trace. Thus, to consider two thrown exceptions equivalent, 
-one may want 
+For example, they can access the line number of the throwing statement for their stack trace.
+Thus, to consider two thrown exceptions equivalent, one may want \vsnote*{}{a complete sentence}.
 As the stack trace is not modeled in JavaDL, its treatment for verification is an open research question in itself, and because we consider exhibiting the stack trace
 within the program a dubious practice in the first place, we chose to ignore it in this paper.
+\vsnote{Agreed.}
 
 Third, one could argue that we have not so much proven the refactoring to be correct,
-but rather moved this decision further down the chain: unlike in a full formalization of the Java object model from ground up, % e.g.\ in the Coq-theorem prover,
+but rather moved this decision further down the chain: unlike in a full formalization of the Java object model from ground up, 
 we do not have a way of proving the taclets correct (i.e.\ derive them as lemmas) within KeY, as they model our assumptions about object identity when running two Java programs in the exact same state, which is not described by the Java semantics.
-%for \textit{any} program.
 
 %\paragraph{Abstract Object Allocation Sites.}
 %As discussed, the above solutions interact with abstract execution only indirectly by providing techniques to handle equivalences in the program surrounding the abstract statements and abstract expressions. 
