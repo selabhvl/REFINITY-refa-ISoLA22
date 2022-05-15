@@ -6,21 +6,48 @@
   for KeY, KeY proves mostly automatic).
 \end{itemize}
 
-\oanote*{find a way to cite the draft paper here p.7}
+\oanote*{find a way to cite the draft paper here p.7}{}
 
-Succintly, exactly as stated by Steinfhöfel in their Ph.D. thesis, “Abstract Execution” denotes the idea to process Abstract programs by symbolic Execution~\cite{steinhoefel-20}.
+Succinctly, exactly as stated by Steinfhöfel in their Ph.D. thesis, “Abstract Execution” denotes the idea to process Abstract programs by symbolic Execution~\cite{steinhoefel-20}.
 Symbolic execution (SE) \cite{DBLP:journals/csur/BaldoniCDDF18,DBLP:journals/ac/YangFBCW19} abstracts concrete execution by way of symbolic representations of language runtime
-state in place of concrete machine representions of such artifacts.
+state in place of concrete machine representations of such artefacts.
 Thus e.g. values, a store or a program counter all have a symbolic representation in SE.
 Branching points, such as encountered when symbolically executing e.g. an if-then-else statement splits an execution path into new paths for each possible branch arm and for each such
 path e.g. the symbolic store may be preserved in the new paths, but different conditions may also be carried through such that in the path where the symbolic program counter refers
 to the then branch the evaluation of the boolean expression in the if statement must be valid whereas it is not valid in the path where the symbolic program counter refers to the else branch.
 Possible executions are not just captured through branching paths, but along a path itself through the symbolic store; a symbolic value represents any valid concrete substitution.
 
-The use of SE to potentially explore every possible execution a program can have is a popular program analysis technique (cite draft paper). Abstract Execution (AE) extends SE by
+\oanote*{find a way to mention Kripke structures in here, refer to KeY book p.55,fill in more concretely about what AE introduces over SE, use p.110 Dom's thesis}{
+The use of SE to potentially explore every possible execution a program can have is a popular program analysis technique (cite draft paper). AE extends SE by
 introducing abstract program elements to the base language that is symbolicaly executed.
 Where before there may have been statements and expressions abstract variants are introduced in addition.
 These abstract variants represent any possible substitution with concrete elements, be it statements or expressions, from the base language being symbolically executed.
+}
+
+We introduce REFINITY by showing how to specify a method \rcode{void n()} where we do not want to specify the exact contents of its method body.
+Only that it could possibly assign to some locations (its frame) and access some locations (its footprint).
+Furthermore we wish to specify that no exceptions will be thrown by the method body.
+We achieve such a specification in REFINITY by supplying it a definition of \rcode{n()} as seen in Listing \ref{lst:ExtractVariable-refinity-method}.
+A method is specified and its only content is an abstract statement \rcode{\\abstract\_statement N;} preceeded by a comment where every line in the
+comment begins with a \rcode{@}-character which denotes that this is a specification, and in this case a specification for the abstract statement.
+The specification reads straigthforward with no suprises. An execution of the abstract statement \rcode{N} may have the effects of: assigning to the
+abstract location set \rcode{frN}, accessing the abstract location set \rcode{fpN} and may not throw any exceptions.
+
+An abstract location set represents a fixed set of memory locations a program may read or write to.
+The set is fixed through a program's duration but the values at these locations may change.
+When an abstract location set is placed in an assignable or accessible specification it is to be understood as an upper bound;
+the locations may possibly all be accessed or assigned to, not at all or anything inbetween.
+
+
+\begin{figure}[h]
+  \centering
+  \begin{minipage}{.65\linewidth}
+  \lstinputlisting[linerange={2-8},style=refinity]{ExtractVariable/REFINITY/method.refinity}
+  \captionof{lstlisting}{Method}
+  \label{lst:ExtractVariable-refinity-method}
+  \end{minipage}
+\end{figure}
+
 
 \begin{itemize}
 \item in the following, we show a simple example for AE where we prove a new refactoring correct with REFINITY
@@ -30,6 +57,8 @@ These abstract variants represent any possible substitution with concrete elemen
 \item add AE-constraint to make the example go through
 \item 1-2 sentences on ``instantiation-problem'', i.e. avoid giving specs that can't be implemented (example: assignable nothing) although technically Dom covered this already.
 \end{itemize}
+
+In the following, we show an example of how AE can be used to prove a refactoring correct with REFINITY. 
 
 %%% Local Variables:
 %%% mode: latex

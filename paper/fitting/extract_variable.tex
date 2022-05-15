@@ -43,11 +43,6 @@ In our case we simply specify the postcondition that \rcode{x} returned in Befor
 What can be seen in the first three lines of the Before and After sides is an \emph{abstract execution constraint} on \rcode{x}.
 Namely that \rcode{x} should be disjoint from the abstract location set \rcode{frN}.
 
-An abstract location set represents a fixed set of memory locations a program may read or write to. The set is fixed through a program's duration but the values at these locations may change.
-Abstract location sets can be specified as assignable or accessible at various program locations as seen in Listing~\ref{lst:ExtractVariable-refinity-method}.
-When a location set is placed in an assignable or accessible specification it is to be understood as an upper bound; the locations may possibly all be accessed or assigned to, not at all or
-anything inbetween.
-
 While inspecting the method \rcode{n()} you will discover an \emph{Abstract Statement} (AS) \rcode{\\abstract\_statement S;} immediately trailing the assignable and accessible specification for it.
 This reprecent a ``placeholder'' for any statement that adheres to the specification given for it, here we only specified that whatever statement that executes there \emph{could} assign to the abstract
 location set \rcode{frN} and \emph{could} access \rcode{fpN}.
@@ -72,12 +67,6 @@ We use an assertion to ensure we consider only the refactoring when \rcode{x} is
     \caption{After}
     \label{lst:ExtractVariable-refinity-after}
   \end{subfigure}\vspace{4mm}
-  \begin{subfigure}[b]{.65\linewidth}
-    \lstinputlisting[style=refinity]{ExtractVariable/REFINITY/method.refinity}
-    \vspace{-2mm}
-    \caption{Method}
-    \label{lst:ExtractVariable-refinity-method}
-  \end{subfigure}
 \captionof{lstlisting}{Extract Local Variable}
 \label{lst:ExtractVariable-refinity}
 \end{figure}
