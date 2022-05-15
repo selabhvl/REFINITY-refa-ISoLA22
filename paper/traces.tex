@@ -1,35 +1,68 @@
 In the previous section, we have established that relational verification using abstract execution
 must take care of general effects of language semantics outside the abstract statements.
-In this section, we illustrate a different obstacle to practical abstract execution, which touches on its core specification principles: sequences of side effects.
+In this section, we illustrate a different obstacle to practical abstract execution, which touches on its core specification principles: sequences of side effects and events.
 
 %In the previous section, we have established that syntactical equality of heaps is too strict as a precondition to equivalent (or rather: identical) behaviour.
 %In practice, 
-In general, developers are content if refactored code gives the same observable behaviour \cite{needed}.
-This behaviour is first and foremost encoded through unit-tests, but also on tests on side-effects and their order (e.g.\ output via \texttt{print}-statements).
+In general, developers are content if refactored code gives the same observable behavior \cite{needed}.
+This behavior is first and foremost encoded through unit-tests, but also on tests on side-effects and their order (e.g.\ output via \texttt{print}-statements).
 Here we then have a much more relaxed setting where equivalence is decoupled from the fine-grained program semantics.
 More realistically, one may want to establish that after refactoring, certain operations happened in the same order.
 
 Abstract execution supports the specification of read and write events, via dynamic frames, but does not specify their order or give a general possibility to
 specify the order of side-effects/events. The most straightforward approach is to use a special model variable to keep track of the events explicitly in a trace, 
 and specify properties using the surrounding logic, in our case, JavaDL. This approach has been taken for dynamics logics (without investigating relation verification) in, e.g., ABSDL~\cite{DBLP:journals/jlp/DinO14} and for relational verification (albeit without using a dynamic logic) by, e.g., Barthe et al.~\cite{DBLP:conf/fmcad/BartheEGGKM19}.
+This explicit encoding of user-defined execution histories has the advantage that it is not only useful for proofs, but can also directly be harnessed in concrete unit-tests where we can explicitly compare the recorded history of an earlier execution of a test with the history of the same test but on the refactored code base.
 
-\begin{example}
-\eknote*{illustrate AE by giving a contract that says that trace T of program P does not contain a certain event and use it in the relational post-condition}{fill me}
-\end{example}
-
-However, first-order specifications of temporal properties have been proven to be unweildly, large and hard to understand. 
-This places even more burden on the developer, as they have to make sure that their chosen encoding of events in the data structure captures the salient part of equivalence.
+A main advantage of encoding the trace in the post state, is that relational verification (either based on self-composition or its variants~\cite{DBLP:conf/spc/DarvasHS05,DBLP:conf/csfw/BartheDR04,DBLP:conf/fm/BartheCK11} or using the proof obligation described above),
+can use the state logic to describe both states.
+However, first-order specifications of temporal properties have been proven to be unwieldy, large and hard to understand. 
+%This places even more burden on the developer, as they have to make sure that their chosen encoding of events in the data structure captures the salient part of equivalence.
 %Clearly, this data structure is sensitive to order and any object identities very much in the same way as is the syntactic representation of heap manipulations.
-\vsnote*{Clarified, I hope.}{This explicit encoding of user-defined execution histories has the advantage that it is not only useful for proofs, but can also directly be harnessed in concrete unit-tests where we can explicitly compare the recorded history of an earlier execution of a test with the history of the same test but on the refactored codebase.}
-This led to the development of other dynamic logics which interact with novel trace specifications, such as BPL~\cite{DBLP:conf/tableaux/Kamburjan19} and symbolic traces~\cite{DBLP:conf/tableaux/BubelDHN15}. %, as well as the
+This led to the development of other dynamic logics which interact with novel trace specifications, such as BPL~\cite{DBLP:conf/tableaux/Kamburjan19} and symbolic traces~\cite{DBLP:conf/tableaux/BubelDHN15}, where the post-condition of a modality is a \emph{trace formula} without quantifiers over indices, whose models are single traces.
+It has neither been investigated how such logics can be used for relational verification, nor how abstract statements can be specified w.r.t.\ such trace properties.
+%, as well as the
 %integration of other, more standard trace specification into dynamic logic, such as LTL~\cite{beckert} or session types~\cite{ifm}.
-For none of these approaches, abstract statements have been investigated. %it is clear how abstract statement can be specified.
+%For none of these approaches, abstract statements have been investigated, but . %it is clear how abstract statement can be specified.
 
-Let us illustrate some challenges using a simplified version of local Session Types for Active Objects~\cite{DBLP:journals/jacm/HondaYC16,DBLP:journals/csur/BoerSHHRDJSKFY17,DBLP:conf/ifm/KamburjanC18}, which are an example for BPL specifications.
+%We sketch the first steps towards a possible solution using a simplified version of local Session Types for Active Objects~\cite{DBLP:journals/jacm/HondaYC16,DBLP:journals/csur/BoerSHHRDJSKFY17,DBLP:conf/ifm/KamburjanC18}, which are an example for BPL specifications.
 
-\begin{example}
-\eknote*{actually come up with an example}{fill me}
-\end{example}
+We concentrate on, simplified, symbolic traces here, we are defined by the grammar
+\[\theta ::= \lceil \phi \rceil ~|~ \mathsf{call}(\mathtt{m}) ~|~ \mathbf{finite} ~|~ \theta \ast\!\ast \theta \]
+where $\lceil \phi \rceil$ denotes the trace where the state formula $\phi$ holds, $\mathsf{call}(\mathtt{m})$ a call event on method $\mathtt{m}$, $\mathbf{finite}$ an arbitrary finite trace without any events\footnote{We derive here from the original definition for example's sake.} and $\ast\ast$ it the chop~\cite{DBLP:conf/tableaux/BubelDHN15}, a special concatenation. Models for such formulas are traces: sequences of states and events.
+
+Consider the two programs in Fig.~\ref{fig:sth}. It is showing a refactoring of some program using a \codein{File}, where we only give the trace specification.
+The first program specifies that some initialization happens that is guaranteed to call \codein{f.open}, then the file is read and written,
+and then some finalization happens that calls \codein{f.close}. The second program, switches the order of read and write.
+The programs are, obviously, not equivalent in a strict sense, but it the trace property we are interested in is only concerned with the order of operations on the file 
+(\codein{open}, \codein{write}, \codein{read} and \codein{open}), for example to express that only opened files are read and written to, then we need to specify a notion of equivalences
+
+
+\begin{figure}
+\begin{lstlisting}[style=refinity]
+File f = new File();
+String s = "";
+/*@  ensures finite ** call(f.open) ** finite; */
+\abstract_statement A;     
+s = f.read();
+f.write(s);
+/*@  ensures finite ** call(f.close) ** finite; */
+\abstract_statement B;     
+\end{lstlisting}
+\begin{lstlisting}[style=refinity]
+File f = new File();
+String s = "";
+/*@  ensures finite ** call(f.open) ** finite; */
+\abstract_statement A;     
+f.write(s);
+s = f.read();
+/*@  ensures finite ** call(f.close) ** finite; */
+\abstract_statement B;     
+\end{lstlisting}
+\caption{Refactoring for Trace-Based-Notions of Equivalence.}
+\label{fig:sth}
+\end{figure}
+
 
 
 %Harnessing output as a mechanism to decide equivalence requires instrumentation of both software versions, though:

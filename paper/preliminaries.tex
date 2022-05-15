@@ -5,3 +5,19 @@
 \item short subsection on how R. works (lhs/rhs setup, generating PO
   for KeY, KeY proves mostly automatic).
 \end{itemize}
+
+\oanote*{find a way to cite the draft paper here p.7}
+
+Succintly, exactly as stated by Steinfhöfel in their Ph.D. thesis, “Abstract Execution” denotes the idea to process Abstract programs by symbolic Execution~\cite{steinhoefel-20}.
+Symbolic execution (SE) \cite{DBLP:journals/csur/BaldoniCDDF18,DBLP:journals/ac/YangFBCW19} abstracts concrete execution by way of symbolic representations of language runtime
+state in place of concrete machine representions of such artifacts.
+Thus e.g. values, a store or a program counter all have a symbolic representation in SE.
+Branching points, such as encountered when symbolically executing e.g. an if-then-else statement splits an execution path into new paths for each possible branch arm and for each such
+path e.g. the symbolic store may be preserved in the new paths, but different conditions may also be carried through such that in the path where the symbolic program counter refers
+to the then branch the evaluation of the boolean expression in the if statement must be valid whereas it is not valid in the path where the symbolic program counter refers to the else branch.
+Possible executions are not just captured through branching paths, but along a path itself through the symbolic store; a symbolic value represents any valid concrete substitution.
+
+The use of SE to potentially explore every possible execution a program can have is a popular program analysis technique (cite draft paper). Abstract Execution (AE) extends SE by
+introducing abstract program elements to the base language that is symbolicaly executed.
+Where before there may have been statements and expressions abstract variants are introduced in addition.
+These abstract variants represent any possible substitution with concrete elements, be it statements or expressions, from the base language being symbolically executed.
