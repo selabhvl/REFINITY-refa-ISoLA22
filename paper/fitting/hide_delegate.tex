@@ -1,25 +1,30 @@
 \subsection{Encoding the Hide Delegate refactoring}\label{sec:hideDelegate}
 
-The Hide Delegate refactoring can be described as an Extract Method refactoring on a call chain such as \lstinline[style=smallJava]|Y y = o.f().g()|, where
-the call chain is extracted to a method on \lstinline[style=smallJava]|o| such that we can replace the chain with a call to the new method \lstinline[style=smallJava]|o.h()|, 
-which we declare as \lstinline[style=smallJava]|Y h(){ return this.f().g(); }|.
+The Hide Delegate refactoring can be described as an Extract Method refactoring on a call chain such as \jcode{Y y = o.f().g()}
+the call chain is extracted to a method on \jcode{o} such that we can replace the chain with a call to the new method \jcode{o.h()}
+which we declare as \jcode{Y h(){ return this.f().g(); }}.
 The refactoring can enable less
-coupling as the class that contained the call chain afterwards does not need to know the return type of \lstinline[style=smallJava]|f()|.
+coupling as the class that contained the call chain afterwards does not need to know the return type of \jcode{f()}.
 We note that this is just one example and intermediate, dotted, expressions can be arbitrary long and/or broken up across assignments to local variables.
-\vsnote{Q: Generalize to \lstinline{o = AE; z = o.g(); return z;} ?}
-\vsnote{Three things on the nature of encoding things in R.: i) this is an example that R. is bad at \textit{names}: we need concrete names \texttt{f/g} (with concrete parameters), but want placeholders. ii) we don't really remove/replace anything, since we need all the code that we want to use in the same class, i.e., the ``new'' method \lstinline{hideDelegate()} was already present before -- but that's okay because it's obviously correct to introduce methods that are not called -- another example of syntactical requirements on encodings in R. iii) This is the example for our abuse of R.\ for OO-based refactorings.}
+\vsnote{Q: Generalize to \jcode{o = AE; z = o.g(); return z;} ?}
+\vsnote{Three things on the nature of encoding things in R.: i) this is an example that R. is bad at \textit{names}: we need concrete names \texttt{f/g} (with concrete parameters), but want placeholders. ii) we don't really remove/replace anything, since we need all the code that we want to use in the same class, i.e., the ``new'' method \jcode{hideDelegate()} was already present before -- but that's okay because it's obviously correct to introduce methods that are not called -- another example of syntactical requirements on encodings in R. iii) This is the example for our abuse of R.\ for OO-based refactorings.}
 
 \vsnote*{}{Full example with all annotations, AE constraints etc. explained here.}
+
+\ref{lst:HideDelegate-nofields-refinity}
+
 
 \begin{figure}
   \centering
   \begin{subfigure}[b]{.4\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/before.refinity}
     \caption{Before}
+    \label{lst:HideDelegate-nofields-before-refinity}
   \end{subfigure}\hspace{1cm}
   \begin{subfigure}[b]{.4\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/after.refinity}
     \caption{After}
+    \label{lst:HideDelegate-nofields-after-refinity}
   \end{subfigure}
 \captionof{lstlisting}{Hide Delegate}
 \label{lst:HideDelegate-nofields-refinity}
@@ -30,10 +35,12 @@ We note that this is just one example and intermediate, dotted, expressions can 
   \begin{subfigure}[b]{.4\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/Resource.refinity}
     \caption{Before}
+    \label{lst:HideDelegate-nofields-resource-refinity}
   \end{subfigure}\hspace{1cm}
   \begin{subfigure}[b]{.4\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/Owner.refinity}
     \caption{After}
+    \label{lst:HideDelegate-nofields-owner-refinity}
   \end{subfigure}
 \captionof{lstlisting}{Hide Delegate Classes}
 \label{lst:HideDelegate-nofields-classes-refinity}
