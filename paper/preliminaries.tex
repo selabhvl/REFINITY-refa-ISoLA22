@@ -17,12 +17,13 @@ path e.g. the symbolic store may be preserved in the new paths, but different co
 to the then branch the evaluation of the boolean expression in the if statement must be valid whereas it is not valid in the path where the symbolic program counter refers to the else branch.
 Possible executions are not just captured through branching paths, but along a path itself through the symbolic store; a symbolic value represents any valid concrete substitution.
 
-\oanote*{find a way to mention Kripke structures in here, refer to KeY book p.55,fill in more concretely about what AE introduces over SE, use p.110 Dom's thesis}{
+\oanote*{find a way to mention Kripke structures in here, refer to KeY book p.55,fill in more concretely about what AE introduces over SE, use p.110 Dom's thesis}{}
 The use of SE to potentially explore every possible execution a program can have is a popular program analysis technique (cite draft paper). AE extends SE by
-introducing abstract program elements to the base language that is symbolicaly executed.
-Where before there may have been statements and expressions abstract variants are introduced in addition.
-These abstract variants represent any possible substitution with concrete elements, be it statements or expressions, from the base language being symbolically executed.
-}
+introducing abstract program elements (APEs) to the base language that is symbolicaly executed.
+For statements and expressions a corresponding abstract statement and abstract expression are introduced in addition; .
+APEs represent any possible substitution with concrete program elements, be it statements or expressions, from the base language being symbolically executed.
+Execution of APEs is then the leap taken in AE over traditional SE and require the introduction of abstract state changes, SE branching for
+any abrupt completion an APE may have(early return, exceptions thrown,...), over-approximation of, a way to specifify the behavior of APEs ~\cite{steinhoefel-20}.
 
 We introduce REFINITY by showing how to specify a method \rcode{void n()} where we do not want to specify the exact contents of its method body.
 Only that it could possibly assign to some locations (its frame) and access some locations (its footprint).
@@ -37,7 +38,6 @@ An abstract location set represents a fixed set of memory locations a program ma
 The set is fixed through a program's duration but the values at these locations may change.
 When an abstract location set is placed in an assignable or accessible specification it is to be understood as an upper bound;
 the locations may possibly all be accessed or assigned to, not at all or anything inbetween.
-
 
 \begin{figure}[h]
   \centering
