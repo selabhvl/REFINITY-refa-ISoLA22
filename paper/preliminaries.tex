@@ -21,3 +21,17 @@ The use of SE to potentially explore every possible execution a program can have
 introducing abstract program elements to the base language that is symbolicaly executed.
 Where before there may have been statements and expressions abstract variants are introduced in addition.
 These abstract variants represent any possible substitution with concrete elements, be it statements or expressions, from the base language being symbolically executed.
+
+\begin{itemize}
+\item in the following, we show a simple example for AE where we prove a new refactoring correct with REFINITY
+\item with AE, we can specify a fully abstract method $n()$ (abstract body, explain locationsets, frame/footprint, global AE constraints -- do not specialise for Extract LV yet).
+\item And now we can formulate the equivalence-question in Refinity with a before/after. Point out condition under which this is not correct,
+\item the first attempt fails with open goals (give interpretation of open goal)
+\item add AE-constraint to make the example go through
+\item 1-2 sentences on ``instantiation-problem'', i.e. avoid giving specs that can't be implemented (example: assignable nothing) although technically Dom covered this already.
+\end{itemize}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

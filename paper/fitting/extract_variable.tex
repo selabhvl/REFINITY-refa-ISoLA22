@@ -1,8 +1,3 @@
-\newcommand\jcode[1]{\lstinline[style=smallJava]|#1|}
-\newcommand\rcode[1]{\lstinline[style=refinity]|#1|}
-\newcommand\jmcode[1]{\lstinline[mathescape=true,style=smallJava]|#1|}
-\newcommand\rmcode[1]{\lstinline[mathescape=true,style=refinity]|#1|}
-
 Let us consider the Extract Local Variable refactoring seen in Listing~\ref{lst:ExtractVariable-java}.
 The example is an instance of a more general case, where preserving the behaviour of the program depends on other parts of the code.
 The behaviour of the program changes if the method call \jcode{n()} has access to the attribute \jcode{x} and overwrites it.
