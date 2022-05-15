@@ -24,15 +24,15 @@ The dynamic check for such a change detailed in other work~\ref{stolz:isolarefa}
 remains unchanged through the introduction of an assertion \jcode{assert temp == x;} to uncover violations after the fact,
 which is useful e.g. when checking the refactored code against its suite of unit tests.
 
-In Refinity one proceeds to verify a refactoring as correct by supplying the code before and after refactoring and supplying a desired precondition and postcondition to relate
-the two programs. One essentially asks Refinity: Given these preconditions does the postcondition hold after abstract execution of these two programs? Refinity accepts a restricted
+In REFINITY one proceeds to verify a refactoring as correct by supplying the code before and after refactoring and supplying a desired precondition and postcondition to relate
+the two programs. One essentially asks REFINITY: Given these preconditions does the postcondition hold after abstract execution of these two programs? REFINITY accepts a restricted
 subset of Java, the same restrictions present in KeY, with extensions for abstract program fragments; pieces that are ``placeholders'' for concrete Java code.
 The specification facilities for either Java constructs or abstact program fragments are described in the Java Modelling Language (JML) with some extensions.
 
-We describe the refactoring to Refinity as shown with a left side (Before) in Listing~\ref{lst:ExtractVariable-refinity-before},
+We describe the refactoring to REFINITY as shown with a left side (Before) in Listing~\ref{lst:ExtractVariable-refinity-before},
 a right side (After) in Listing~\ref{lst:ExtractVariable-refinity-after} and a method level context (Method) in Listing~\ref{lst:ExtractVariable-refinity-method}.
 
-Additionally some information is declared in parts of Refinity's interface that are not shown here:
+Additionally some information is declared in parts of REFINITY's interface that are not shown here:
 Free program variables, here \rcode{x}; abstract location sets, here \rcode{frN} and \rcode{fpN}; relevant locations for the before and after code, here empty;
 the desired precondition, here empty, and the desired postcondition.
 
@@ -71,11 +71,11 @@ We use an assertion to ensure we consider only the refactoring when \rcode{x} is
 \label{lst:ExtractVariable-refinity}
 \end{figure}
 
-Refinity manages to prove automatically that the postcondition holds after abstract execution of both side; here meaning that
+REFINITY manages to prove automatically that the postcondition holds after abstract execution of both side; here meaning that
 \rcode{x} and \rcode{temp} hold the same reference and that any execptions thrown are identical.
 
 One can consider what we have managed to encode and prove a partial success.
-Indeed if we remove the constraint on \rcode{x} not being assigned to as a side-effect of executing \rcode{n()}  Refinity fails to prove our postcondition end up holding.
+Indeed if we remove the constraint on \rcode{x} not being assigned to as a side-effect of executing \rcode{n()}  REFINITY fails to prove our postcondition end up holding.
 Yet this is a slightly unnatural encoding if we are to consider concrete instantiations of what we have expressed here.
 We do not really intend to encode that return statements must occur at the end as shown, but that from that point onwards the reference \rcode{x} and \rcode{temp} hold
 are identical. Thus we manage to encode our desired postcondition, but not capture the desired concrete instantiation with our fragments.
