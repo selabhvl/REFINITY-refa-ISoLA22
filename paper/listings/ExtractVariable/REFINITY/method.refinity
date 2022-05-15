@@ -2,7 +2,6 @@ class X {
  void n() {
  /*@ assignable frN;
    @ accessible fpN;
-   @ return_behavior requires false;
    @ exceptional_behavior requires false;  
    @*/
    \abstract_statement N;
