@@ -61,7 +61,7 @@ whose interpretation must adhere to $\mathcal{I}(\mathtt{allocate})(h) = o_h$. T
 %\end{figure}
 
 \end{definition}
-The modification is the addition of $v = \mathtt{allocate(heap)}$ to the antecedent.\footnote{In terms of implementation, the modification is  chainging the \texttt{allocateInstance} taclet in KeY.}
+The modification is the addition of $v = \mathtt{allocate(heap)}$ to the antecedent.\footnote{In terms of implementation, the modification is changing the \texttt{allocateInstance} taclet in KeY.}
 The modified rule suffices to show the simple equivalence of \codein{return new C()} to itself from above.
 Continuing our investigation of when objects are considered equal, 
 where the two allocations are independent from each other, i.e., any side-effects of the constructors are not visible to each other, \codein{C} is not a subtype of \codein{D} and vice versa.
@@ -97,8 +97,8 @@ The first rule uses the assumption that the orders are only sensitive to the \co
 Intuitively, this implements a different counter for each class in the type hierarchy and two objects are considered equal if the counters of their classes are equal.
 Creating an object of a class, increases the counter of this class and all its superclasses.
 This suffices to prove the programs in Listing~\ref{lst:ObjectCreation-refinity} to be equivalent. If~\codein{C} is a sub type of~\codein{D}, then the proof fails.
-\eknote*{updated}{%
-The second rule is able to remove intermittent operations that are symbolically represented on the heap, e.g.\ in \lstinline{x = new C(); x.set(1); y = new D();} versus \lstinline{y = new D(); x = new C(); x.set(1);}, but are not relevant to object creation.
+\vsnote*{Still not seeing how this can be true.}{%
+The second rule is able to remove intermittent operations that are symbolically represented on the heap, e.g.\ in \lstinline{x = new C(); x.set(1); y = new D()} versus \lstinline{y = new D(); x = new C(); x.set(1)}, but are not relevant to object creation.
 }
 
 \begin{figure}[tbp]
@@ -132,7 +132,7 @@ return new C(2);
 
 Note that we ignore the state of fields in the heap, meaning that equivalence of two objects is determined only by their counters. 
 This requires to be careful with specification: it does not suffice for each notion of equivalence to specify that two objects are equal, but also \emph{their} fields must be equal.
-For example, consider the class and programs in Listing.~\ref{lst:ObjectCreation-refinity-2}.
+For example, consider the class and programs in Listing~\ref{lst:ObjectCreation-refinity-2}.
 The returned objects are identical, but in the post states the heap assigns different values to their field.
 %To weaken the assumption and take the whole into account to determine  \vsnote*{@EK}{incomplete sentence}.
 
@@ -195,4 +195,5 @@ Alternatively, the notion of equivalence becomes even more specification-heavy f
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
+%%% eval: (auto-fill-mode -1)
 %%% End:
