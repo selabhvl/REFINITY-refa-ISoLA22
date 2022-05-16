@@ -39,7 +39,10 @@ Free program variables, here \rcode{x}; abstract location sets, here \rcode{frN}
 the desired precondition, here empty, and the desired postcondition.
 
 The pre- and postcondition are specified in terms of equations that may relate the effects of the before and after side such as return values, exceptions thrown and any of the relevant locations declared.
-In our case we simply specify the postcondition that \rcode{x} returned in Before must be identical to \rcode{temp} returned in After and that any exception thrown must be identical for the two sides.
+In our case we use the default postcondition REFINITY provides which is simply \rcode{\\result\_1 == \\result\_2} which are two sequences that contain for each respective side in this order:
+The return value if any, otherwise null; any exception thrown if any, otherwise null; the relevant abstract locations specified.
+
+Thus the default postcondition in our case will be that \rcode{x} returned in Before must be identical to \rcode{temp} returned in After and that any exception thrown must be identical for the two sides.
 
 We use an assertion to ensure we consider only the refactoring when \rcode{x} is an instance of its intended type.
 \begin{figure}[!h]
@@ -61,7 +64,7 @@ We use an assertion to ensure we consider only the refactoring when \rcode{x} is
 \end{figure}
 With only the specification as shown in Listing~\ref{lst:ExtractVariable-refinity} REFINITY is unable to prove that \rcode{x} will be identical to \rcode{temp} after AE of both sides.
 \oanote*{discuss the open goal if it is simple enough to convey}{Something is missing} and that is to specify that the execution of the abstract statement \rcode{N} cannot interfere with \rcode{x}.
-We must introduce a constraint on the frame \rcode{frN} of \rcode(N), namely that it is disjoint from \rcode{x}.
+We must introduce a constraint on the frame \rcode{frN} of abstract statement \rcode{N}, namely that it is disjoint from \rcode{x}.
 To do so we put an abstract execution constraint \rcode{//@ ae\_constraint \\disjoint(x,frN);} on each side which ensures \rcode{x}
 will be assumed not to be in \rcode{frN}.
 
