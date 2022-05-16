@@ -29,7 +29,7 @@ Furthermore we wish to specify that no exceptions will be thrown by the method b
 We achieve such a specification in REFINITY by supplying it a definition of \rcode{n()} as seen in Listing \ref{lst:ExtractVariable-refinity-method}.
 A method is specified and its only content is an abstract statement \rcode{\\abstract\_statement N;} preceeded by a comment where every line in the
 comment begins with a \rcode{@}-character which denotes that this is a specification, and in this case a specification for the abstract statement.
-The specification reads straigthforward with no surprises. An execution of the abstract statement \rcode{N} may have the effects of: assigning to the
+The specification reads straigthforward with no surprises. An execution of the abstract statement \rcode{N} may have the effects of: Assigning to the
 abstract location set \rcode{frN}, accessing the abstract location set \rcode{fpN} and may not throw any exceptions.
 
 An abstract location set represents a fixed set of memory locations a program may read or write to.
