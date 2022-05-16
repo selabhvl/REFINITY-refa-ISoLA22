@@ -1,12 +1,12 @@
 Let us consider a refactoring that eliminates assignments to method parameters as seen in lis.~\ref{lst:RemoveAssignment-java-before} and instead introduces a temporary variable initialized to the method parameter's value that replaces the usage of the method parameter at any usage site as seen in lis.~\ref{lst:RemoveAssignment-java-after}.
 
 \begin{figure}
-  \begin{subfigure}{.45\linewidth}
+  \begin{subfigure}[b]{.45\linewidth}
     \lstinputlisting[style=smallJava]{RemoveAssignmentToParameter/Java/before.java}
     \caption{Before}
     \label{lst:RemoveAssignment-java-before}
-  \end{subfigure}\hspace{1cm}
-  \begin{subfigure}{.45\linewidth}
+  \end{subfigure}\hfill
+  \begin{subfigure}[b]{.45\linewidth}
     \lstinputlisting[style=smallJava]{RemoveAssignmentToParameter/Java/after.java}
     \caption{After}
     \label{lst:RemoveAssignment-java-after}
@@ -22,12 +22,12 @@ Naturally REFINITY is unable to prove lis.~\ref{lst:RemoveAssignment-refinity-be
 as we are not able to further relate $P$ and $Q$; we would need to somehow additionally state that $Q$ is produced through a substitution on $P$.
 
 \begin{figure}
-  \begin{subfigure}{.45\linewidth}
+  \begin{subfigure}[b]{.45\linewidth}
     \lstinputlisting[style=refinity]{RemoveAssignmentToParameter/REFINITY/before.refinity}
     \caption{Before}
     \label{lst:RemoveAssignment-refinity-before}
-  \end{subfigure}\hspace{1cm}
-  \begin{subfigure}{.45\linewidth}
+  \end{subfigure}\hfill
+  \begin{subfigure}[b]{.45\linewidth}
     \lstinputlisting[style=refinity]{RemoveAssignmentToParameter/REFINITY/after.refinity}
     \caption{After}
     \label{lst:RemoveAssignment-refinity-after}

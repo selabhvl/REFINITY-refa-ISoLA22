@@ -17,8 +17,8 @@ Semantically JavaDL formulas are not evaluated in a single first-order structure
 which is a collection of first-order structures \cite{DBLP:series/lncs/10001}.}
 
 The use of SE to potentially explore every possible execution a program can have is a popular program analysis technique (cite draft paper \cite{xxx}). AE extends SE by
-introducing abstract program elements (APEs) to the base language that is symbolicaly executed.
-For statements and expressions a corresponding abstract statement and abstract expression are introduced in addition; .
+introducing abstract program elements (APEs) to the base language that is symbolically executed.
+For statements and expressions a corresponding abstract statement and abstract expression are introduced.
 APEs represent any possible substitution with concrete program elements, be it statements or expressions, from the base language being symbolically executed.
 Execution of APEs is then the leap taken in AE over traditional SE and require the introduction of abstract state changes, SE branching for
 any abrupt completion an APE may have (e.g. exceptions thrown), \oanote*{should at least be paraphrased}{over-approximation of returned values and thrown exceptions by symbols created ``dependently fresh'' for identifiers of abstract program placeholders} and a way to specifify the behavior of APEs ~\cite{steinhoefel-20}.
