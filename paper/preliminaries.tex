@@ -24,7 +24,7 @@ Execution of APEs is then the leap taken in AE over traditional SE and require t
 any abrupt completion an APE may have (e.g. exceptions thrown), \oanote*{should at least be paraphrased}{over-approximation of returned values and thrown exceptions by symbols created “dependently fresh” for identifiers of abstract program placeholders} and a way to specifify the behavior of APEs ~\cite{steinhoefel-20}.
 
 We summarize how AE is implemented in REFINITY by showing how to specify a method \rcode{void n()} where we do not want to specify the exact contents of its method body.
-Only that it could possibly assign to some locations (its frame) and access some locations (its footprint).
+Only that it could possibly assign to some abstract locations (its frame) and access some abstract locations (its footprint).
 Furthermore we wish to specify that no exceptions will be thrown by the method body.
 We achieve such a specification in REFINITY by supplying it a definition of \rcode{n()} as seen in Listing \ref{lst:ExtractVariable-refinity-method}.
 A method is specified and its only content is an abstract statement \rcode{\\abstract\_statement N;} preceeded by a comment where every line in the
