@@ -2,14 +2,13 @@
 
 The Hide Delegate refactoring can be described as an Extract Method refactoring on a call chain such as \jcode{Y y = o.f().g()}
 the call chain is extracted to a method on \jcode{o} such that we can replace the chain with a call to the new method \jcode{o.h()}
-which we declare as \jcode{Y h(){ return this.f().g(); }}.
+which we declare as \lstinline|Y h() { return this.f().g(); }|.
+\vsnote{I fixed a ``broken'' macro issue here.}
 The refactoring can enable less
 coupling as the class that contained the call chain afterwards does not need to know the return type of \jcode{f()}.
 We note that this is just one example and intermediate, dotted, expressions can be arbitrary long and/or broken up across assignments to local variables.
 \vsnote{Q: Generalize to \jcode{o = AE; z = o.g(); return z;} ?}
 \vsnote{Three things on the nature of encoding things in R.: i) this is an example that R. is bad at \textit{names}: we need concrete names \texttt{f/g} (with concrete parameters), but want placeholders. ii) we don't really remove/replace anything, since we need all the code that we want to use in the same class, i.e., the ``new'' method \jcode{hideDelegate()} was already present before -- but that's okay because it's obviously correct to introduce methods that are not called -- another example of syntactical requirements on encodings in R. iii) This is the example for our abuse of R.\ for OO-based refactorings.}
-
-\vsnote*{}{Full example with all annotations, AE constraints etc. explained here.}
 
 \ref{lst:HideDelegate-nofields-refinity}
 
@@ -49,9 +48,12 @@ We note that this is just one example and intermediate, dotted, expressions can 
 \subsection*{Hide Delegate --- once more with fields}
 
 Similarily a minor variation of the  Hide Delegate refactoring also applies to a call chain which assigns to temporaries or fields
-e.g. \lstinline[style=smallJava]|x = o.f(); Y y = x.g()|. Here we must beware that in our replacement we may observe a difference
+e.g. \lstinline[style=smallJava]|x = o.f(); Y y = x.g()|.
+\vsnote*{Probably not true.}{%
+Here we must beware that in our replacement we may observe a difference
 if \lstinline[style=smallJava]|g()| can leave \lstinline[style=smallJava]|x| in an altered state which is then eliminated by applying
 the refactoring \lstinline[style=smallJava]|Y y = h();|
+}
 
 
 
