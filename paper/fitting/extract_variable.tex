@@ -59,28 +59,18 @@ We use an assertion to ensure we consider only the refactoring when \rcode{x} is
 \captionof{lstlisting}{Extract Local Variable}
 \label{lst:ExtractVariable-refinity}
 \end{figure}
-With only the specification as shown in Listing \ref{lst:ExtractVariable-refinity} REFINITY is unable to prove that \rcode{x} will be identical to \rcode{temp} after AE of both sides.
-Something is missing and that is to specify that the execution of the abstract statement \rcode{N} cannot interfere with \rcode{x}.
+With only the specification as shown in Listing~\ref{lst:ExtractVariable-refinity} REFINITY is unable to prove that \rcode{x} will be identical to \rcode{temp} after AE of both sides.
+\oanote*{discuss the open goal if it is simple enough to convey}{Something is missing} and that is to specify that the execution of the abstract statement \rcode{N} cannot interfere with \rcode{x}.
 We must introduce a constraint on the frame \rcode{frN} of \rcode(N), namely that it is disjoint from \rcode{x}.
 To do so we put an abstract execution constraint \rcode{//@ ae\_constraint \\disjoint(x,frN);} on each side which ensures \rcode{x}
 will be assumed not to be in \rcode{frN}.
 
-What can be seen in the first three lines of the Before and After sides is an \emph{abstract execution constraint} on \rcode{x}.
-Namely that \rcode{x} should be disjoint from the abstract location set \rcode{frN}.
-
-What we have done by specifying the \emph{abstract execution constraint}, the first three lines in Before and After, is to place an additional restriction on the assignable abstract
-location set \rcode{frN} of the AS present in \rcode{n()} stating that \rcode{x} is not an element of \rcode{frN}. As such \rcode{n()} should not be able to alter the value (a reference)
-\rcode{x} holds.
-
-
-REFINITY manages to prove automatically that the postcondition holds after abstract execution of both side; here meaning that
-\rcode{x} and \rcode{temp} hold the same reference and that any execptions thrown are identical.
+After the aformentioned change REFINITY manages to automatically prove that the postcondition holds after abstract execution of both sides;
+\rcode{x} and \rcode{temp} will hold identical references and any execptions thrown will be identical.
 
 One can consider what we have managed to encode and prove a partial success.
-Indeed if we remove the constraint on \rcode{x} not being assigned to as a side-effect of executing \rcode{n()}  REFINITY fails to prove our postcondition end up holding.
 Yet this is a slightly unnatural encoding if we are to consider concrete instantiations of what we have expressed here.
-We do not really intend to encode that return statements must occur at the end as shown, but that from that point onwards the reference \rcode{x} and \rcode{temp} hold
-are identical. Thus we manage to encode our desired postcondition, but not capture the desired concrete instantiation with our fragments.
+What we would somehow want to express is to have after the first call to \rcode{n()} on each side abstract statements that are related by a substitution of \rcode{x} and \rcode{temp}.
 
 %%% Local Variables:
 %%% mode: latex
