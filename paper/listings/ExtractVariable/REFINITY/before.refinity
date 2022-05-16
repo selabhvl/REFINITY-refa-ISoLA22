@@ -1,6 +1,4 @@
-/*@ ae_constraint
-  @ \disjoint(x, frN);
-  @*/
+//@ ae_constraint \disjoint(x, frN);
 assert x instanceof X;
 ((X)x).n();
 ((X)x).n();
