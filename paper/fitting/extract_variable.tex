@@ -45,6 +45,7 @@ The return value if any, otherwise null; any exception thrown if any, otherwise 
 Thus the default postcondition in our case will be that \rcode{x} returned in Before must be identical to \rcode{temp} returned in After and that any exception thrown must be identical for the two sides.
 
 We use an assertion to ensure we consider only the refactoring when \rcode{x} is an instance of its intended type.
+A current limitation of the implementation of REFINITY necessitate the casting \rcode{(X)x} as free program variables may only be declared to be of type Object.
 \begin{figure}[!h]
   \centering
   \begin{subfigure}[b]{.34\linewidth}
