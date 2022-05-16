@@ -1,7 +1,7 @@
 class Owner {
  Resource r;
  Resource getResource() { 
-/*@ assignable r, frG;
+/*@ assignable frG;
   @ accessible fpG;
   @ ...
   @*/

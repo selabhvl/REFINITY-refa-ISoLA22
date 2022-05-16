@@ -14,7 +14,7 @@
     public Owner getOwner() {
 
         /*@ 
-          @ assignable owner, frF;
+          @ assignable frF;
           @ accessible fpF;
           @ return_behavior requires false;
           @ exceptional_behavior requires false;
@@ -37,7 +37,7 @@ public class Owner {
     public Resource getResource() {
         
         
-        /*@ assignable resource, frG;
+        /*@ assignable frG;
           @ accessible fpG;
           @ return_behavior requires false;
           @ exceptional_behavior requires false;

@@ -1,7 +1,7 @@
 class Resource {
  Owner o;
  Owner getOwner() {
- /*@ assignable o,frF;
+ /*@ assignable frF;
    @ accessible fpF;
    @ ...
    @*/
