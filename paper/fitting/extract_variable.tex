@@ -63,7 +63,9 @@ We use an assertion to ensure we consider only the refactoring when \rcode{x} is
 \label{lst:ExtractVariable-refinity}
 \end{figure}
 With only the specification as shown in Listing~\ref{lst:ExtractVariable-refinity} REFINITY is unable to prove that \rcode{x} will be identical to \rcode{temp} after AE of both sides.
-\oanote*{discuss the open goal if it is simple enough to convey}{Something is missing} and that is to specify that the execution of the abstract statement \rcode{N} cannot interfere with \rcode{x}.
+We get several instances of SE resulting in the reference \rcode{x} holds being changed by the abstract statement \rcode{N} in \rcode{n()}.
+
+To prohibit this we specify that the execution of the abstract statement \rcode{N} cannot interfere with \rcode{x}.
 We must introduce a constraint on the frame \rcode{frN} of abstract statement \rcode{N}, namely that it is disjoint from \rcode{x}.
 To do so we put an abstract execution constraint \rcode{//@ ae\_constraint \\disjoint(x,frN);} on each side which ensures \rcode{x}
 will be assumed not to be in \rcode{frN}.
