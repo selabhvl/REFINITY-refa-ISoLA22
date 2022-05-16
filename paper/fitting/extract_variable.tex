@@ -40,7 +40,7 @@ the desired precondition, here empty, and the desired postcondition.
 
 The pre- and postcondition are specified in terms of equations that may relate the effects of the before and after side such as return values, exceptions thrown and any of the relevant locations declared.
 In our case we use the default postcondition REFINITY provides which is simply \rcode{\\result\_1 == \\result\_2} which are two sequences that contain for each respective side in this order:
-The return value if any, otherwise null; any exception thrown if any, otherwise null; the values at relevant abstract locations specified.
+The return value if any, otherwise null; any exception thrown if any, otherwise null; onwards, the final values at the relevant abstract locations specified.
 
 Thus the default postcondition in our case will be that \rcode{x} returned in Before must be identical to \rcode{temp} returned in After and that any exception thrown must be identical for the two sides.
 
