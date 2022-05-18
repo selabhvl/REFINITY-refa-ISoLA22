@@ -19,10 +19,14 @@ an expressive permission model natively, with tool support including two back-en
 symbolic execution,one on verification condition generation; an inference tool based on abstract
 interpretion is currently under development. \cite{DBLP:series/natosec/0001SS17}}
 
-Stolz, Ka I Pun and Gheyi, investigate how well-known refactorings interact with concurrency in Active Object languages \cite{DBLP:conf/isola/StolzPG20}.
+Stolz, Ka I Pun and Gheyi investigate how well-known refactorings interact with concurrency in Active Object languages~\cite{DBLP:conf/isola/StolzPG20}.
 Findings show that refactorings that are straight-forward in Java are not necessarily so under the concurrency model considered and identify key
 program transformations that may cause interactions.
 REFINITY and its foundation KeY strictly considers sequential Java programs.
+
+Eilertsen, Stolz and Bagge demonstrate a technique of introducing runtime checks in Java for two refactorings \emph{Extract And Move Method} and
+\emph{Extract Local Variable}~\cite{stolz:isolarefa}. The technique in combination with testing can detect changed behavior and allow identification
+of which refactoring step introduced the change the deviant behavior.
 
 
 
