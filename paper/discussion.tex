@@ -1,0 +1,15 @@
+\begin{itemize}
+\item Challenge: be careful in encoding, since currently LHS and RHS share classes and methods.
+\item Adressing this would essentially require choosing unique names on LHS and RHS, since they go into a single KeY-proof, and hence would require some form of mapping objects between both sides.
+\item Challenge: capturing the most general instance of a pattern (example: Extract Local Variable, with the duplicate call to \texttt{n()}).
+\item For example for HD, we need to have two cases, one with fields, in addition to the one with local vars.
+\item We feel that often pre-conditions on a refactoring can easily be discharged by simple syntactical or static analysis (e.g. ``code does never read attribute $x$ of objects of type $C$'').
+Yet unlike in other formal work where the program is encoded as part of the proof-term, we cannot implement such analyses within KeY, and can only informally document and require such side-conditions on refactorings.
+\end{itemize}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% eval: (auto-fill-mode -1)
+%%% TeX-master: "main"
+%%% End:
