@@ -23,14 +23,14 @@ In the following, for simplification, we assume that the array is only used with
   \label{refa:ReplaceArray-java}
 \end{figure}
 
-Having established that both programs are not equal, but should be considered equivalent, ... .
+Having established that both programs are not equal, but should be considered equivalent, \vsnote*{I think @EK wrote this partial sentence.}{...} .
 To avoid having to establish the correspondence in all uses (of either setter/getter or the array),
-we can assume that accesses in either case are wrapped in a method --- if we assume that Extract Method/Inline Method are already proven as correct.
+we can assume that accesses in either case are wrapped in a method --- if we assume that \rname{Extract Method}/\rname{Inline Method} are already proven as correct.
 This reliance on other refactorings allows us to compartmentalise the reasoning, and mostly focus on contracts for the involved methods.
 While abstract execution is good at reasoning about placeholders for abstract behaviour, a similar mechanism for abstract structures is missing.
 Through some intermediate steps, we can offload most of the reasoning to a history-based mechanism with some static assumptions on the code that can be easily checked.
 The first is to encapsulate all accesses in methods; setters/getters on the object-side, and static helpers on the array-side.\vsnote{Proved by Dom, kinda.}
-We can then formulate the question to REFINITY as given in Fig.~\ref{lst:ReplaceArray-REF} for each of the operations in the API, here the matching pairs of setters/getters:
+We can then formulate the question to \Refinity{} as given in Fig.~\ref{lst:ReplaceArray-REF} for each of the operations in the API, here the matching pairs of setters/getters:
 
 \begin{figure}
   \begin{subfigure}[b]{.45\linewidth} 
@@ -63,7 +63,7 @@ p.setX(value);
 It remains to show that a) neither abstract statement overwrites \texttt{p}, that b) the histories of API operations called on either side match pairwise,
 and that c) in the post-condition the values in their respective components match.
 
-\vsnote*{}{After spelling this out, it looks like we should just start with \href{https://memberservices.informit.com/my_account/webedition/9780135425664/html/replaceprimitivewithobject.html}{``Replace Data Value with Object''}.}
+%\vsnote*{}{After spelling this out, it looks like we should just start with \href{https://memberservices.informit.com/my_account/webedition/9780135425664/html/replaceprimitivewithobject.html}{``Replace Data Value with Object''}.}
 
 \subsection*{Replacing interface-based implementations}
 
@@ -99,38 +99,39 @@ and use in contrast to above \textit{identical abstract statements}.
 However, we need to rely on \textit{method contracts} for operations in the interface, and that the implementations actually respect this interface.
 Furthermore, again due to the identical interfaces, we do not need separate cases for each operation in the interface,
 however, this relies on \textit{only} manipulating object \texttt{p} through the interface.
-Listing~\ref{lst:refa-ibased} illustrates the corresponding verification task for REFINITY.
+Listing~\ref{lst:refa-ibased} illustrates the corresponding verification task for \Refinity{}.
 It remains to handle the relevant location set correctly, as nonetheless we are changing the object and hence have to restrict the types accordingly.
 \vsnote*{TODO: Ole/Eduard figure out/check specification of $M$ \& postcondition?}{}
 
-REFINITY currently does \vsnote*{TODO: Ole reporting current state of affairs here}{or does not} succeed in proving \vsnote*{Exactly what are we asking REFINITY, see above}{this}.
+\Refinity{} currently does \vsnote*{TODO: Ole reporting current state of affairs here}{or does not} succeed in proving \vsnote*{Exactly what are we asking REFINITY, see above}{this}.
 
-\noindent\rule{\textwidth}{2pt}
+% \noindent\rule{\textwidth}{2pt}
 
 %%%%%%%%%%%%%
-\vsnote*{}{Older text to be adapted/reused.}
+% \vsnote*{}{Older text to be adapted/reused.}
 
-In REFINITY it would be difficult to even model this because what we would most naturally want to do is to somehow write a LHS with an abstract statement $P$ and a RHS with an abstract statemetn $Q$ and specify that $P$ contains an array used to index some data as seen in lis.~\ref{refa:ReplaceArray-java}. Then we would want to require somehow that $Q$ is exactly as $P$ but with the array substituted for a data object and any reads or writes to the array replaced with appropriate setters and getters. Such things are not possible as on the modeling level the abstract elements operate as black boxes whose contents we can't specify.
+% In REFINITY it would be difficult to even model this because what we would most naturally want to do is to somehow write a LHS with an abstract statement $P$ and a RHS with an abstract statemetn $Q$ and specify that $P$ contains an array used to index some data as seen in lis.~\ref{refa:ReplaceArray-java}. Then we would want to require somehow that $Q$ is exactly as $P$ but with the array substituted for a data object and any reads or writes to the array replaced with appropriate setters and getters. Such things are not possible as on the modeling level the abstract elements operate as black boxes whose contents we can't specify.
 
-If we attempt to specify the refactoring in REFINITY so that it captures all refactorings of the kind shown in lis.~\ref{refa:ReplaceArray-java} the closest we come is as show in lis.~\ref{refa:ReplaceArray-refinity} where valid instantiations
-also include programs that don't contain any arrays at all.
+% If we attempt to specify the refactoring in REFINITY so that it captures all refactorings of the kind shown in lis.~\ref{refa:ReplaceArray-java} the closest we come is as show in lis.~\ref{refa:ReplaceArray-refinity} where valid instantiations
+% also include programs that don't contain any arrays at all.
 
-\begin{figure}
-  \begin{subfigure}[b]{.45\linewidth} 
-    \lstinputlisting[style=refinity]{ReplaceArrayWithObject/REFINITY/before.refinity}
-    \caption{Before}
-    \label{refa:ReplaceArray-refinity-before}   
-  \end{subfigure}\hfill
-  \begin{subfigure}[b]{.45\linewidth}
-    \lstinputlisting[style=refinity]{ReplaceArrayWithObject/REFINITY/after.refinity}
-    \caption{After}
-    \label{refa:ReplaceArray-refinity--after}
-  \end{subfigure}
-  \captionof{lstlisting}{A too wide pattern}
-  \label{lst:ReplaceArray-refinity}
-\end{figure}
+% \begin{figure}
+%   \begin{subfigure}[b]{.45\linewidth} 
+%     \lstinputlisting[style=refinity]{ReplaceArrayWithObject/REFINITY/before.refinity}
+%     \caption{Before}
+%     \label{refa:ReplaceArray-refinity-before}   
+%   \end{subfigure}\hfill
+%   \begin{subfigure}[b]{.45\linewidth}
+%     \lstinputlisting[style=refinity]{ReplaceArrayWithObject/REFINITY/after.refinity}
+%     \caption{After}
+%     \label{refa:ReplaceArray-refinity--after}
+%   \end{subfigure}
+%   \captionof{lstlisting}{A too wide pattern}
+%   \label{lst:ReplaceArray-refinity}
+% \end{figure}
 
 %%% Local Variables:
 %%% mode: latex
+%%% eval: (auto-fill-mode -1)
 %%% TeX-master: "../main"
 %%% End:

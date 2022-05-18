@@ -14,7 +14,7 @@ specify the order of side-effects/events. The most straightforward approach is t
 and specify properties using the surrounding logic, in our case, JavaDL. This approach has been taken for dynamics logics (without investigating relation verification) in, e.g., ABSDL~\cite{DBLP:journals/jlp/DinO14} and for relational verification (albeit without using a dynamic logic) by, e.g., Barthe et al.~\cite{DBLP:conf/fmcad/BartheEGGKM19}.
 This explicit encoding of user-defined execution histories has the advantage that it is not only useful for proofs, but can also directly be harnessed in concrete unit-tests where we can explicitly compare the recorded history of an earlier execution of a test with the history of the same test but on the refactored code base.
 
-A main advantage of encoding the trace in the post state, is that relational verification (either based on self-composition or its variants~\cite{DBLP:conf/spc/DarvasHS05,DBLP:conf/csfw/BartheDR04,DBLP:conf/fm/BartheCK11} or using the proof obligation described above),
+A main advantage of encoding the trace in the post state is that relational verification (either based on self-composition or its variants~\cite{DBLP:conf/spc/DarvasHS05,DBLP:conf/csfw/BartheDR04,DBLP:conf/fm/BartheCK11} or using the proof obligation described above),
 can use the state logic to describe both states.
 However, first-order specifications of temporal properties have been proven to be unwieldy, large and hard to understand. 
 %This places even more burden on the developer, as they have to make sure that their chosen encoding of events in the data structure captures the salient part of equivalence.
@@ -33,8 +33,9 @@ where $\lceil \phi \rceil$ denotes the trace where the state formula $\phi$ hold
 
 Consider the two programs in Fig.~\ref{fig:sth}. It is showing a refactoring of some program using a \codein{File}, where we only give the trace specification.
 The first program specifies that some initialization happens that is guaranteed to call \codein{f.open}, then the file is read and written,
-and then some finalization happens that calls \codein{f.close}. The second program, switches the order of read and write.
-The programs are, obviously, not equivalent in a strict sense, but it the trace property we are interested in is only concerned with the order of operations on the file 
+and then some finalization happens that calls \codein{f.close}.
+The second program switches the order of read and write.
+The programs are, obviously, not equivalent in a strict sense, but if the trace property we are interested in is only concerned with the order of operations on the file 
 (\codein{open}, \codein{write}, \codein{read} and \codein{open}), for example to express that only opened files are read and written to, then we need to specify a notion of equivalences
 
 
@@ -63,7 +64,7 @@ s = f.read();
 \label{fig:sth}
 \end{figure}
 
-
+\vsnote*{@ALL TODO: some conclusion here missing}{Speculate about difficult in reconciliating traces + AEs \textit{here}}.
 
 %Harnessing output as a mechanism to decide equivalence requires instrumentation of both software versions, though:
 %we need to extend our code with a (global) variable that accumulates observable behaviour at dedicated locations in the program.
@@ -71,8 +72,6 @@ s = f.read();
 %and achieves the desired effect when we completely ignore differences in the relevant locations set by not including any variables in there at all.
 
 %\vsnote{Just a minor observation.}
-
-%\vsnote*{}{TODO: Any good example here?}
 
 %\vsnote*{}{TODO: Idea can't be new. Also see histories in general (Eduard?)}
 
