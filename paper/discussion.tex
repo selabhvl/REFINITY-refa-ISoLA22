@@ -1,11 +1,38 @@
-\begin{itemize}
-\item Challenge: be careful in encoding, since currently LHS and RHS share classes and methods.
-\item Adressing this would essentially require choosing unique names on LHS and RHS, since they go into a single KeY-proof, and hence would require some form of mapping objects between both sides.
-\item Challenge: capturing the most general instance of a pattern (example: Extract Local Variable, with the duplicate call to \texttt{n()}).
-\item For example for HD, we need to have two cases, one with fields, in addition to the one with local vars.
-\item We feel that often pre-conditions on a refactoring can easily be discharged by simple syntactical or static analysis (e.g. ``code does never read attribute $x$ of objects of type $C$'').
+In the following, we shortly discuss some of the raised issues and in how far they can be adressed in the future and possibly in the short-term.
+\vsnote{Do we?}
+
+The first challenge is that due to the way \Refinity{} prepares the environment and the top-level proof obligation for KeY,
+in fact both sides in a refactoring share the same Java namespace.
+This means for example that the \rname{Extract Method} refactoring no so much proves the original correct, but rather a version where the extracted method is already present.
+Care must be taken to set this up correctly, and e.g.\ in the \rname{Extract Method} example make sure that the methods is not used on the \textit{Before}-side.
+The same holds for refactorings that remove code.
+\vsnote{Underwhelming.}
+
+Adressing this would requiring choosing unique names in either schemata, since they go into a single KeY-proof, and hence would require some form of mapping classes/objects of distinct types (due to the nominal type system of Java) between both sides.
+This issue is closely related to the challenge we discussed before when trying to relate unrelated yet semantically equivalent data types (see Section \ref{sec:relational}).
+In general, we observe that currently \Refinity{} requires some scaffolding that makes the actual refactoring less obvious,
+such as our use of assertions and casts.
+
+A more general problem is capturing the most general instance of a refactoring.
+Currently, \Refinity{} lacks placeholders for names, which means that e.g.\ in the \rname{Extract Local Variable} refactoring we would have to instantiate the \textit{Before}-schema for every concrete instance with the corresponding identifier names for variables.
+Likewise, the related \rname{Hide Delegate} example uses concrete method- and class names.
+During our development of this refactoring, we have found us revising the encoding and use of placeholders with their annotations repeatedly.
+Conversely, due to the challenges in checking instantiation of schemata against concrete programs already pointed out by Steinhöfel \cite{steinhoefel-20},
+\vsnote{Maybe add page number -- or is this also mentioned in the paper. Ole?}
+one has to take care not to write too restrictive programs the rule out useful working instances
+
+Another area for placeholders would be a generalisation of storage locations:
+we foresee that there exist refactorings that may need to be specified twice, once with using local variables and another time using attributes in their schemata.
+\vsnote{@EK: Can you confirm that I'm making sense here? It turns out that none of our refactorings is actually an example for that.}
+\vsnote*{}{Eduard, are variables on the top-level of the method-context (and hence in Problem.java) equivalent to \textit{free program vars} in the sense that KeY always splits accesses into null/not-null when there is no concrete value? That was a bit unclear to us, since although in principle an AS could update them with a random value, we didn't see this explicitly in the proofs, or we missed it.}
+
+\vsnote*{}{Not sure if the following should be here or in future work -- which we don't have as of yet?}
+For the time being we are limited to checking schemata against each other.
+In the future, when we move on to checking instantiations, 
+we feel that often necessary pre-conditions on a refactoring can easily be discharged by simple syntactical or static analysis (e.g. ``code does never read attribute \lstinline|x| of objects of type \lstinline|C|'').
 Yet unlike in other formal work where the program is encoded as part of the proof-term, we cannot implement such analyses within KeY, and can only informally document and require such side-conditions on refactorings.
-\end{itemize}
+Correspondingly, we will also not be able to use KeY to formulate and prove a lemma that such a static property entails the necessary consequences.
+\vsnote*{}{Note to Eduard: what I mean here is that e.g. in Coq, if I would have the Java AST, I could implement \textbf{AND} prove as correct a static analysis. Can you add a sentence conjecturing on what would be possible if the code would be available as part of the proof-context? Or maybe it already is in some way?}
 
 
 %%% Local Variables:
