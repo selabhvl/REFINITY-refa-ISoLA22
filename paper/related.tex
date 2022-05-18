@@ -27,6 +27,7 @@ REFINITY and its foundation KeY strictly considers sequential Java programs.
 Eilertsen, Stolz and Bagge demonstrate a technique of introducing runtime checks in Java for two refactorings \emph{Extract And Move Method} and
 \emph{Extract Local Variable}~\cite{stolz:isolarefa}. The technique in combination with testing can detect changed behavior and allow identification
 of which refactoring step introduced the change the deviant behavior.
+Our proof of correctness of \emph{Extract Local Variable} in REFINITY is inspired by the technique employed by Eilertsen et. al
 
 
 
@@ -38,7 +39,8 @@ lazy behavioural subtyping, for
 an object-oriented kernel language similar to Featherweight Java.  The
 proof system avoids reverifying methods that are not modified
 explicitly by the class adaptation.
-
+\oanote*{paper is a challenge to read, is this correct?}{KeY and REFINITY allows for modularity in proof and specification, but not the incremental reasoning broched
+for the proof system for adaptable class hierarchies.}
 
 
 
