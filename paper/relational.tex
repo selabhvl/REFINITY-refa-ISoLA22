@@ -2,12 +2,14 @@ Another area of interest for equivalence is replacing one data structure with an
 e.g.\ Fowler's \cite{needed}\vsnote{TODO: @Ole, I'm sure Fowler had something, can you check please?}.
 As an example, in the following we look at a piece of code where an array is replaced with an object (or vice versa).
 Again, from the strict default perspective of ``equal return values, equal heaps'', any two programs using the data structures are obviously not equal.
-Encoding observability as per the previous section will obviously solve this issue, as the observables would ideally talk about the constituent parts.
+Encoding observability through traces as per the previous section will obviously solve this issue, as the observables would ideally talk \vsnote*{of ...?}{about the constituent parts}.
+A new challenge arises when both programs use different or disjoint sets of operations, i.e.\ we have different alphabets for their trace languages.
 
 \input{limits/replace_array_with_object}
 
 
 %%% Local Variables:
 %%% mode: latex
+%%% eval: (auto-fill-mode -1)
 %%% TeX-master: "main"
 %%% End:

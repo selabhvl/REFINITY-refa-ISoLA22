@@ -1,20 +1,20 @@
 Similar or other approaches to formal verification of refactorings can be found in work by
-Garrido et. al. \cite{garrido2006formal} who formalize \emph{``Push Down Method''},
-\emph{``Pull Up Field''} and \emph{``Rename Temporary''} using an executable
+Garrido et. al. \cite{garrido2006formal} who formalize \rname{``Push Down Method''},
+\rname{``Pull Up Field''} and \rname{``Rename Temporary''} using an executable
 Java formal semantics in Maude and give partially mechanized proofs for the two former.
 
 Long Quan et. al. \cite{DBLP:conf/isola/QuanQL08} formulate refactorings as refinement
 laws in the calculus of refinement of component and object-oriented systems (rCOS),
 focusing on correctnes proofs of refactoring rules themselves.
 
-While KeY and REFINITY is unique for its relational verification capacity for
-schematic programs (or abstract programs) it is limited in power for verification
+While KeY and \Refinity{} are unique for their relational verification capacity for
+schematic programs (or abstract programs) they are limited in power for verification
 of concrete programs relying much more on manual specification or interaction \cite{DBLP:conf/aplas/Steinhofel20}
 than tools like LLRêve \cite{DBLP:journals/jar/KieferKU18} or SymDiff \cite{DBLP:conf/cav/LahiriHKR12}
 which offer more automation for concrete programs.
 
 \oanote*{sort of in the same ballpark}{
-Peter M{\"u}ller et. al, Viper,  presents a verification infrastructure whose intermediate language supports
+Peter M{\"u}ller \vsnote*{The dot goes somewhere else.}{et. al}, Viper,  presents a verification infrastructure whose intermediate language supports
 an expressive permission model natively, with tool support including two back-end verifiers: one based on
 symbolic execution,one on verification condition generation; an inference tool based on abstract
 interpretion is currently under development. \cite{DBLP:series/natosec/0001SS17}}
@@ -22,16 +22,17 @@ interpretion is currently under development. \cite{DBLP:series/natosec/0001SS17}
 Stolz, Ka I Pun and Gheyi investigate how well-known refactorings interact with concurrency in Active Object languages~\cite{DBLP:conf/isola/StolzPG20}.
 Findings show that refactorings that are straight-forward in Java are not necessarily so under the concurrency model considered and identify key
 program transformations that may cause interactions.
-REFINITY and its foundation KeY strictly considers sequential Java programs.
+\Refinity{} and its foundation KeY strictly considers sequential Java programs.
 
-Eilertsen, Stolz and Bagge demonstrate a technique of introducing runtime checks in Java for two refactorings \emph{Extract And Move Method} and
-\emph{Extract Local Variable}~\cite{stolz:isolarefa}. The technique in combination with testing can detect changed behavior and allow identification
+Eilertsen, Stolz and Bagge demonstrate a technique of introducing runtime checks in Java for two refactorings \rname{Extract And Move Method} and
+\rname{Extract Local Variable}~\cite{stolz:isolarefa}. The technique in combination with testing can detect changed behavior and allow identification
 of which refactoring step introduced the change the deviant behavior.
-Our proof of correctness of \emph{Extract Local Variable} in REFINITY is inspired by the technique employed by Eilertsen et. al
+Our proof of correctness of \rname{Extract Local Variable} in \Refinity{} is inspired by the technique employed by Eilertsen et al.
 
 
+\vsnote*{@Ole: TODO? Check for relevance.}{Schaefer et al.\url{https://dl.acm.org/doi/10.1145/1932682.1869485}}.
 
-//TODO look in rohit isola and anna refactoring papers
+\vsnote*{@Ole: TODO?}{\textit{Methinks} that the work on generating test cases for checking equivalent behaviour can't be unrelated -- maybe Massoni/Gheyi or someone in their transitive closure?}
 
 \cite{dovland:adaptableclass2015} proposes a proof system that allows
 incrementally reasoning about adaptable class hiearachies, based on
@@ -39,12 +40,13 @@ lazy behavioural subtyping, for
 an object-oriented kernel language similar to Featherweight Java.  The
 proof system avoids reverifying methods that are not modified
 explicitly by the class adaptation.
-\oanote*{paper is a challenge to read, is this correct?}{KeY and REFINITY allows for modularity in proof and specification, but not the incremental reasoning broached
+\oanote*{paper is a challenge to read, is this correct?}{KeY and \Refinity{} allows for modularity in proof and specification, but not the incremental reasoning broached
 for the proof system for adaptable class hierarchies.}
 
 
 
 %%% Local Variables:
 %%% mode: latex
+%%% eval: (auto-fill-mode -1)
 %%% TeX-master: "main"
 %%% End:

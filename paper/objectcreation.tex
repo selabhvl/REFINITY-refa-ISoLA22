@@ -1,28 +1,14 @@
 
-\begin{figure}
-  \centering
-  \begin{subfigure}{.2\linewidth}
-    \lstinputlisting[style=refinity]{ObjectCreation/REFINITY/before.refinity}
-    \caption{Before}
-  \end{subfigure}\hspace{1cm}
-  \begin{subfigure}{.2\linewidth}
-    \lstinputlisting[style=refinity]{ObjectCreation/REFINITY/after.refinity}
-    \caption{After}
-  \end{subfigure}
-\captionof{lstlisting}{Object creation}
-\label{lst:ObjectCreation-refinity}
-\end{figure}
-
 As we have seen in the previous section, \Refinity{} encodes a rather harsh regimen on program equivalence:
 in the absence of a more fine-grained (application-specific) post-condition, it encodes that return values or exceptions must be identical on both sides,
 as must be the objects in the \relevant{} location set (and the observables in this location set must be adequately specified).
 
-This, in combination with the symbolic execution of both programs, create a hurdle for programs that contain object creations (and, subsequently exceptions).
+This, in combination with the symbolic execution of both programs, creates a hurdle for programs that contain object creations (and, subsequently exceptions).
 An object allocation in JavaDL is, roughly sketched, symbolically executed by creating a fresh function symbol for the allocated object and storing it on the symbolic heap.
 
 
 The question of equivalence for created objects is not specific to abstract execution, yet important for its practicability: 
-abstract statements are embedded in concrete programs which change as well, and more complex and application specific refactorings must all language features of the
+abstract statements are embedded in concrete programs which change as well, and more complex and application-specific refactorings must take all language features of the
 host language into account.
 
 
@@ -30,6 +16,8 @@ At its core, the challenge lies in the fact that, as both programs are executed 
 Indeed, it is not obvious whether the program should be considered equivalent to itself in the first place.
 The program is executed twice from the same state, but this does not suffice for the two created objects to be equal -- the allocation must, additionally, be deterministic.
 In the following we make the assumption that this is indeed the case and use this information in the symbolic execution as follows.
+
+\vsnote*{@EK: There's a sentence here missing bridging from previous paragraph to definition.}{Probably needs a sentence that technical details are in the KeY-book; maybe pull up footnote?}
 
 \begin{definition}
 We assume that in every state of the Kripke structure, for every heap $h$, all objects are ordered by some order $<_h$, such that there is some
@@ -71,8 +59,10 @@ that counts all allocation, they get the same number from this counter. They are
 
 They are, however, distinguishable in the proof system due to the term-representation of the heap.
 If we choose to consider them equal, we must adapt our \codein{allocate} mechanism:
-First, it must be able to distinguish between the allocation of different classes and, second, it must be able to simplify the heap to ignore irrelevant operations on it.
-%\vsnote{@EK: on the one hand I agree, on the other, the way I see it, it's not that we want to ignore something, but we want the implicit partial order of independent changes? Anyway, no action required, and ignoring achieves this.}
+first, it must be able to distinguish between the allocation of different classes and, second, it must be able to simplify the heap to ignore irrelevant operations on it.
+% \vsnote{@EK: on the one hand I agree, on the other, the way I see it, it's not that we want to ignore something, but we want the implicit partial order of independent changes? Anyway, no action required, and ignoring achieves this.}
+\vsnote*{@EK: see above.}{We adapt the previous definition to take into account the types of objects.}
+
 \begin{definition}
 We assume that in every state of the Kripke structure, for every heap $h$ and every class $C$, all objects of type $C$ are ordered by some order $<_h^C$, such that there is some
 object $o_h^C$, such that (1) for all $o' <^C_h o$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
@@ -93,10 +83,29 @@ Let $\sqsubseteq$ be the subtype relation and $T(t)$ the type of a term.
 \mathtt{C::allocate(create(h, o))}\rightsquigarrow\mathtt{C::allocate(h)}& &&\text{if $C \not\sqsubseteq T(o)$}
 \end{align*}
 \end{definition}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{subfigure}{.2\linewidth}
+    \lstinputlisting[style=refinity]{ObjectCreation/REFINITY/before.refinity}
+    \caption{Before}
+  \end{subfigure}\hspace{1cm}
+  \begin{subfigure}{.2\linewidth}
+    \lstinputlisting[style=refinity]{ObjectCreation/REFINITY/after.refinity}
+    \caption{After}
+  \end{subfigure}
+\captionof{lstlisting}{Object creation}
+\label{lst:ObjectCreation-refinity}
+\end{figure}
+
 The first rule uses the assumption that the orders are only sensitive to the \codein{<allocated>} field and the second one that they are independent, besides the subtyping relation.
 Intuitively, this implements a different counter for each class in the type hierarchy and two objects are considered equal if the counters of their classes are equal.
-Creating an object of a class, increases the counter of this class and all its superclasses.
-This suffices to prove the programs in Listing~\ref{lst:ObjectCreation-refinity} to be equivalent. If~\codein{C} is a sub type of~\codein{D}, then the proof fails.
+Creating an object of a class increases the counter of this class and all its superclasses.
+This suffices to prove the programs in Listing~\ref{lst:ObjectCreation-refinity} to be equivalent.
+\vsnote*{@EK/Ole: Can someone clarify why/where this is not covered by/included in Dom's encoding on p.231 of the thesis? Or in the AE-papers?}{%
+A more limited case is shown as correct in Steinhöfel's \rname{Slide Statement} proof \cite{steinhoefel-20}, p.231.
+}
+If~\codein{C} is a sub type of~\codein{D}, then the proof fails.
 \vsnote*{Still not seeing how this can be true.}{%
 The second rule is able to remove intermittent operations that are symbolically represented on the heap, e.g.\ in \lstinline{x = new C(); x.set(1); y = new D()} versus \lstinline{y = new D(); x = new C(); x.set(1)}, but are not relevant to object creation.
 }
@@ -131,10 +140,12 @@ return new C(2);
 \end{figure}
 
 Note that we ignore the state of fields in the heap, meaning that equivalence of two objects is determined only by their counters. 
+\vsnote*{@EK: Unclear what the takeaway is from the following sentences.}{%
 This requires to be careful with specification: it does not suffice for each notion of equivalence to specify that two objects are equal, but also \emph{their} fields must be equal.
 For example, consider the class and programs in Listing~\ref{lst:ObjectCreation-refinity-2}.
 The returned objects are identical, but in the post states the heap assigns different values to their field.
 %To weaken the assumption and take the whole into account to determine  \vsnote*{@EK}{incomplete sentence}.
+}
 
 %both programs are equivalent, yet cannot be proved automatically due to syntactically different heaps.
 %To address this limitation, we need additional rules that allow ignoring heap updates that are irrelevant.
@@ -148,8 +159,8 @@ The returned objects are identical, but in the post states the heap assigns diff
 
 Let us close with three remarks. First, the solutions we described here are enabling the programmer (or refactoring designer) to fine tune their notion of equivalence, which must be specified additionally to the refactoring itself.
 Realizing the choice, however, is rather simple by enabling and disabling rules, resp.\ taclets. 
-\eknote*{Changed}{Thus, we avoid to put even more burden on the first-order specification of the relational post-condition, and merely require the programmer to select from a number of options.
-We stress that the taclets for the different options are not \emph{unsound}, but merely switch between different version of assumption about the (in this case underspecified) Java object model.}
+Thus, we avoid to put even more burden on the first-order specification of the relational post-condition, and merely require the programmer to select from a number of options.
+We stress that the taclets for the different options are not \emph{unsound}, but merely switch between different version of assumptions about the (in this case underspecified) Java object model.
 %\vsnote{VERY interesting point, I completely disagree! Maybe what you're saying is that adding potentially unsound/not capturing taclets is easier than formulating an adequate post-condition? Having unsound taclets is the only reason I can see for disabling them -- that any strategy-search could be misguided is a different issue.}
 
 Second, while we only discussed object creation here, the same solution also handles \emph{exceptions}, which must be created before being thrown. 
@@ -184,13 +195,15 @@ Take for example the program in Listing~\ref{lst:xisnewxisnew}.
 \label{lst:xisnewxisnew}
 \end{figure}
 
-Again, we assume that the constructor of \codein{C} has no side-effects (except object creation) upon constructor invocation.
+Again, we assume that the constructor of \codein{C} has no side-effects except object creation on the heap.
 In this case, the first object creation is of no consequence.
 The additional rules above however will not yet be sufficient to prove that this version is equivalent to the version without the redundant object creation and assignment.
 The location-set mechanism would still insist that the second object created  in the redundant version is a different object from the first (and only) object created in the optimized version.
-On the one hand this can be addressed through a relaxed post-condition where we accept that we only need \textit{an} object of the right type and arguments, but it relies on the side-condition of the constructor not having side-effects, which requires a very restrictive method contract for the constructor.
+On the one hand this can be addressed through a relaxed post-condition where we accept that we only need \textit{some} object of the right type and arguments, but it relies on the side-condition of the constructor not having side-effects, which requires a very restrictive method contract for the constructor.
+\vsnote*{@EK(?): See above, kinda leaves hanging there about what is the conclusion.}{%
 Alternatively, the notion of equivalence becomes even more specification-heavy for optimizations, as it may be more fine-grained. 
 %We face the same issue if we would want to encode the absence of side-effects as precondition to a taclet.
+}
 
 %%% Local Variables:
 %%% mode: latex

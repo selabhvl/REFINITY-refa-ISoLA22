@@ -90,19 +90,16 @@ and finally discuss challenges related to expressing equivalence in the face of 
 \subsection{Object creation}\label{sec:objectcreation}
 \input{objectcreation}
 
-\subsection{Trace properties}
+\subsection{Trace properties}\label{sec:traces}
 \input{traces}
 
-\subsection{Relational invariants}
+\subsection{Relational invariants}\label{sec:relational}
 \input{relational}
 
 \section{Discussion}\label{sec:discussion}
-\begin{itemize}
-\item Challenge: capturing the most general instance of a pattern (example: Extract Local Variable, with the duplicate call to \texttt{n()}).
-\end{itemize}
+\input{discussion}
 
 \section{Related Work}\label{sec:related}
-\input{related}
 
 \begin{itemize}
 \item formal proofs of correctness for OO program optimisation
@@ -111,6 +108,8 @@ and finally discuss challenges related to expressing equivalence in the face of 
 \item important: correctness on actual Java, not something which looks like Java
 \item also: correctness with respect to OO features
 \end{itemize}
+
+\input{related}
 
 \section{Conclusion}\label{sec:conclusion}
 
@@ -123,10 +122,10 @@ To investigate the discussed problems with refactoring using AE w.r.t.\ trace pr
 This work was partially supported by the Research Council of Norway via \texttt{SIRIUS} (237898) and \texttt{PeTWIN} (294600).
 %\input{conclusion}
 
-\section{Leftovers}
-\textit{Use if space/time/useful.}
-\subsection{Remove assignment to parameter}
-\input{limits/remove_assignment_to_parameter}
+% \section{Leftovers}
+% \textit{Use if space/time/useful.}
+% \subsection{Remove assignment to parameter}
+% \input{limits/remove_assignment_to_parameter}
 
 \bibliographystyle{splncs04}
 \bibliography{refs}
