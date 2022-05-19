@@ -113,13 +113,28 @@ and finally discuss challenges related to expressing equivalence in the face of 
 
 \section{Conclusion}\label{sec:conclusion}
 
+We have presented two new encodings of refactorings (\rname{Extract Local Variable} and \rname{Hide Delegate}) and their necessary preconditions (constraints) for them to be behaviour-preserving for \Refinity{}.
+\Refinity{} has syntactical constructs that capture abstract program executions, for which the KeY system,
+an automated theorem prover for JavaDL, succeeds in proving the refactorings as correct (equal) wrt.\ to the Java semantics without user interaction.
+
+The \rname{Hide Delegate} refactoring departs from statement-based refactorings and considers changes involving multiple classes and requires us to consider the first subtle difference between equivalent-yet-not-equal objects in the form of equivalent exceptions and how we need to explicitly address this in the post-condition of the proof-obligation.
+This also allows us to make a contribution through further taclets that capture some indistinguishable programs that only differ in placement of objects on the heap.
+
+We discuss in how far \Refinity{} could be used to capture other refactorings, broadening our investigation into the underlying notion of sometimes use-case specific \textit{equivalent behaviour}.
+For example, while traces over observable behaviour could be explicitly encoded and checked against each other as return values in \Refinity{}, a more general process-algebra inspired approach of execution histories for abstract executions would avoid confounding the original program logic with scaffolding to achieve an encoding without having to extend the tool.
+We also point out the difficulties due to naming issue in the current encoding from Refinity to KeY proof-obligations for refactorings that change the class hierarchies or in general attempt to relate behaviour across different types.
 
 \paragraph{Future Work.} 
-To investigate the discussed problems with refactoring using AE w.r.t.\ trace properties, we are currently implementing AE for BPL in the Crowbar tool~\cite{crowbar} as a starting point.
+To investigate the discussed problems with refactoring using AE wrt.\ trace properties, we are currently implementing AE for BPL in the Crowbar tool~\cite{crowbar} as a starting point.
+\vsnote*{@EK: probably requires a sentence elaboring what Crowbar is.}
 
+We are also working on contributing further encodings of common refactorings that can already now be handled by \Refinity{}.
+In addition, we are particularly interested in additional taclets for KeY that would enable automation of proofs
+that currently are stuck on the explicit symbolic encoding of program state although it would be indistinguishable from equivalent states in pratice.
+The latter is of relevance e.g. for proving common optimizations as in our \rname{Dead Code Elimination} example.
 
 \subsubsection*{Acknowledgements}
-This work was partially supported by the Research Council of Norway via \texttt{SIRIUS} (237898) and \texttt{PeTWIN} (294600).
+This work was partially supported by the Research Council of Norway via \texttt{SIRIUS} (237898), \texttt{PeTWIN} (294600) and \texttt{CROFLOW} (326249).
 %\input{conclusion}
 
 % \section{Leftovers}
