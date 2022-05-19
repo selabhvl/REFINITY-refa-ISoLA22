@@ -30,7 +30,10 @@ of which refactoring step introduced the change the deviant behavior.
 Our proof of correctness of \rname{Extract Local Variable} in \Refinity{} is inspired by the technique employed by Eilertsen et al.
 
 
-\vsnote*{@Ole: TODO? Check for relevance.}{Schaefer et al.\url{https://dl.acm.org/doi/10.1145/1932682.1869485}}.
+Schaefer et al. develop microrefactorings that compose to specify several refactorings in a concise manner~\cite{Schafer-OOPSLA-2010}.
+They tackle name binding issues that arise during transformations and make use of an infrastructure to preserve correct name binding in refactorings.
+\oanote{double check}{Proof of general correctness is not provided, instead testing is performed.}
+
 
 \vsnote*{@Ole: TODO?}{\textit{Methinks} that the work on generating test cases for checking equivalent behaviour can't be unrelated -- maybe Massoni/Gheyi or someone in their transitive closure?}
 
