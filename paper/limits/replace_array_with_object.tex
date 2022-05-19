@@ -1,14 +1,4 @@
-Let us consider a refactoring that replaces an array containing a geographical position given by a latitude and longitude as in Listing~\ref{lst:ReplaceArray-java-before} with an object that gives read or write access to the same values through setters and getters that make it immediately clear what is being accessed as seen in Listing~\ref{lst:ReplaceArray-java-after}.
-In either direction of this refactoring, we must be certain that indexing can only occur within the bounds of the original program as there will be no corresponding out of bounds failure for method calls.
-We note the added (syntactical) complication that in the direction from array to object, that if array offsets are computed, there is no direct correspondence to a setter/getter,
-and the refactored code needs to dispatch on the corresponding component.
-In the following, for simplification, we assume that the array is only used with constants.
-
-% There may be usage sites in the original program which in some way rely on the array representation.
-%These must be identified and handled in an equivalent way in the refactored program.
-
-
-\begin{figure}
+\begin{figure}[tbp]
   \begin{subfigure}[h]{.45\linewidth} 
     \lstinputlisting[style=smallJava]{ReplaceArrayWithObject/Java/before.java}
     \caption{Before}
@@ -23,16 +13,17 @@ In the following, for simplification, we assume that the array is only used with
   \label{refa:ReplaceArray-java}
 \end{figure}
 
-Having established that both programs are not equal, but should be considered equivalent, \vsnote*{I think @EK wrote this partial sentence.}{...} .
-To avoid having to establish the correspondence in all uses (of either setter/getter or the array),
-we can assume that accesses in either case are wrapped in a method --- if we assume that \rname{Extract Method}/\rname{Inline Method} are already proven as correct.
-This reliance on other refactorings allows us to compartmentalise the reasoning, and mostly focus on contracts for the involved methods.
-While abstract execution is good at reasoning about placeholders for abstract behaviour, a similar mechanism for abstract structures is missing.
-Through some intermediate steps, we can offload most of the reasoning to a history-based mechanism with some static assumptions on the code that can be easily checked.
-The first is to encapsulate all accesses in methods; setters/getters on the object-side, and static helpers on the array-side.\vsnote{Proved by Dom, kinda.}
-We can then formulate the question to \Refinity{} as given in Fig.~\ref{lst:ReplaceArray-REF} for each of the operations in the API, here the matching pairs of setters/getters:
+Let us consider a refactoring that replaces an array containing a geographical position given by a latitude and longitude as in Listing~\ref{lst:ReplaceArray-java-before} with an object that gives read or write access to the same values through setters and getters that make it immediately clear what is being accessed as seen in Listing~\ref{lst:ReplaceArray-java-after}.
+In either direction of this refactoring, we must be certain that indexing can only occur within the bounds of the original program as there will be no corresponding out of bounds failure for method calls.
+We note the added (syntactical) complication that in the direction from array to object, that if array offsets are computed, there is no direct correspondence to a setter/getter,
+and the refactored code needs to dispatch on the corresponding component.
+In the following, for simplification, we assume that the array is only used with constants.
 
-\begin{figure}
+% There may be usage sites in the original program which in some way rely on the array representation.
+%These must be identified and handled in an equivalent way in the refactored program.
+
+
+\begin{figure}[tbp]
   \begin{subfigure}[b]{.45\linewidth} 
     \begin{lstlisting}[style=smallJava]
 String[] p = new String[2];
@@ -60,50 +51,58 @@ p.setX(value);
   \label{lst:ReplaceArray-REF}
 \end{figure}
 
-It remains to show that a) neither abstract statement overwrites \texttt{p}, that b) the histories of API operations called on either side match pairwise,
+Having established that both programs are not equal, but should be considered equivalent, \vsnote*{I think @EK wrote this partial sentence.}{...} .
+To avoid having to establish the correspondence in all uses (of either setter/getter or the array),
+we can assume that accesses in either case are wrapped in a method --- if we assume that \rname{Extract Method}/\rname{Inline Method} are already proven as correct.
+This reliance on other refactorings allows us to compartmentalise the reasoning, and mostly focus on contracts for the involved methods.
+While abstract execution is good at reasoning about placeholders for abstract behaviour, a similar mechanism for abstract structures is missing.
+Through some intermediate steps, we can offload most of the reasoning to a history-based mechanism with some static assumptions on the code that can be easily checked.
+The first is to encapsulate all accesses in methods; setters/getters on the object-side, and static helpers on the array-side.
+We can then formulate the abstract programs for \Refinity{} as given in Fig.~\ref{lst:ReplaceArray-REF} for each of the operations in the API, here the matching pairs of setters/getters.
+It remains to show that a) neither abstract statement overwrites \texttt{p}, that b) the histories of API operations with arguments called on either side match pairwise,
 and that c) in the post-condition the values in their respective components match.
 
 %\vsnote*{}{After spelling this out, it looks like we should just start with \href{https://memberservices.informit.com/my_account/webedition/9780135425664/html/replaceprimitivewithobject.html}{``Replace Data Value with Object''}.}
 
-\subsection*{Replacing interface-based implementations}
+% \subsection*{Replacing interface-based implementations}
 
-\begin{figure}
-      \begin{lstlisting}[style=smallJava]
-IFace p /* global free program variable */
-post: true
-    \end{lstlisting}
+% \begin{figure}[tbp]
+% %      \begin{lstlisting}[style=smallJava]
+% %IFace p /* global free program variable */
+% %post: true
+%  %   \end{lstlisting}
 
-  \begin{subfigure}[h]{.45\linewidth} 
-    \begin{lstlisting}[style=smallJava]
-assert p instanceof ImplLHS;
-\abstract_statement M
-    \end{lstlisting}
-    \caption{Before}
-    \label{lst:IFaceBefore}
-  \end{subfigure}\hfill
-  \begin{subfigure}[h]{.45\linewidth}
-        \begin{lstlisting}[style=smallJava]
-assert p instanceof ImplRHS;
-\abstract_statement M
-    \end{lstlisting}
-    \caption{After}
-    \label{lst:iFaceAfter}
-  \end{subfigure}
-  \captionof{lstlisting}{Replace interface implementation}
-  \label{lst:refa-ibased}
-\end{figure}
+%   \begin{subfigure}[h]{.45\linewidth} 
+%     \begin{lstlisting}[style=smallJava]
+% assert p instanceof ImplLHS;
+% \abstract_statement M
+%     \end{lstlisting}
+%     \caption{Before}
+%     \label{lst:IFaceBefore}
+%   \end{subfigure}\hfill
+%   \begin{subfigure}[h]{.45\linewidth}
+%         \begin{lstlisting}[style=smallJava]
+% assert p instanceof ImplRHS;
+% \abstract_statement M
+%     \end{lstlisting}
+%     \caption{After}
+%     \label{lst:iFaceAfter}
+%   \end{subfigure}
+%   \captionof{lstlisting}{Replace interface implementation}
+%   \label{lst:refa-ibased}
+% \end{figure}
 
-Changing implementations, i.e., replacing one class with another and the same interface,
-should face no technical issues: we can declare a free object variable of the corresponding type,
-and use in contrast to above \textit{identical abstract statements}.
-However, we need to rely on \textit{method contracts} for operations in the interface, and that the implementations actually respect this interface.
-Furthermore, again due to the identical interfaces, we do not need separate cases for each operation in the interface,
-however, this relies on \textit{only} manipulating object \texttt{p} through the interface.
-Listing~\ref{lst:refa-ibased} illustrates the corresponding verification task for \Refinity{}.
-It remains to handle the relevant location set correctly, as nonetheless we are changing the object and hence have to restrict the types accordingly.
-\vsnote*{TODO: Ole/Eduard figure out/check specification of $M$ \& postcondition?}{}
+% Changing implementations, i.e., replacing one class with another of the same interface,
+% should ideally face no technical issues in a formal tool: we can declare a free variable of the corresponding type,
+% and use it --- in contrast to the array/object-example above --- with \textit{identical abstract statements}.
+% However, we need to rely on \textit{method contracts} for operations in the interface, and that the implementations actually respect this interface.
+% Clearly the two underlying objects would not be identical, but we could formulate the post-condition guaranteeing equivalence by asserting component-wise equality.
+% \vsnote*{}{Interesting issue with recursive classes like Lists...}
+% Listing~\ref{lst:refa-ibased} illustrates the corresponding verification task for \Refinity{}.
+% It remains to handle the relevant location set correctly, as nonetheless we are changing the object and hence have to restrict the types accordingly.
+% \vsnote*{TODO: Ole/Eduard figure out/check specification of $M$ \& postcondition?}{}
 
-\Refinity{} currently does \vsnote*{TODO: Ole reporting current state of affairs here}{or does not} succeed in proving \vsnote*{Exactly what are we asking REFINITY, see above}{this}.
+% \Refinity{} currently does \vsnote*{TODO: Ole reporting current state of affairs here}{or does not} succeed in proving \vsnote*{Exactly what are we asking REFINITY, see above}{this}.
 
 % \noindent\rule{\textwidth}{2pt}
 
