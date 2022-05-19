@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:aeRelationalModel xmlns:ns2="http://www.key-project.org/abstractexecution" preCondition="" postCondition="\result_1[0]==\result_2[0]">
+    <programOne>assert in instanceof Resource;
+
+Object x = ((Resource)in).getOwner();
+Resource y = 
+/*@ assignable \nothing;
+  @ accessible \nothing;
+  @ exceptional_behavior requires false;
+  @ normal_behavior ensures \result instanceof Resource;
+  @*/
+\abstract_expression java.lang.Object o;
+return y;
+</programOne>
+    <programTwo>assert in instanceof Resource;
+
+return ((Resource)in)
+       .hiddenDelegate();</programTwo>
+    <methodLevelContext>class Resource {
+    public Object getOwner() {
+        Object owner = null;
+
+        /*@ ae_constraint
+          @   \disjoint(owner, fpF);
+          @   
+          @*/
+        
+        /*@ assignable \hasTo(owner),frF;
+          @ accessible fpF;
+          @ exceptional_behavior requires false;
+          @ return_behavior requires false;
+          @ break_behavior requires false;
+          @ continue_behavior requires false;
+          @*/
+          \abstract_statement F;
+          return owner;
+        
+    }
+  public Resource hiddenDelegate() {
+   Object x = this.getOwner();
+   Resource y = 
+   /*@ assignable \nothing;
+     @ accessible \nothing;
+     @ exceptional_behavior requires false;
+     @ normal_behavior ensures \result instanceof Resource;
+     @*/
+   \abstract_expression java.lang.Object o;
+   return y;
+
+    
+  }
+
+}</methodLevelContext>
+    <locationSets>
+        <locationSet funcName="frF">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+            <resultSortName>LocSet</resultSortName>
+        </locationSet>
+        <locationSet funcName="fpF">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+            <resultSortName>LocSet</resultSortName>
+        </locationSet>
+    </locationSets>
+    <functions/>
+    <predicates/>
+    <programVariables>
+        <programVariable typeName="java.lang.Object" varName="in">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+        </programVariable>
+    </programVariables>
+</ns2:aeRelationalModel>
