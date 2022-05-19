@@ -5,7 +5,9 @@ This has proven fruitful in the exploration of correctness of refactorings prima
 %In this paper we explore further types of equivalent transformations and refactorings and discuss the challenges that still need to be overcome for full round-trip correctness of refactorings in object-oriented languages.
 %
 AE introduces abstract statements (and expressions), which act as named and specified placeholders for statements of the host language.
-A refactoring proof is a relational verification proof that compares two programs, \vsnote*{TODO: We'll have to rephrase this, I think. @Ole?}{which have the \emph{same} abstract statements}.
+A refactoring proof is a relational verification proof that compares two programs which can have abstract program elements.
+Consider relating ``\jmcode{if ($E_{bool}$) \{$S_1$;\} else \{$S_2;$\}}'' and ``\jmcode{if(!$E_{\mathit{boolean}}$) \{$S_2$;return;\} $S_2$;}'' where
+$E_{\mathit{boolean}}$ represents an arbitrary boolean expression, $S_1$ and $S_2$ represent arbitrary statements.
 One of the programs represents the schema of the code before the refactoring, and the other one the code afterwards, with respect to some relational post-condition that defines the notion of \emph{program equivalence}.
 
 
@@ -13,7 +15,7 @@ One of the programs represents the schema of the code before the refactoring, an
 More complex refactorings need more elaborate specification and verification techniques for relational verification. 
 The reason is that the programs surrounding the abstract statements, as well as the notion of equivalence, become more involved.
 This holds for both structure and behaviour.
-\Refinity{} \cite{steinhoefel:ae}, the tool supporting verification on top of the KeY system, \vsnote*{@Ole}{an automated theorem prover for Java\cite{needed}},
+\Refinity{} \cite{steinhoefel:ae}, the tool supporting verification on top of the KeY system, an automated theorem prover for Java~\cite{DBLP:conf/aplas/Steinhofel20},
 has been primarily designed to verify the correctness of refactorings that are based on moving code within a method, or on extracting some statements into their own method (i.e., the \rname{Extract Method} refactoring).
 However, refactorings are not limited to single methods or statement-blocks, but may also restructure classes and data structures \cite{fowler:refactoring}.
 We investigate the \rname{Hide Delegate} refactoring that moves code between classes and show how it can be encoded in \Refinity{}.
