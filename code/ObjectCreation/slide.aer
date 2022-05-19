@@ -4,8 +4,8 @@
 y = new D();</programOne>
     <programTwo>y = new D();
 x = new C();</programTwo>
-    <methodLevelContext>public class C{}
-public class D{}</methodLevelContext>
+    <methodLevelContext>class C{}
+class D{}</methodLevelContext>
     <locationSets>
         <locationSet funcName="relevant">
             <relevantOne>-1</relevantOne>
