@@ -3,7 +3,6 @@ class Resource {
  Owner getOwner() {
  /*@ assignable frF;
    @ accessible fpF;
-   @ ...
    @*/
    \abstract_statement F;
    return owner;

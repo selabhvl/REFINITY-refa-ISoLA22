@@ -1,3 +1,4 @@
+assert in instanceof Resource;
 return ((Resource)in)
        .getOwner()
        .getResource();
