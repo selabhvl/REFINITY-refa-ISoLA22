@@ -6,10 +6,9 @@ Java formal semantics in Maude and give partially mechanized proofs for the two 
 Long Quan et al. \cite{DBLP:conf/isola/QuanQL08} formulate refactorings as refinement
 laws in the calculus of refinement of component and object-oriented systems (rCOS),
 focusing on correctness proofs of refactoring rules themselves.
-\vsnote*{@Ole: and this relates to our work in the following way....}{%
-  They did not have the benefit of any tool support.
-  Do they have ``programs with holes'' or do they only proof concrete programs equal?
-  What about the ``class'' of refactorings they look at -- just like Dom shuffling statements or truly OO?}
+They did not have the benefit of any tool support, but similarily \oanote*{e.g. see p.5 of their extract method which extracts some block}{are able to describe
+refactorings on schematic programs.}
+Statement level refactorings as well as refactorings that transform class hierarchies are considered.
 
 While KeY and \Refinity{} are unique for their relational verification capacity for
 schematic programs (or abstract programs) they are limited in power for verification
