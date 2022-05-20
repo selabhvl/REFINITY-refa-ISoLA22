@@ -1,15 +1,15 @@
 class Resource {
- Owner owner;
  Owner getOwner() {
+  Owner owner = null;
  /*@ assignable frF;
    @ accessible fpF;
-   @ ...
    @*/
    \abstract_statement F;
    return owner;
   }
   Resource hDelegate() {
-   return this.getOwner()
+   return this
+          .getOwner()
           .getResource();    
   }
 }

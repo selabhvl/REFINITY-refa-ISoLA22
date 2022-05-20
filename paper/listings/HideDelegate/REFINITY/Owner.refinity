@@ -1,9 +1,8 @@
 class Owner {
- Resource resource;
- Resource getResource() { 
+Resource getResource() {
+  Resource resource = null;
 /*@ assignable frG;
   @ accessible fpG;
-  @ ...
   @*/
   \abstract_statement G;       
   return resource;
