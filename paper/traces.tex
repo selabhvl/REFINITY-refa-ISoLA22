@@ -4,7 +4,8 @@ In this section, we illustrate a different obstacle to practical abstract execut
 
 %In the previous section, we have established that syntactical equality of heaps is too strict as a precondition to equivalent (or rather: identical) behaviour.
 %In practice, 
-In general, developers are content if refactored code gives the same observable behavior \cite{needed}.
+\oanote*{Find a citation here, Vo. suggested it could be by Emerson Murphy hill}{In general, developers are content if refactored code gives the same observable behavior \cite{needed}}.
+%OLE: Developers following Fowler's persuasion of what constitutes a correct refactoring is are content if the refactored code gives the same obvervable behavior in any testable manner? then cite fowler's book
 This behavior is first and foremost encoded through unit-tests, but also on tests on side-effects and their order (e.g.\ output via \texttt{print}-statements).
 Here we then have a much more relaxed setting where equivalence is decoupled from the fine-grained program semantics.
 More realistically, one may want to establish that after refactoring, certain operations happened in the same order.
