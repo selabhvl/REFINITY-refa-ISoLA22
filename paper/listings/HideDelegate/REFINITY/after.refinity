@@ -1,3 +1,2 @@
-assert in instanceof Resource;
 return ((Resource)in)
        .hDelegate();
