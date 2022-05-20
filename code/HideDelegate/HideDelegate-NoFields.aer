@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:aeRelationalModel xmlns:ns2="http://www.key-project.org/abstractexecution" preCondition="" postCondition="\result_1[0]==\result_2[0] &amp;&amp;&#10;( &#10;  (&#10;  \result_1[1] instanceof java.lang.NullPointerException &amp;&amp;&#10;  \result_2[1] instanceof java.lang.NullPointerException&#10;  ) &#10;  ||&#10;  \result_1[1] == \result_2[1]&#10;) ">
-    <programOne>assert in instanceof Resource;
-return ((Resource)in)
+<ns2:aeRelationalModel xmlns:ns2="http://www.key-project.org/abstractexecution" preCondition="" postCondition="\result_1==\result_2">
+    <programOne>return ((Resource)in)
        .getOwner()
        .getResource();
 
 </programOne>
-    <programTwo>assert in instanceof Resource;
-return ((Resource)in)
+    <programTwo>return ((Resource)in)
        .hiddenDelegate();</programTwo>
-    <methodLevelContext>class Resource {      
-    Owner getOwner() {
-      Owner owner = null;
+    <methodLevelContext>public class Resource {
+
+    Owner owner;
+          
+    public Owner getOwner() {
+
         /*@ 
           @ assignable frF;
           @ accessible fpF;
+          @ return_behavior requires false;
+          @ exceptional_behavior requires false;
           @*/
         \abstract_statement F;
         return owner;
@@ -27,11 +30,17 @@ return ((Resource)in)
 
 }
 
-class Owner {
-    Resource getResource() { 
-        Resource resource = null;      
+public class Owner {
+
+    Resource resource; 
+   
+    public Resource getResource() {
+        
+        
         /*@ assignable frG;
           @ accessible fpG;
+          @ return_behavior requires false;
+          @ exceptional_behavior requires false;
           @*/
         \abstract_statement G;
         
