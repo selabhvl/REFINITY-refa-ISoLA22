@@ -49,7 +49,7 @@ Note that we do not require that the abstract statements \rcode{F} and \rcode{G}
 That means the abstract statements may for instance throw exceptions.
 In the published version of \Refinity{} one must write a postcondition that consists of a conjunction of return values of the sides being identical and
 that exceptions thrown are both instances of \jcode{NullPointerException} or equal.
-This is owing to the fact that \Refinity{} did not consider occurances of \jcode{new NullPointerException()} originating from \oanote{fix this phrasing}{the same place} to be identical.
+This is owing to the fact that \Refinity{} did not consider occurances of \jcode{new NullPointerException()} originating from \oanote*{fix this phrasing}{the same place} to be identical.
 In our modified version this is no longer an issue and we may use the default postcondition that simply matches return results and exceptions.
 
 
