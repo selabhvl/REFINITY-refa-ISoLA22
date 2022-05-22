@@ -19,7 +19,6 @@ This holds for both structure and behaviour.
 has been primarily designed to verify the correctness of refactorings that are based on moving code within a method, or on extracting some statements into their own method (i.e., the \rname{Extract Method} refactoring).
 However, refactorings are not limited to single methods or statement-blocks, but may also restructure classes and data structures \cite{fowler:refactoring}.
 We investigate the \rname{Hide Delegate} refactoring that moves code between classes and show how it can be encoded in \Refinity{}.
-\vsnote{Note to self: technically our encoding in R. doesn't actually move anything ;-)}
 
 
 As for behaviour, we discuss the interpretation of \textit{equivalence} from the perspective of the user and how to encode this --- for example, if the surrounding programs throw exceptions, under which conditions are the exceptions considered equivalent?
@@ -31,9 +30,8 @@ first investigated by Beckert et al.~\cite{DBLP:conf/lopstr/BeckertBKSSU13}.
 
 
 For exceptions and object creation, we describe several possibilities when newly created objects (resp.\ thrown exceptions) are considered equal
-and how this information can be used in dynamic logic proofs. The different possibilities are implemented as different rule sets and \vsnote*{@EK? Unclear to VS. ``Cannot''? Or?}{must not} be encoded in the relational post-condition.
-\vsnote*{Weird phrasing, rewrite? Isn't reducing size of the spec a good thing?}{%
-  This reduces the size of the required specification, a notorious bottleneck} in formal verification~\cite{DBLP:journals/corr/abs-1211-6186,DBLP:series/lncs/HahnleH19}.
+and how this information can be used in dynamic logic proofs. The different possibilities are implemented as different rule sets and do not have to be encoded in the relational post-condition.
+This reduces the size of the required specification, which is an advantage, since it is a notorious bottleneck in formal verification~\cite{DBLP:journals/corr/abs-1211-6186,DBLP:series/lncs/HahnleH19}.
 
 
 Furthermore, we discuss the necessary extensions needed to prove equivalent behaviour where one data structure is replaced by another, e.g., an array or any primitive type by a class.
