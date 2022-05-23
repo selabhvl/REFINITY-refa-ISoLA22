@@ -62,7 +62,7 @@ This reliance on other refactorings allows us to compartmentalise the reasoning,
 While abstract execution is good at reasoning about placeholders for abstract behaviour, a similar mechanism for abstract structures is missing.
 Through some intermediate steps, we can offload most of the reasoning to a history-based mechanism with some static assumptions on the code that can be easily checked.
 The first is to encapsulate all accesses in methods; setters/getters on the object-side, and static helpers on the array-side.
-We can then formulate the abstract programs for \Refinity{} as given in Fig.~\ref{lst:ReplaceArray-REF} for each of the operations in the API, here the matching pairs of setters/getters.
+We can then formulate the abstract programs for \Refinity{} as given in Listing.~\ref{lst:ReplaceArray-REF} for each of the operations in the API, here the matching pairs of setters/getters.
 It remains to show that a) neither abstract statement overwrites \texttt{p}, that b) the histories of API operations with arguments called on either side match pairwise,
 and that c) in the post-condition the values in their respective components match.
 
