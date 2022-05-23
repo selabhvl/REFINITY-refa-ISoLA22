@@ -33,7 +33,7 @@ We concentrate on, simplified, symbolic traces here, we are defined by the gramm
 where $\lceil \phi \rceil$ denotes the trace where the state formula $\phi$ holds, $\mathsf{call}(\mathtt{m})$ a call event on method $\mathtt{m}$, $\mathbf{finite}$ an arbitrary finite trace without any events\footnote{We deviate here from the original definition for example's sake.} and $\ast\ast$ is the chop~\cite{DBLP:conf/tableaux/BubelDHN15}, a special concatenation.
 Models for such formulas are traces: sequences of states and events.
 
-Consider the two programs in Fig.~\ref{fig:sth}.
+Consider the two programs in Listing~\ref{lst:sth}.
 It shows a refactoring of some program using a \codein{File}, where we only give the trace specification.
 The first program specifies that some initialization happens that is guaranteed to call \codein{f.open}, then the file is read and written,
 and then some finalization happens that calls \codein{f.close}.
@@ -72,7 +72,7 @@ s = f.read();
 \caption{After}
 \end{sublstlisting}
 \caption{Refactoring for Trace-Based-Notions of Equivalence.}
-\label{fig:sth}
+\label{lst:sth}
 \end{figure}
 
 
