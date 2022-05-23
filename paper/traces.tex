@@ -43,6 +43,9 @@ The programs are, obviously, not equivalent in a strict sense, but if the trace 
 It remains to be seen in how far abstract executions can be expanded with such a mechanism in the future.
 
 \begin{figure}[tbp]
+\captionsetup{type=lstlisting}
+\centering
+\begin{sublstlisting}{.8\linewidth}
 \begin{lstlisting}[style=refinity]
 File f = new File();
 String s = "";
@@ -53,6 +56,9 @@ f.write(s);
 /*@  ensures finite ** call(f.close) ** finite; */
 \abstract_statement B;     
 \end{lstlisting}
+\caption{Before}
+\end{sublstlisting}
+\begin{sublstlisting}{.8\linewidth}\vspace{1mm}
 \begin{lstlisting}[style=refinity]
 File f = new File();
 String s = "";
@@ -63,6 +69,8 @@ s = f.read();
 /*@  ensures finite ** call(f.close) ** finite; */
 \abstract_statement B;     
 \end{lstlisting}
+\caption{After}
+\end{sublstlisting}
 \caption{Refactoring for Trace-Based-Notions of Equivalence.}
 \label{fig:sth}
 \end{figure}
