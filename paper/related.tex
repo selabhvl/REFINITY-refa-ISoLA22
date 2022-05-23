@@ -6,8 +6,8 @@ Java formal semantics in Maude and give partially mechanized proofs for the two 
 Long Quan et al. \cite{DBLP:conf/isola/QuanQL08} formulate refactorings as refinement
 laws in the calculus of refinement of component and object-oriented systems (rCOS),
 focusing on correctness proofs of refactoring rules themselves.
-They did not have the benefit of any tool support, but similarily \oanote*{e.g. see p.5 of their extract method which extracts some block}{are able to describe
-refactorings on schematic programs.}
+They did not have the benefit of any tool support, but similarily are able to describe
+refactorings on schematic programs.
 Statement level refactorings as well as refactorings that transform class hierarchies are considered.
 
 While KeY and \Refinity{} are unique for their relational verification capacity for
@@ -26,7 +26,6 @@ Findings show that refactorings that are straight-forward in Java are not necess
 program transformations that may cause interactions.
 In contrast to their work, \Refinity{} and its foundation KeY strictly consider sequential Java programs,
 but they already explore the notion of equivalent executions in their formal considerations of syntactical different, but overlapping, programs.
-\vsnote{@Ole: do you think the Festschrift is related?}
 
 Eilertsen, Stolz and Bagge demonstrate a technique of introducing runtime checks in Java for two refactorings \rname{Extract And Move Method} and
 \rname{Extract Local Variable}~\cite{stolz:isolarefa}. The technique in combination with testing can detect changed behavior and allow identification
@@ -36,22 +35,19 @@ Our proof of correctness of \rname{Extract Local Variable} in \Refinity{} is ins
 
 Schaefer et al. develop microrefactorings that compose to specify several refactorings in a concise manner~\cite{Schafer-OOPSLA-2010}.
 They tackle name binding issues that arise during transformations and make use of an infrastructure to preserve correct name binding in refactorings.
-\oanote{double check}{Proof of general correctness is not provided, instead testing is performed.}
-
 
 Soares et al. describe and evaluate SafeRefactor - a tool that given a program input and a refactoring to apply can automatically generate testcases to detect behavioral changes~\cite{Soares-IEEE-2010}.
-\oanote{should actually try this for some case, or look at an example of Dom's}{In the instances where \Refinity{} fails to prove a refactoring it can generate testcases relating to the goals left open for the failed proof.}
+In the instances where \Refinity{} fails to prove a refactoring it can generate testcases relating to the goals left open for the failed proof.
 
 
 Dovland et al. \cite{dovland:adaptableclass2015} propose a proof system that allows
 incrementally reasoning about adaptable class hierarchies, based on
 lazy behavioural subtyping, for 
-an object-oriented kernel language similar to Featherweight Java.  The
+an object-oriented kernel language similar to Featherweight Java. The
 proof system avoids reverifying methods that are not modified
 explicitly by the class adaptation.
-\oanote*{paper is a challenge to read, is this correct?}{KeY and \Refinity{} allows for modularity in proof and specification, but not the incremental reasoning broached
-for the proof system for adaptable class hierarchies.}
-
+We are unaware whether the incremental reasoning broached for the proof system has a counterpart in KeY and \Refinity{}, but
+the latter allows for modularity in proof an verification which may achieve a similar result.
 
 
 %%% Local Variables:
