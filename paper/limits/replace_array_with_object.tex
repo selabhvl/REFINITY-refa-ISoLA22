@@ -1,15 +1,17 @@
 \begin{figure}[tbp]
-  \begin{subfigure}[h]{.45\linewidth} 
+  \captionsetup{type=lstlisting}
+  \centering
+  \begin{sublstlisting}[h]{.45\linewidth} 
     \lstinputlisting[style=smallJava]{ReplaceArrayWithObject/Java/before.java}
     \caption{Before}
     \label{lst:ReplaceArray-java-before}
-  \end{subfigure}\hspace{1cm}
-  \begin{subfigure}[h]{.45\linewidth}
+  \end{sublstlisting}\hspace{1cm}
+  \begin{sublstlisting}[h]{.45\linewidth}
     \lstinputlisting[style=smallJava]{ReplaceArrayWithObject/Java/after.java}
     \caption{After}
     \label{lst:ReplaceArray-java-after}
-  \end{subfigure}
-  \captionof{lstlisting}{Replace array with object refactoring}
+  \end{sublstlisting}
+  \caption{Replace array with object refactoring}
   \label{refa:ReplaceArray-java}
 \end{figure}
 
@@ -24,8 +26,9 @@ In the following, for simplification, we assume that the array is only used with
 
 
 \begin{figure}[tbp]
-  \begin{subfigure}[b]{.45\linewidth} 
-    \begin{lstlisting}[style=smallJava]
+\captionsetup{type=lstlisting}
+\begin{sublstlisting}[b]{.45\linewidth} 
+\begin{lstlisting}[style=smallJava]
 String[] p = new String[2];
 /* M only uses the static
 method API to modify `p` and
@@ -33,22 +36,22 @@ does not assign a new value
 to `p`. */
 \abstract_statement M
 setX(p,value);
-    \end{lstlisting}
-    \caption{Before}
-    \label{lst:ArrayBefore}
-  \end{subfigure}\hspace{1cm}
-  \begin{subfigure}[b]{.45\linewidth}
-        \begin{lstlisting}[style=smallJava]
+\end{lstlisting}
+\caption{Before}
+\label{lst:ArrayBefore}
+\end{sublstlisting}\hspace{1cm}
+\begin{sublstlisting}[b]{.45\linewidth}
+\begin{lstlisting}[style=smallJava]
 Pos p = new Pos();
 /* ditto */
 \abstract_statement M
 p.setX(value);
-    \end{lstlisting}
-    \caption{After}
-    \label{lst:ArrayAfter}
-  \end{subfigure}
-  \captionof{lstlisting}{Replace array with object refactoring}
-  \label{lst:ReplaceArray-REF}
+\end{lstlisting}
+\caption{After}
+\label{lst:ArrayAfter}
+\end{sublstlisting}
+\caption{Replace array with object refactoring}
+\label{lst:ReplaceArray-REF}
 \end{figure}
 
 Having established that both programs are not equal, but should be considered equivalent,
