@@ -71,7 +71,7 @@ That means the abstract statements may for instance throw exceptions; for instan
 
 In order to prove the specified \rname{Hide Delegate} refactoring in the published version of \Refinity{} one must write a postcondition that consists of a conjunction of return values of the sides being identical and
 that exceptions thrown are both instances of NPE or equal.
-This is owing to the fact that \Refinity{} did not consider occurances of \jcode{new NullPointerException()}, or any other same heap objects, to be identical.
+This is owing to the fact that \Refinity{} did not consider occurances of \jcode{new NullPointerException()}, or any other newly created objects, to be equal.
 
 In our modified version of \Refinity{} this is no longer an issue and we may use the default postcondition that simply matches return results and exceptions;
 \Refinity{} will automatically manage prove the shown \rname{Hide Delegate} refactoring to be correct wrt. the given postconditions.
