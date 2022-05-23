@@ -28,7 +28,7 @@ It has neither been investigated how such logics can be used for relational veri
 
 %We sketch the first steps towards a possible solution using a simplified version of local Session Types for Active Objects~\cite{DBLP:journals/jacm/HondaYC16,DBLP:journals/csur/BoerSHHRDJSKFY17,DBLP:conf/ifm/KamburjanC18}, which are an example for BPL specifications.
 
-We concentrate on, simplified, symbolic traces here, we are defined by the grammar
+We concentrate on, simplified, symbolic traces here, which are defined by the grammar
 \[\theta ::= \lceil \phi \rceil ~|~ \mathsf{call}(\mathtt{m}) ~|~ \mathbf{finite} ~|~ \theta \ast\!\ast \theta \]
 where $\lceil \phi \rceil$ denotes the trace where the state formula $\phi$ holds, $\mathsf{call}(\mathtt{m})$ a call event on method $\mathtt{m}$, $\mathbf{finite}$ an arbitrary finite trace without any events\footnote{We deviate here from the original definition for example's sake.} and $\ast\ast$ is the chop~\cite{DBLP:conf/tableaux/BubelDHN15}, a special concatenation.
 Models for such formulas are traces: sequences of states and events.
