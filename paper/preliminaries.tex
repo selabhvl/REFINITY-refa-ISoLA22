@@ -34,13 +34,14 @@ The set is fixed through a program's duration but the values at these locations 
 When an abstract location set is placed in an assignable or accessible specification it is to be understood as an upper bound;
 the locations may possibly all be accessed or assigned to, not at all or anything in between.
 
-\begin{figure}[h]
+\begin{figure}[tbp]
   \centering
-  \begin{minipage}{.65\linewidth}
+  \captionsetup{type=lstlisting}
+  \begin{sublstlisting}{.65\linewidth}
   \lstinputlisting[linerange={2-8},style=refinity]{ExtractVariable/REFINITY/method.refinity}
-  \captionof{lstlisting}{Method}
+  \end{sublstlisting}
+  \caption{Method}
   \label{lst:ExtractVariable-refinity-method}
-  \end{minipage}
 \end{figure}
 
 %\begin{itemize}

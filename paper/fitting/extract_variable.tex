@@ -6,18 +6,19 @@ Before we would have calls to \jmcode{o$_1$.n()} and then \jmcode{o$_2$.n()} whe
 have \jmcode{o$_1$.n()} followed by \jmcode{o$_1$.n()}. In this case if e.g. \jcode{n()} simply prints \jcode{this.toString()} we will
 observe a difference in the two programs.
 
-\begin{figure}[!h]
+\begin{figure}[tbp]
+  \captionsetup{type=lstlisting}
   \centering
-  \begin{subfigure}{.2\linewidth}
+  \begin{sublstlisting}{.2\linewidth}
     \lstinputlisting[style=refinity]{ExtractVariable/Java/before.java}
     \caption{Before}
-  \end{subfigure}\hspace{1cm}
-  \begin{subfigure}{.3\linewidth}
+  \end{sublstlisting}\hspace{1cm}
+  \begin{sublstlisting}{.3\linewidth}
     \lstinputlisting[style=refinity]{ExtractVariable/Java/after.java}
     \caption{After}
-  \end{subfigure}
-\captionof{lstlisting}{Extract Local Variable}
-\label{lst:ExtractVariable-java}
+  \end{sublstlisting}
+  \caption{Extract Local Variable}
+  \label{lst:ExtractVariable-java}
 \end{figure}
 
 The dynamic check for such a change detailed in other work~\cite{stolz:isolarefa} codified the necessity that the reference \jcode{x}
@@ -46,21 +47,22 @@ Thus the default postcondition in our case will be that \rcode{x} returned in Be
 
 We use an assertion to ensure we consider only the refactoring when \rcode{x} is an instance of its intended type.
 A current limitation of the implementation of REFINITY necessitate the casting \rcode{(X)x} as free program variables may only be declared to be of type Object.
-\begin{figure}[!h]
+\begin{figure}[tbp]
+  \captionsetup{type=lstlisting}
   \centering
-  \begin{subfigure}[b]{.34\linewidth}
+  \begin{sublstlisting}[b]{.34\linewidth}
     \lstinputlisting[linerange={2-5},style=refinity]{ExtractVariable/REFINITY/before.refinity}
     \vspace{-2mm}
     \caption{Before}
     \label{lst:ExtractVariable-refinity-before}
-  \end{subfigure}\hspace{1cm}
-  \begin{subfigure}[b]{.34\linewidth}
+  \end{sublstlisting}\hspace{1cm}
+  \begin{sublstlisting}[b]{.34\linewidth}
     \lstinputlisting[linerange={2-6},style=refinity]{ExtractVariable/REFINITY/after.refinity}
     \vspace{-2mm}
     \caption{After}
     \label{lst:ExtractVariable-refinity-after}
-  \end{subfigure}\vspace{4mm}
-\captionof{lstlisting}{Extract Local Variable}
+  \end{sublstlisting}\vspace{4mm}
+\caption{Extract Local Variable}
 \label{lst:ExtractVariable-refinity}
 \end{figure}
 With only the specification as shown in Listing~\ref{lst:ExtractVariable-refinity} REFINITY is unable to prove that \rcode{x} will be identical to \rcode{temp} after AE of both sides.
