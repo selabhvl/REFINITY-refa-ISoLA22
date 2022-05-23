@@ -5,16 +5,14 @@ where the call chain is extracted to a new method on \jcode{o}, say \jcode{h()} 
 
 \begin{figure}[tbp]
   \centering
-  \begin{subfigure}[b]{.3\linewidth}
+  \begin{subfigure}{.3\linewidth}
     \input{tikz/hd-npe-before}
     \caption{Before}
-    \label{fig:hd-npe-before}
-  \end{subfigure}\hspace{0.5cm}
-  \begin{subfigure}[b]{.3\linewidth}
+  \end{subfigure}
+  \begin{subfigure}{.3\linewidth}
     \input{tikz/hd-npe-after}
     \caption{After}
-    \label{fig:hd-npe-after}
-  \end{subfigure}\hspace{1cm}
+  \end{subfigure}
   \caption{NPEs}
   \label{fig:NPEs}
 \end{figure}
@@ -31,33 +29,35 @@ Thus we consider an behavioral equivalence that allows for disagreement in stack
 %\vsnote{TODO @Ole: check that in HD we explain the ``equivalence'' of the NPEs --- I don't see this yet in the example in 3.1}
 
 \begin{figure}[tbp]
+  \captionsetup{type=lstlisting}
   \centering
-  \begin{subfigure}[b]{.455\linewidth}
+  \begin{sublstlisting}[b]{.455\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/before.refinity}
     \caption{Before}
     \label{lst:HideDelegate-nofields-before-refinity}
-  \end{subfigure}\hspace{1cm}
-  \begin{subfigure}[b]{.455\linewidth}
+  \end{sublstlisting}\hspace{1cm}
+  \begin{sublstlisting}[b]{.455\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/after.refinity}
     \caption{After}
     \label{lst:HideDelegate-nofields-after-refinity}
-  \end{subfigure}
-\captionof{lstlisting}{Hide Delegate}
+  \end{sublstlisting}
+\caption{Hide Delegate}
 \label{lst:HideDelegate-nofields-refinity}
 \end{figure}
 
 \begin{figure}[tbp]
+  \captionsetup{type=lstlisting}
   \centering
-  \begin{subfigure}[b]{.4\linewidth}
+  \begin{sublstlisting}[b]{.4\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/Resource.refinity}
     \caption{Before}
     \label{lst:HideDelegate-nofields-resource-refinity}
-  \end{subfigure}\hspace{1cm}
-  \begin{subfigure}[b]{.4\linewidth}
+  \end{sublstlisting}\hspace{1cm}
+  \begin{sublstlisting}[b]{.4\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/Owner.refinity}
     \caption{After}
     \label{lst:HideDelegate-nofields-owner-refinity}
-  \end{subfigure}
+  \end{sublstlisting}
 \captionof{lstlisting}{Hide Delegate Classes}
 \label{lst:HideDelegate-nofields-classes-refinity}
 \end{figure}
