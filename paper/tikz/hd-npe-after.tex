@@ -1,0 +1,18 @@
+\begin{tikzpicture}[node distance=1cm,auto,>=stealth']
+    \node[] (this) {this};
+    \node[right = of this] (o) {o};
+    \node[right = of o] (null) {null};
+    
+    \node[below of=this, node distance=3cm] (thisb) {};
+    \node[below of=o, node distance=3cm] (ob) {};
+    \node[below of=null, node distance=3cm] (nullb) {};
+
+    \draw (this) -- (thisb);
+    \draw (o) -- (ob);
+    \draw (null) -- (nullb);
+    \coordinate (loop) at ($(o)!0.35!(ob)$);
+
+    \draw[->] ($(this)!0.25!(thisb)$) -- node[above,scale=1,pos=0.2]{h()} ($(o)!0.25!(ob)$);
+    \draw[->,rounded corners=2pt] (loop) -- ($(loop) + (0.5,0) $) --  ($(loop) + (0.5,-0.1) $)  node[midway,scale=1]{f()} -- ($(loop) + (0,-0.1)$);    
+    \draw[->] ($(o)!0.75!(ob)$) -- node[above,scale=1,pos=0.2]{g()} node[below,scale=1,midway]{NPE} ($(null)!0.75!(nullb)$);
+\end{tikzpicture}

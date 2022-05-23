@@ -1,17 +1,36 @@
 \subsection{Encoding the Hide Delegate refactoring}\label{sec:hideDelegate}
 
-The Hide Delegate refactoring can be described as an Extract Method refactoring on a call chain such as \jcode{Y y = o.f().g()}
-the call chain is extracted to a method on \jcode{o} such that we can replace the chain with a call to the new method \jcode{o.h()}
-which we declare as \jcode{Y h() \{ return this.f().g(); \}}.
+The \rname{Hide Delegate} refactoring can be described as an \rname{Extract Method} refactoring on a call chain such as seen in \jcode{Y y = o.f().g()}
+where the call chain is extracted to a new method on \jcode{o}, say \jcode{h()} which contains the extraction \jcode{Y h() \{ return this.f().g(); \}}, such that we replace the chain as seen in \jcode{Y y = o.h()}.
 
+\begin{figure}[tbp]
+  \centering
+  \begin{subfigure}[b]{.3\linewidth}
+    \input{tikz/hd-npe-before}
+    \caption{Before}
+    \label{fig:hd-npe-before}
+  \end{subfigure}\hspace{0.5cm}
+  \begin{subfigure}[b]{.3\linewidth}
+    \input{tikz/hd-npe-after}
+    \caption{After}
+    \label{fig:hd-npe-after}
+  \end{subfigure}\hspace{1cm}
+  \caption{NPEs}
+  \label{fig:NPEs}
+\end{figure}
+
+We note that a pattern usually considered is also \jcode{X x = o.f(); Y y = x.g()} potentially with non-interfering intermediate statements inbetween the two statements,
+but in that case we can reach the considered pattern through applications of \rname{Slide Statement} and finally \rname{Inline Variable} on \jcode{x}.
 The refactoring can enable less coupling as the class that contained the call chain afterwards does not need to know the return type of \jcode{f()}.
-We note that this is just one example and intermediate, dotted, expressions can be arbitrary long and/or broken up across assignments to local variables.
 
-%\vsnote{Q: Generalize to \jcode{o = AE; z = o.g(); return z;} ?}
+Also of note is the scenario shown in Fig.~\ref{fig:NPEs} where the call to \jcode{f()} returns \jcode{null}. In the strictest sense of behavioral preservation
+we will observe a difference as the \jcode{NullPointerException} (NPE) thrown before Fig.~\ref{fig:hd-npe-before} will show a different stacktrace than the one thrown after Fig.~\ref{fig:hd-npe-before}.
+Thus we consider an behavioral equivalence that allows for disagreement in stacktraces for such matching exceptions; in fact one is unable to make any other distinction in \Refinity{}.
+
 %\vsnote{Three things on the nature of encoding things in R.: i) this is an example that R. is bad at \textit{names}: we need concrete names \texttt{f/g} (with concrete parameters), but want placeholders. ii) we don't really remove/replace anything, since we need all the code that we want to use in the same class, i.e., the ``new'' method \jcode{hideDelegate()} was already present before -- but that's okay because it's obviously correct to introduce methods that are not called -- another example of syntactical requirements on encodings in R. iii) This is the example for our abuse of R.\ for OO-based refactorings.}
+%\vsnote{TODO @Ole: check that in HD we explain the ``equivalence'' of the NPEs --- I don't see this yet in the example in 3.1}
 
-
-\begin{figure}
+\begin{figure}[tbp]
   \centering
   \begin{subfigure}[b]{.455\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/before.refinity}
@@ -27,7 +46,7 @@ We note that this is just one example and intermediate, dotted, expressions can 
 \label{lst:HideDelegate-nofields-refinity}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[tbp]
   \centering
   \begin{subfigure}[b]{.4\linewidth}
     \lstinputlisting[style=refinity]{HideDelegate/REFINITY/Resource.refinity}
@@ -42,27 +61,19 @@ We note that this is just one example and intermediate, dotted, expressions can 
 \captionof{lstlisting}{Hide Delegate Classes}
 \label{lst:HideDelegate-nofields-classes-refinity}
 \end{figure}
-We specify the Before and After program fragment for a Hide Delegate refactoring in Listing~\ref{lst:HideDelegate-nofields-refinity} which contains no surprises when compared to the sketched out example above.
+We specify the Before and After program fragment for a \rname{Hide Delegate} refactoring in Listing~\ref{lst:HideDelegate-nofields-refinity} which contains no surprises when compared to the sketched out example above.
 The classes and methods used in the refactoring appear in Listing~\ref{lst:HideDelegate-nofields-classes-refinity} and show that we minimally specify the contents of the involved methods by using abstract
 statements in their bodies.
 Note that we do not require that the abstract statements \rcode{F} and \rcode{G} in the methods \rcode{getOwner()} and \rcode{getResource} cannot complete abruptly.
-That means the abstract statements may for instance throw exceptions.
+That means the abstract statements may for instance throw exceptions; for instance the sketched out scenario considered in Fig.~\ref{fig:NPEs} where here \rcode{getResource()} will return \rcode{null} and cause the following call to throw a NPE is a possibility.
+
 In the published version of \Refinity{} one must write a postcondition that consists of a conjunction of return values of the sides being identical and
-that exceptions thrown are both instances of \jcode{NullPointerException} or equal.
-This is owing to the fact that \Refinity{} did not consider occurances of \jcode{new NullPointerException()} originating from \oanote*{fix this phrasing}{the same place} to be identical.
-In our modified version this is no longer an issue and we may use the default postcondition that simply matches return results and exceptions.
+that exceptions thrown are both instances of NPE or equal.
+This is owing to the fact that \Refinity{} did not consider occurances of \jcode{new NullPointerException()}, or any other same heap objects, to be identical.
 
+In our modified version of \Refinity{} this is no longer an issue and we may use the default postcondition that simply matches return results and exceptions;
+\Refinity{} will automatically manage prove the shown \rname{Hide Delegate} refactoring to be correct wrt. the given postconditions.
 
-
-
-
-% \subsection*{Hide Delegate --- once more with fields}
-
-% Similarily a minor variation of the  Hide Delegate refactoring also applies to a call chain which assigns to fields
-% e.g. \jcode{x = o.f(); Y y = x.g()}.
-
-
-%TODO this is not yet done
 
 %%% Local Variables:
 %%% mode: latex
