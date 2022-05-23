@@ -85,17 +85,18 @@ Let $\sqsubseteq$ be the subtype relation and $T(t)$ the type of a term.
 \end{definition}
 
 \begin{figure}[tbp]
+  \captionsetup{type=lstlisting}
   \centering
-  \begin{subfigure}{.2\linewidth}
+  \begin{sublstlisting}{.2\linewidth}
     \lstinputlisting[style=refinity]{ObjectCreation/REFINITY/before.refinity}
     \caption{Before}
-  \end{subfigure}\hspace{1cm}
-  \begin{subfigure}{.2\linewidth}
+  \end{sublstlisting}\hspace{1cm}
+  \begin{sublstlisting}{.2\linewidth}
     \lstinputlisting[style=refinity]{ObjectCreation/REFINITY/after.refinity}
     \caption{After}
-  \end{subfigure}
-\captionof{lstlisting}{Object creation}
-\label{lst:ObjectCreation-refinity}
+  \end{sublstlisting}
+  \caption{Object creation}
+  \label{lst:ObjectCreation-refinity}
 \end{figure}
 
 The first rule uses the assumption that the orders are only sensitive to the \codein{<allocated>} field and the second one that they are independent, besides the subtyping relation.
@@ -107,8 +108,9 @@ If~\codein{C} is a sub type of~\codein{D}, then the proof fails.
 The second rule is able to remove some intermittent operations that are symbolically represented on the heap, e.g.\ a call to an imaginary setter in \lstinline{x = new C(); x.set(1); y = new D()} versus \lstinline{y = new D(); x = new C(); x.set(1)}, but are not relevant to object creation.
 
 \begin{figure}[tbp]
+\captionsetup{type=lstlisting}
 \centering
-\begin{subfigure}[b]{.3\linewidth}
+\begin{sublstlisting}[b]{.3\linewidth}
 \begin{lstlisting}[style=refinity]
 class C {
   private int j;
@@ -118,20 +120,20 @@ class C {
 }
 \end{lstlisting}
 \caption{Class}
-\end{subfigure}\hspace{3mm}
-\begin{subfigure}[b]{.3\linewidth}
+\end{sublstlisting}\hspace{3mm}
+\begin{sublstlisting}[b]{.3\linewidth}
 \begin{lstlisting}[style=refinity]
 return new C(1);
 \end{lstlisting}
 \caption{Before}
-\end{subfigure}\hspace{3mm}
-\begin{subfigure}[b]{.3\linewidth}
+\end{sublstlisting}\hspace{3mm}
+\begin{sublstlisting}[b]{.3\linewidth}
 \begin{lstlisting}[style=refinity]
 return new C(2);
 \end{lstlisting}
-    \caption{After}
-  \end{subfigure}
-\captionof{lstlisting}{Object creation}
+\caption{After}
+\end{sublstlisting}
+\caption{Object creation}
 \label{lst:ObjectCreation-refinity-2}
 \end{figure}
 
@@ -177,18 +179,19 @@ we do not have a way of proving the taclets correct (i.e.\ derive them as lemmas
 \paragraph*{Excursus: Dead Code Elimination}
 Similar considerations of equivalent heap manipulations need to be considered also in the are of optimizations, whose soundness proofs rely on relation verification as well.
 Take for example the program in Listing~\ref{lst:xisnewxisnew}.
-\begin{figure}
+\begin{figure}[tbp]
+  \captionsetup{type=lstlisting}
   \centering
-  \begin{subfigure}[b]{.2\linewidth}
+  \begin{sublstlisting}[b]{.2\linewidth}
     \lstinputlisting[style=refinity]{DeadCode/Java/before.java}
     \caption{Before}
-  \end{subfigure}\hspace{1cm}
-  \begin{subfigure}[b]{.2\linewidth}
+  \end{sublstlisting}\hspace{1cm}
+  \begin{sublstlisting}[b]{.2\linewidth}
     \lstinputlisting[style=refinity]{DeadCode/Java/after.java}
     \caption{After}
-  \end{subfigure}
-\captionof{lstlisting}{Dead Object}
-\label{lst:xisnewxisnew}
+  \end{sublstlisting}
+  \caption{Dead Object}
+  \label{lst:xisnewxisnew}
 \end{figure}
 
 Again, we assume that the constructor of \codein{C} has no side-effects except object creation on the heap.
