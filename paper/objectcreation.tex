@@ -101,7 +101,7 @@ The modified rule suffices to show the simple equivalence of \codein{return new 
 Continuing our investigation of when objects are considered equal, 
 where the two allocations are independent from each other, i.e., any side-effects of the constructors are not visible to each other, \codein{C} is not a subtype of \codein{D} and vice versa.
 Again the question where the two \codein{C} (resp.\ \codein{D}) objects are equal arises.
-They are not equal in the sense that, if there is a global implicit\footnote{The counter is indeed implicit, as the order $<_h$ cannot be accessed by the proof system.} counter
+They are not equal in the sense that, if there is a implicit\footnote{The counter is indeed implicit, as the order $<_h$ cannot be accessed by the proof system.} global counter
 that counts all allocations, they get the same number from this counter. They are equal in the sense that there is no explicit way to distinguish them in the program.
 
 They are, however, distinguishable in the proof system due to the term-representation of the heap.
@@ -112,8 +112,8 @@ We adapt the previous definition to take into account the types of objects, \EK{
 
 \begin{definition}
 We assume that in every state of the Kripke structure, for every heap $h$ and every class $C$, all objects of type $C$ are ordered by some total order $<_h^C$, such that there is some
-object $o_h^C$, such that (1) for all $o' <^C_h o$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
-(2) for all $o \leq_h^C o''$ the object $o''$ is not allocated. Additionally, if $D$ is a subtype of $C$ then $<_h^D$ must be a suborder of $<_h^C$.
+object $o_h^C$, such that (1) for all $o' <^C_h o_h^C$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
+(2) for all $o_h^C \leq_h^C o''$ the object $o''$ is not allocated. Additionally, if $D$ is a subtype of $C$ then $<_h^D$ must be a suborder of $<_h^C$.
 For each class $C$, we introduce a unary function symbol \codein{C::allocate} with the signature $\mathtt{Heap} \rightarrow \mathtt{Object}$,
 whose interpretation must adhere to $\mathcal{I}(C::\mathtt{allocate})(h) = o_h^C$.
 We obtain:
