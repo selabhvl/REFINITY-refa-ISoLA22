@@ -1,0 +1,192 @@
+We are pleased to inform you that your paper
+
+ 027: "Towards practical abstract execution"
+
+has been accepted for
+
+ Automated Software Re-Engineering (ISoLA2022 · ASRE)
+
+Please find the reports beneath.
+
+
+========
+
+The following comment has been provided:
+
+---
+
+Congratulations: your paper has been accepted for the Isola2022 conference, ASRE
+track. Below find the reviewer comments. We expect you to incorporate the feedback
+as best as possible to further strengthen your paper.
+
+The deadline for submitting the camera ready version is August 10th. We will
+provide further instructions on how to deal with the camera ready version.
+
+----------------
+ REPORT
+----------------
+
+In recent years the technique of Abstract Execution (AE) gained
+traction to prove correctness of various program tranformation
+scenarios. This paper analyzes some limitations that show up when
+proving correctness of refactorings that involve moving, removing,
+duplicating, or re-implementing objects and makes suggestions how
+these might be remedied.
+
+I think the content of this paper is very interesting and highly
+relevant for ASRE. It opens up a whole range of directions for future
+research, and it is of practical importance.
+
+Having said this, I am not entirely happy with the presentation which,
+as it stands, sells the paper's content short and diminishes the
+number of potential readers. It is also marred by numerous small
+errors. I will make some general suggestions, followed by number of
+detailed issues.
+
+(1) After reading the introduction, one could have the impression that
+the paper suggests a few technical tweaks required to verify
+refactorings of programs involving objects. In fact, the work looks
+much more broadly at those issues arising when proving correctness of
+transformations that involve moving, removing, duplicating, or
+re-implementing objects. These are not mere technical problems, but
+one has to carefully justify what the intention of correctness in such
+cases is supposed to be, as the numerous examples make clear.  I
+suggest to completely rewrite the introduction and at least the first
+part of the conclusion to bring this out.
+
+I would even choose a somewhat different title for the paper, such as
+"Towards Practical Specification of Program Transformations".
+
+(2) Large parts of the paper are only accessible to readers who are
+familiar with REFINITY and KeY. I suggest to abstract away from these
+concrete systems as much as possible. For example: instead of
+providing the update of a KeY rule very few people will be familiar
+with (as in Def. 1), one might:
+
+- explain the object creation mechanism in KeY abstractly (symbolic heap,
+  implicit field <allocated>)
+- define (and then assume) the order <_h (is it partial? total?) with the
+  pivot object o_h
+- define the semantics of allocate()
+- explain that adding the assumption v=allocate(heap) to object creation
+  rules, where v holds the value of a newly created object, renders
+  object creation deterministic to a degree that permits to prove
+  equivalence of the original and the refactored program's store;
+- do not refer to a concrete calculus, Kripke semantics, to taclets,
+  updates ...
+
+The same should obviously be done for Def. 2 and other places, where
+you refer to KeY/REFINITY-specific concepts (for example, Sect. 4).
+
+(3) Nearly all the technical material is contained in Monster Section
+3, which makes reading the paper tiring and awkward. At the very
+least, introduce a fresh main Section after 3.2.
+
+---
+
+Details:
+
+* p1: E_bool in the example must be E_Boolean
+* usage of "resp." is always wrong, please consult a grammar
+* "Steinhöfel in their Ph.D.thesis"
+* Section 2 is hard to follow, please improve clarity and logical flow
+* p3: "are not evaluated in a Kripke": seems wrong
+* "the leap changes" ?
+* Listing 1,2 and explanations in text: clarify relation between N and n()
+* p6: "inbetween", "an behavioral"
+* p6f: f() returns null, but sequence diagram (Fig. 1) seems to suggest
+  it returns o -- this is quite confusing; also, second cross ref. to Fig 1a
+  should probably be Fig. 1b?
+* p7, Listing 7a: shouldn't hDelegate() be declared *after*?
+* p8: "occurances", please use a spell checker
+* p8: "modified version of REFINITY" suddenly pops up from nowhere
+* p9: insert paragraph before "Continuing our investigation"
+* p9: "suffices to show the simple equivalence": explain why, and also
+  what is "simple" about it; likewise, below explain "distinguishable ...
+  due to the term representation"
+* p10: what is an "imaginery" setter?
+* p10: "Let us close ...": this is puzzling, as we are not anywhere close
+  to the end of the paper or even section
+* p11: "select from a number of options": clarify that you encoded different
+  state equivalence semantics in different rule sets (avoid "taclet") which
+  can be selected by the user via choosing the desired option in the GUI.
+* p11: "in the are of"?
+* p12: "dynamics logics", "unit-tests"
+* p12f: use standard concatenation for traces instead of the chop, which will
+  stay misterious to most readers without explanation. Concatenation
+  is sufficient for your examples. Also, \ceiling{\phi} denotes a "singleton"
+  trace.
+* p13: "notion of equivalences It" ?
+* p13: footnote 4: what does "original" refer to?
+* p14: Listing 11b: avoid "ditto"; "establish the corresponding"?;
+  "compartmentalize" -> "modularize"
+* p15: the passage on top of the page (before Sect. 4) is hard to follow
+* p15: final sentence on page is incomplete
+* p16: "not be able to use KeY": an opportunity for proof assistants that can
+  show meta properties of languages, but are less good at functional stuff?
+* p16: missing citation after Peter Müller et al; why do you give his
+  first name, but not for the others?
+* p17: "incrementally reasoning"
+* p20: references [28], [29] are the same paper.
+
+
+----------------
+ REPORT
+----------------
+
+Synopsis and Contributions
+
+The authors discuss challenges related to applying Abstract Execution
+to verifying non statement-based refactoring, involving restructuring of classes and data structures.
+They present new definitions of equivalence between objects (exceptions) that allow to either use simpler specification for certain refactorings,
+or to verify refactorings not previously provable correct.
+
+
+General Remarks
+
+The paper presents interesting progresses for what concern the application of Abstract Execution to non statement-based refactoring, 
+involving objects (exceptions) creation, method calls and data structures.
+There are only a few remarks concerning the content of the paper (see attachment review.pdf), 
+however the reference to the improved version of REFINITY is missing:
+it would be highly desiderable being able to reproduce the results.
+While the content of the manuscript is certainly
+of interest, the presentation needs a decisive improvement. In fact, the manuscript contains many typos, errors and presentation issues: several sections are hard to follow (see attachment review.pdf).
+
+
+Detailed Report
+
+A detailed report concerning issues related to typos, presentation and content is attached (review.pdf).
+
+----------------
+
+NOTE: The reviewer has uploaded a PDF document 'review.pdf' with additional comments. This file is NOT attached to this email but can be accessed in the EquinOCS system. To do so, log into your account, select the 'Submit' intent and hit 'Show' beneath the respective report.
+
+
+----------------
+ REPORT
+----------------
+
+This paper discusses relational verification techniques to prove that program refactorings are equivalence preserving. The authors present an extension of the existing REFINITY approach to handle more complex refactorings. Moreover they discuss challenges such as object creation for how to define equivalence in the presence of object creation
+
+PROs
++ Good introduction to abstract symbolic execution and its application to proving refinements correct.
++ Extension of REFINITY
++ Discussion of different notions of equivalence
+
+CONs
+- What is presented in the paper is a rather small delta w.r.t. what already existed in REFINITY before
+- Many notions and notations in the paper are hard to understand for someone who is not familiar with the KeY system and its logic (e.g., updates are used in Def. 1 without explanation)
+- It is not really clear to what extend the ideas from Sect. 3.3 and 3.4 have been implemented in REFINITY (or are just preliminary ideas).
+
+
+Details:
+p1: E_bool -> E_boolean
+p1: Why does the notion of equivalence become more complex for more complex refactorings? Checking equivalence becomes more complex. But why would the notion change?
+p3: Why ist there a "not" in "Semantically JavaDL formulas are not evaluated in a Kripke structure over a collection of first-order structures [1]."?
+p4: At the ende of page 4, it should be clarified that the postcondition expresses that the two programs terminate in equivalent states - as opposed to restricting what these states are.
+p5: Why is it not necessary for the postcondition to state that the heap is the same in both cases?
+p5: Something seems to be wrong with the sentence "We get several instances of SE resulting in the reference x holds being
+changed by the abstract statement N in n() ."
+p6: "taclet" should be explained.
+p9: What exactly is being defined in Def. 1? Something is assumed and something is introduced. But what is defined? Def. 2 has the same problem.
+p10: [26], p.231 -> [26, p. 231]
