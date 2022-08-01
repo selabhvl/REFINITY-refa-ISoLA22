@@ -14,7 +14,7 @@ This has proven fruitful in the exploration of correctness of refactorings prima
 %
 AE introduces abstract statements (and expressions), which act as named and specified placeholders for statements of the host language.
 A refactoring proof is a relational verification proof that compares two programs which can have abstract program elements.
-Consider relating ``\jmcode{if ($E_{bool}$) \{$S_1$;\} else \{$S_2;$\}}'' and ``\jmcode{if(!$E_{\mathit{boolean}}$) \{$S_2$;return;\} $S_1$;}'' where
+Consider relating ``\jmcode{if ($E_{boolean}$) \{$S_1$;\} else \{$S_2;$\}}'' and ``\jmcode{if(!$E_{\mathit{boolean}}$) \{$S_2$;return;\} $S_1$;}'' where
 $E_{\mathit{boolean}}$ represents an arbitrary boolean expression, $S_1$ and $S_2$ represent arbitrary statements.
 One of the programs represents the schema of the code before the refactoring, and the other one the code afterwards, with respect to some relational post-condition that defines the notion of \emph{program equivalence}. \EK{This reasoning about abstract programs is exactly the aforementioned reasoning about the program transformation behind the refactoring.}
 
