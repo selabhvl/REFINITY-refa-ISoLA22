@@ -6,7 +6,7 @@ Java formal semantics in Maude and give partially mechanized proofs for the two 
 Long Quan et al. \cite{DBLP:conf/isola/QuanQL08} formulate refactorings as refinement
 laws in the calculus of refinement of component and object-oriented systems (rCOS),
 focusing on correctness proofs of refactoring rules themselves.
-They did not have the benefit of any tool support, but similarily are able to describe
+They did not have the benefit of any tool support, but similarily were able to describe
 refactorings on schematic programs.
 Statement level refactorings as well as refactorings that transform class hierarchies are considered.
 
@@ -18,14 +18,14 @@ which offer more automation for concrete programs.
 
 Peter M{\"u}ller et. al present a verification infrastructure whose intermediate language supports
 an expressive permission model natively, with tool support including two back-end verifiers: one based on
-symbolic execution, one on verification condition generation; an inference tool based on abstract
+symbolic execution and one on verification condition generation, an inference tool based on abstract
 interpretation reportedly under development~\cite{DBLP:series/natosec/0001SS17}.
 
 Stolz, Pun and Gheyi investigate how well-known refactorings interact with concurrency in Active Object languages~\cite{DBLP:conf/isola/StolzPG20}.
 Findings show that refactorings that are straight-forward in Java are not necessarily so under the concurrency model considered and identify key
 program transformations that may cause interactions.
 In contrast to their work, \Refinity{} and its foundation KeY strictly consider sequential Java programs,
-but they already explore the notion of equivalent executions in their formal considerations of syntactical different, but overlapping, programs.
+but they already explore the notion of equivalent executions in their formal considerations of syntactically different, but overlapping, programs.
 
 Eilertsen, Stolz and Bagge demonstrate a technique of introducing runtime checks in Java for two refactorings \rname{Extract And Move Method} and
 \rname{Extract Local Variable}~\cite{stolz:isolarefa}. The technique in combination with testing can detect changed behavior and allow identification
@@ -33,8 +33,8 @@ of which refactoring step introduced the change the deviant behavior.
 Our proof of correctness of \rname{Extract Local Variable} in \Refinity{} is inspired by the technique employed by Eilertsen et al.
 
 
-Schaefer et al. develop microrefactorings that compose to specify several refactorings in a concise manner~\cite{Schafer-OOPSLA-2010}.
-They tackle name binding issues that arise during transformations and make use of an infrastructure to preserve correct name binding in refactorings.
+Schaefer et al. develop microrefactorings that can be composed to specify several refactorings in a concise manner~\cite{Schafer-OOPSLA-2010}.
+They tackle name binding issues that arise during transformations by making use of an infrastructure to preserve correct name binding in refactorings.
 
 Soares et al. describe and evaluate SafeRefactor - a tool that given a program input and a refactoring to apply can automatically generate testcases to detect behavioral changes~\cite{Soares-IEEE-2010}.
 In the instances where \Refinity{} fails to prove a refactoring it can generate testcases relating to the goals left open for the failed proof.
