@@ -6,7 +6,6 @@ as must be the objects in the \relevant{} location set (and the observables in t
 This, in combination with the symbolic execution of both programs, creates a hurdle for programs that contain object creations (and, subsequently exceptions).
 An object allocation in JavaDL is, roughly sketched, symbolically executed by creating a fresh function symbol for the allocated object and storing it on the symbolic heap.
 
-
 The question of equivalence for created objects is not specific to abstract execution, yet important for its practicability: 
 abstract statements are embedded in concrete programs which change as well, and more complex and application-specific refactorings must take all language features of the
 host language into account.
@@ -17,16 +16,65 @@ Indeed, it is not obvious whether the program should be considered equivalent to
 The program is executed twice from the same state, but this does not suffice for the two created objects to be equal -- the allocation must, additionally, be deterministic.
 In the following we make the assumption that this is indeed the case and use this information in the symbolic execution.
 
+\EK{
+\paragraph{Approach.}
+To formalize this assumption, we first need to express the determinism of the object creation.
+}
+
+\EK{
+We assume that the program semantics is expressed as a Kripke Structure, where the domain of each Kripke State is constant.
+This means that all objects always \emph{exist}. To \emph{allocate} an object, it must be marked as allocated.
+To so so, each object has a field \codein{<allocated>} that is set to \codein{true} for all allocated objects, and to \codein{false} for all others.
+}
+
+\EK{
+To express deterministic allocation, we use a total order $<$ on all objects, which is pivoted on some object $o$
+All objects before $o$ are allocated, and all objects after $o$ are not allocated.
+Allocation then uses $o$ as the next object to create. 
+As the order is fixed for the Kripke structure, two allocations in different states, but with the same pivot object $o$, will allocate the same object next: $o$.
+}
+
+\EK{
+\paragraph{Formalization.}
+As the next step of formalization, we express this as a sequent calculus rule in JavaDL.
+We give the basic concepts behind JavaDL next, 
+for a formal treatment we refer to an introduction to KeY and JavaDL~\cite{DBLP:series/lncs/10001}.
+}
+
+\EK{
+A sequent has the form $\Gamma \Rightarrow \Delta$, where the antecedent $\Gamma$ and the succedent $\Delta$ are sets of JavaDL formulas.
+JavaDL is a typed first-order dynamic logic with program variables and updates: its operators are the usual first-order operators, a modality $[\mathtt{s}]\phi$
+that expresses that formula $\phi$ holds after executing statement $\mathtt{s}$, and updates.
+An update is a syntactic representation of a subsitution on a program variable. A simple update, which is the only form of update we require here, 
+has the form $\mathtt{v} := \mathtt{t}$ and expresses that the value of program variable $\mathtt{v}$ is set to the value of term $\mathtt{t}$.
+To express the truth value of a formula $\phi$ after the substitution expressed by update $U$, an update is applied, notated ${U}\phi$.
+}
+
+\EK{
+Semantically, JavaDL is evaluated over a Kripke Structure and an interpretation $I$. The interpretation assigns value to predicate and function symboles, 
+while the Kripke structure is a set of state: assignments for the program variables. The semantics of a modality is the transition from one state to another,
+according to the semantics of the program. The semantics of an update is the transition from one state to another, according to the subsitution expressed by it.
+The sequent calculus for JavaDL realizes symbolic execution by reducing modalities to updates (under certain side-condition, added to the premise/path-condition).
+}
+
+\EK{
+To handle objects, JavaDL uses a special program variable $\mathtt{heap}$, which maps from objects and fields to their value.
+The heap is written and read with the usual theory of arrays~\cite{DBLP:conf/ifip/McCarthy62}, where fields are used as indices, following the approach by Wei\ss~\cite{DBLP:phd/dnb/Weiss11}.
+The special function $\mathtt{create}$ sets the $\mathtt{<allocate>}$ field to true. It cannot be set otherwise (as one cannot de-allocate an object within JavaDL).
+The function $\mathtt{C\!::\!exactInstance}$ maps each term to true, that is a member of class $\mathtt{C}$ and none of its subclasses.  
+}
+
+
 This is formalized in the following definition, where we model our assumption directly in the model and extend the \texttt{allocateInstance} taclet in KeY.
 \begin{definition}
-We assume that in every state of the Kripke structure, for every heap $h$, all objects are ordered by some order $<_h$, such that there is some
+We assume that in every state of the Kripke structure, for every heap $h$, all objects are ordered by some total order $<_h$, such that there is some
 object $o_h$, such that (1) for all $o' <_h o_h$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
 (2) for all $o_h \leq_h o''$ the object $o''$ is not allocated. 
-We introduce a unary function symbol \codein{allocate} with the signature $\mathtt{Heap} \rightarrow \mathtt{Object}$,
+We introduce a unary function symbol $\mathtt{allocate}$ with the signature $\mathtt{Heap} \rightarrow \mathtt{Object}$,
 whose interpretation must adhere to $\mathcal{I}(\mathtt{allocate})(h) = o_h$. The (slightly prettified) rule is as follows:
 
 \begin{prooftree}
-\AxiomC{$\Gamma,\{U\}(\mathtt{v} \not\doteq \mathtt{null} \wedge \mathtt{v} \doteq \mathtt{allocate(heap)} \wedge \mathtt{C::exactInstance(v)}\doteq\mathtt{TRUE})$}
+\AxiomC{$\Gamma,\{U\}(\mathtt{v} \not\doteq \mathtt{null} \wedge \mathtt{v} \doteq \mathtt{allocate(heap)} \wedge \mathtt{C\!::\!exactInstance(v)}\doteq\mathtt{TRUE})$}
 \noLine
 \UnaryInfC{$\hspace{50mm}\Rightarrow \{U\}\{\mathtt{heap} := \mathtt{create(heap, v)}\}[\mathtt{s}]\phi, \Delta$}
 \UnaryInfC{$\Gamma \Rightarrow \{U\}[ \mathtt{v~=~C.allocate();~s}]\phi, \Delta$}
@@ -54,16 +102,16 @@ Continuing our investigation of when objects are considered equal,
 where the two allocations are independent from each other, i.e., any side-effects of the constructors are not visible to each other, \codein{C} is not a subtype of \codein{D} and vice versa.
 Again the question where the two \codein{C} (resp.\ \codein{D}) objects are equal arises.
 They are not equal in the sense that, if there is a global implicit\footnote{The counter is indeed implicit, as the order $<_h$ cannot be accessed by the proof system.} counter
-that counts all allocation, they get the same number from this counter. They are equal in the sense that there is no explicit way to distinguish them in the program.
+that counts all allocations, they get the same number from this counter. They are equal in the sense that there is no explicit way to distinguish them in the program.
 
 They are, however, distinguishable in the proof system due to the term-representation of the heap.
 If we choose to consider them equal, we must adapt our \codein{allocate} mechanism:
 first, it must be able to distinguish between the allocation of different classes and, second, it must be able to simplify the heap to ignore irrelevant operations on it.
 % \vsnote{@EK: on the one hand I agree, on the other, the way I see it, it's not that we want to ignore something, but we want the implicit partial order of independent changes? Anyway, no action required, and ignoring achieves this.}
-We adapt the previous definition to take into account the types of objects.
+We adapt the previous definition to take into account the types of objects, \EK{by having a \emph{set} of orders $<_h$, one for each class.}
 
 \begin{definition}
-We assume that in every state of the Kripke structure, for every heap $h$ and every class $C$, all objects of type $C$ are ordered by some order $<_h^C$, such that there is some
+We assume that in every state of the Kripke structure, for every heap $h$ and every class $C$, all objects of type $C$ are ordered by some total order $<_h^C$, such that there is some
 object $o_h^C$, such that (1) for all $o' <^C_h o$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
 (2) for all $o \leq_h^C o''$ the object $o''$ is not allocated. Additionally, if $D$ is a subtype of $C$ then $<_h^D$ must be a suborder of $<_h^C$.
 For each class $C$, we introduce a unary function symbol \codein{C::allocate} with the signature $\mathtt{Heap} \rightarrow \mathtt{Object}$,
