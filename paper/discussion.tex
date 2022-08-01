@@ -1,19 +1,19 @@
 In the following, we shortly discuss some of the raised issues and in how far they can be adressed in the future and possibly in the short-term.
 
-The first challenge is that due to the way \Refinity{} prepares the environment and the top-level proof obligation for KeY,
+The first challenge is due to the way \Refinity{} prepares the environment and the top-level proof obligation for KeY,
 in fact both sides in a refactoring share the same Java namespace.
 This means for example that the \rname{Extract Method} refactoring no so much proves the original correct, but rather a version where the extracted method is already present.
 Care must be taken to set this up correctly, and e.g.\ in the \rname{Extract Method} example make sure that the methods is not used on the \textit{Before}-side.
 The same holds for refactorings that remove code.
 %\vsnote{Underwhelming.}
 
-Adressing this would requiring choosing unique names in either schemata, since they go into a single KeY-proof, and hence would require some form of mapping classes/objects of distinct types (due to the nominal type system of Java) between both sides.
+Adressing this would require choosing unique names in either schemata, since they go into a single KeY-proof, and hence would require some form of mapping classes/objects of distinct types (due to the nominal type system of Java) between both sides.
 This issue is closely related to the challenge we discussed before when trying to relate unrelated yet semantically equivalent data types (see Section \ref{sec:relational}).
 In general, we observe that currently \Refinity{} requires some scaffolding that makes the actual refactoring less obvious,
 such as our use of assertions and casts.
 
 A more general problem is capturing the most general instance of a refactoring.
-Currently, \Refinity{} lacks placeholders for names, which means that e.g.\ in the \rname{Extract Local Variable} refactoring we would have to instantiate the \textit{Before}-schema for every concrete instance with the corresponding identifier names for variables.
+Currently, \Refinity{}'s lack of placeholders for names, means that e.g.\ in the \rname{Extract Local Variable} refactoring we would have to instantiate the \textit{Before}-schema for every concrete instance with the corresponding identifier names for variables.
 The otherwise straight-forward refactoring \rname{Rename Temporary} already exposes the issue faced by \Refinity{} due to renaming on the block-level.
 %\vsnote*{We didn't spell it out, but maybe EK can confirm that this would be an issue for/with R. and delete this comment.}
 Likewise, the related \rname{Hide Delegate} example uses concrete method- and class names.
