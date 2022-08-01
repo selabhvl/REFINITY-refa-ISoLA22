@@ -39,7 +39,7 @@ The first program specifies that some initialization happens that is guaranteed 
 and then some finalization happens that calls \codein{f.close}.
 The second program switches the order of read and write.
 The programs are, obviously, not equivalent in a strict sense, but if the trace property we are interested in is only concerned with the order of operations on the file 
-(\codein{open}, \codein{write}, \codein{read} and \codein{open}), for example to express that only opened files are read and written to, then we need to specify a notion of equivalences
+(\codein{open}, \codein{write}, \codein{read} and \codein{open}), for example to express that only opened files are read and written to, then we need to specify a notion of equivalences.
 It remains to be seen in how far abstract executions can be expanded with such a mechanism in the future.
 
 \begin{figure}[tbp]

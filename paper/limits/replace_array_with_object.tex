@@ -54,8 +54,8 @@ p.setX(value);
 \label{lst:ReplaceArray-REF}
 \end{figure}
 
-Having established that both programs are not equal, but should be considered equivalent,
-we need to establish the corresponding in the specific case.
+Having established that the two programs are not equal, but should be considered equivalent,
+we need to establish a correspondence in the specific case.
 To avoid having to establish the correspondence in all uses (of either setter/getter or the array),
 we can assume that accesses in either case are wrapped in a method --- if we assume that \rname{Extract Method}/\rname{Inline Method} are already proven as correct.
 This reliance on other refactorings allows us to compartmentalise the reasoning, and mostly focus on contracts for the involved methods.
