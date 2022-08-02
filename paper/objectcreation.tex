@@ -1,7 +1,7 @@
 
 As we have seen in the previous section, \Refinity{} encodes a rather harsh regimen on program equivalence:
 in the absence of a more fine-grained (application-specific) post-condition, it encodes that return values or exceptions must be identical on both sides,
-as must be the objects in the \relevant{} location set (and the observables in this location set must be adequately specified).
+as well as the objects in the \relevant{} location set (and the observables in this location set must be adequately specified).
 
 This, in combination with the symbolic execution of both programs, creates a hurdle for programs that contain object creations (and, subsequently exceptions).
 An object allocation in JavaDL is, roughly sketched, symbolically executed by creating a fresh function symbol for the allocated object and storing it on the symbolic heap.
