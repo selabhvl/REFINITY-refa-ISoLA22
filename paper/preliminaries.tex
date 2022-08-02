@@ -21,8 +21,7 @@ any abrupt completion an APE may have (e.g. exceptions thrown),
 over-approximation of returned values and thrown exceptions by symbols created ``dependently fresh'' for identifiers of abstract program placeholders and a way to specify the behavior of APEs ~\cite{steinhoefel-20}.
 
 \OA{We summarize how AE is implemented in \Refinity{} by showing how to specify a method \rcode{void n()} with largely unknown method body content.
-We specify it can possibly assign to some abstract locations (its frame) and access some abstract locations (its footprint).
-Furthermore we specify that no exceptions will be thrown by the method body.}
+We want to specify it can possibly assign to some abstract locations (its frame), access some abstract locations (its footprint) and that no exceptions will be thrown by the method body.}
 We achieve such a specification in \Refinity{} by supplying it a definition of \rcode{n()} as seen in Listing \ref{lst:ExtractVariable-refinity-method}.
 A method is specified and its only content is an abstract statement \rcode{\\abstract\_statement N;} preceded by a comment where every line in the
 comment begins with a \rcode{@}-character which denotes that this is a specification, and in this case a specification for the abstract statement.
