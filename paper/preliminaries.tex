@@ -1,4 +1,4 @@
-Succinctly, exactly as stated by Steinhöfel in their Ph.D. thesis, ``Abstract Execution'' denotes the idea to process abstract programs by symbolic execution (SE)~\cite{steinhoefel-20}.
+Succinctly, as stated by Steinhöfel in their Ph.D. thesis, ``Abstract Execution'' denotes the idea to process abstract programs by symbolic execution (SE)~\cite{steinhoefel-20}.
 SE~\cite{DBLP:journals/csur/BaldoniCDDF18,DBLP:journals/ac/YangFBCW19} abstracts concrete execution by means of symbolic representations of language runtime
 state in place of concrete machine representations of such artefacts.
 Thus, e.g., values, a store or a program counter all have a symbolic representation in SE.
@@ -19,13 +19,14 @@ Execution of APEs is then the leap taken in AE over traditional SE and requires 
 any abrupt completion an APE may have (e.g. exceptions thrown),
 over-approximation of returned values and thrown exceptions by symbols created ``dependently fresh'' for identifiers of abstract program placeholders and a way to specify the behavior of APEs ~\cite{steinhoefel-20}.
 
-\OA{We summarize how AE is implemented in \Refinity{} by showing how to specify a method \rcode{void n()} with largely unknown method body content.
+\OA{We summarize how AE is implemented in \Refinity{} by showing how to specify a method \rcode{void n()} with a mostly unknown method body.
 We want to specify it can possibly assign to some abstract locations (its frame), access some abstract locations (its footprint) and that no exceptions will be thrown by the method body.
 We achieve such a specification in \Refinity{} by supplying it a definition of \rcode{n()} as seen in Listing \ref{lst:ExtractVariable-refinity-method}.
-A method is specified and its only content is an abstract statement \rcode{\\abstract\_statement N;} preceded by a Java Modelling Language (JML) like\footnote{we say ``like'' as JML does not deal with abstract Java programs} specification~\cite{HuismanAhrendtBruns2014_1000041881} for it embedded in the comment (every line in the comment beginning with a \rcode{@}-character).
-The specification is straightforward with no surprises: Abstract statement \rcode{N} may assign to the abstract location set \rcode{frN}, access the abstract location set \rcode{fpN} and may not throw any exceptions.}
+A method is specified and its only content is an abstract statement \rcode{\\abstract\_statement N} preceded by a Java Modelling Language (JML) like\footnote{We say ``like'' as JML does not deal with abstract Java programs.} specification~\cite{HuismanAhrendtBruns2014_1000041881}.
+%for it embedded in the comment (every line in the comment beginning with a \rcode{@}-character).
+The specification is straightforward with no surprises: abstract statement \rcode{N} may assign to the abstract location set \rcode{frN}, access the abstract location set \rcode{fpN} and may not throw any exceptions.}
 
-An abstract location set represents a fixed set of memory locations a program may read or write to.
+An abstract location set represents a fixed set of memory locations that a (part of a) program may read or write to.
 The set is fixed through a program's duration but the values at these locations may change.
 When an abstract location set occurs in an assignable or accessible specification it is to be understood as an upper bound;
 the locations may possibly all be accessed or assigned to, not at all or anything in between.

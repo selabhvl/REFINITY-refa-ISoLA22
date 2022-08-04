@@ -2,9 +2,9 @@ Let us consider the Extract Local Variable refactoring seen in Listing~\ref{lst:
 The example is an instance of a more general case, where preserving the behaviour of the program depends on other parts of the code.
 The behaviour of the program changes if the method call \jcode{n()} has access to the attribute \jcode{x} and overwrites it.
 
-Before we would have calls to \jmcode{o$_1$.n()} and then \jmcode{o$_2$.n()} whereas after applying the refactoring we would
-have \jmcode{o$_1$.n()} followed by \jmcode{o$_1$.n()}. In this case if e.g. \jcode{n()} simply prints \jcode{this.toString()} we will
-observe a difference in the two programs.
+Before we would have potentially calls to different objects \jmcode{o$_1$.n()} and then \jmcode{o$_2$.n()}, whereas after applying the refactoring we would
+have \jmcode{o$_1$.n()} followed by \jmcode{o$_1$.n()}.
+In this case if e.g. \jcode{n()} simply prints \jcode{this.toString()} we will observe a difference in the two programs.
 
 \begin{figure}[tbp]
   \captionsetup{type=lstlisting}
@@ -25,10 +25,11 @@ The dynamic check for such a change detailed in other work~\cite{stolz:isolarefa
 remains unchanged through the introduction of an assertion \jcode{assert temp == x;} to uncover violations after the fact,
 which is useful e.g. when checking the refactored code against its suite of unit tests.
 
-In REFINITY one proceeds to verify a refactoring as correct by supplying the code before and after refactoring and supplying a desired precondition and postcondition to relate
-the two programs. One essentially asks REFINITY: Given these preconditions does the postcondition hold after abstract execution of these two programs? REFINITY accepts a restricted
-subset of Java, the same restrictions present in KeY, with extensions for abstract program fragments; pieces that are ``placeholders'' for concrete Java code.
-A proof of correctness in REFINITY is a proof for any concrete Java programs that can be \emph{instantiated} to adhere to the specification given in REFINITY.
+In REFINITY one proceeds to verify a refactoring as correct by supplying the code before and after refactoring and supplying a desired precondition and postcondition to relate the two programs.
+We essentially ask REFINITY: given these preconditions does the postcondition hold after abstract execution of these two abstract programs?
+%REFINITY accepts a restricted
+%subset of Java, the same restrictions present in KeY, with extensions for abstract program fragments; pieces that are ``placeholders'' for concrete Java code.
+A proof of correctness in REFINITY is a proof for any concrete Java programs that can be \emph{instantiated} to adhere to the abstract specification given in REFINITY.
 
 We describe the refactoring to REFINITY as shown with a left side (Before) in Listing~\ref{lst:ExtractVariable-refinity-before},
 a right side (After) in Listing~\ref{lst:ExtractVariable-refinity-after} and a method level context which contains the method we have already shown in Listing~\ref{lst:ExtractVariable-refinity-method}.
@@ -39,7 +40,7 @@ the desired precondition, here empty, and the desired postcondition.
 
 The pre- and postcondition are specified in terms of equations that may relate the effects of the before and after side such as return values, exceptions thrown and any of the relevant locations declared.
 In our case we use the default postcondition REFINITY provides which is simply \rcode{\\result\_1 == \\result\_2} which are two sequences that contain for each respective side in this order:
-The return value if any, otherwise null; exceptions thrown if any, otherwise null; onwards, the final values at the relevant abstract locations specified.
+The return value if any, otherwise null; exceptions thrown if any, otherwise null; and \vsnote*{Unclear (yes, I know what is meant). More constructive: ``an assertion that the values for all locations as per the relevant set are identical''?}{the final values at the relevant abstract locations specified}.
 
 Thus the default postcondition in our case will be that \rcode{x} returned in Before must be identical to \rcode{temp} returned in After and that any exception thrown must be identical for the two sides.
 
@@ -64,19 +65,20 @@ A current limitation of the implementation of REFINITY necessitate the casting \
 \label{lst:ExtractVariable-refinity}
 \end{figure}
 With only the specification as shown in Listing~\ref{lst:ExtractVariable-refinity} REFINITY is unable to prove that \rcode{x} will be identical to \rcode{temp} after AE of both sides.
-We get several instances of SE resulting in the reference \rcode{x} holds being changed by the abstract statement \rcode{N} in \rcode{n()}.
+We get several instances of SE resulting in the reference \rcode{x} being changed by the abstract statement \rcode{N} in \rcode{n()}.
 
 To prohibit this we specify that the execution of the abstract statement \rcode{N} cannot interfere with \rcode{x}.
 We must introduce a constraint on the frame \rcode{frN} of abstract statement \rcode{N}, namely that it is disjoint from \rcode{x}.
-To do so we put an abstract execution constraint \rcode{//@ ae\_constraint \\disjoint(x,frN);} on each side which ensures \rcode{x}
+To do so we put an abstract execution constraint \rcode{@ ae\_constraint \\disjoint(x,frN)} on each side which ensures \rcode{x}
 will be assumed not to be in \rcode{frN}.
 
-After the aformentioned change REFINITY manages to automatically prove that the postcondition holds after abstract execution of both sides;
-\rcode{x} and \rcode{temp} will hold identical references and any execptions thrown will be identical.
+After the aforementioned change REFINITY manages to automatically prove that the postcondition holds after abstract execution of both sides;
+\rcode{x} and \rcode{temp} will hold identical references and any exceptions thrown will be identical.
+\vsnote{New, please check.}{Note that it remains for any concrete application of this refactoring to prove that any code matching abstract statements fulfils their annotated constraints.}
 
-One can consider what we have managed to encode and prove a partial success.
-Yet this is a slightly unnatural encoding if we are to consider concrete instantiations of what we have expressed here.
-What we would somehow want to express is to have after the first call to \rcode{n()} on each side abstract statements that are related by a substitution of \rcode{x} and \rcode{temp}.
+\vsnote*{Unclear. Why ``partial''?}{One can consider what we have managed to encode and prove a partial success.}
+\vsnote{Unclear/can't follow.}{Yet this is a slightly unnatural encoding if we are to consider concrete instantiations of what we have expressed here.
+What we would somehow want to express is to have after the first call to \rcode{n()} on each side abstract statements that are related by a substitution of \rcode{x} and \rcode{temp}.}
 
 %%% Local Variables:
 %%% mode: latex

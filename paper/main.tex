@@ -68,13 +68,14 @@ need to be overcome for full round-trip correctness of refactorings in object-or
 \input{fitting/extract_variable}
 
 \section{Challenges}\label{sec:challenges}
-In this section we explore the possibilities of \Refinity{} beyond the original work.
+\vsnote{Change Section title?}
+In this section we explore the possibilities of applying \Refinity{} beyond its original vision.
 In particular, we are interested in moving away from statement-based refactorings to more complex changes that also affect the structure of the code.
-The first new refactoring, Hide Delegate, harnesses Java inner classes to express the desired behaviour of \Refinity{} in a straight-forward manner
+The first new refactoring, Hide Delegate, \vsnote*{inner classes not actually visible; remove!}{harnesses Java inner classes to} express the desired behaviour of \Refinity{} in a straight-forward manner
 and KeY automatically completes the proof once the right preconditions are identified.
 
 After that, we present a refactoring that is related to Dead Code Elimination.
-This requires introduction of additional constructs for object-construction within KeY,
+This requires introduction of additional constructs for object-creation within the underlying KeY system,
 which are then harnessed in taclets that express that certain non-identical heaps guarantee equivalent behaviour.
 
 We continue our wishlist for further flexibility in expressing equivalent program behaviour based on the execution history of user-defined observable actions,
@@ -83,6 +84,11 @@ and finally discuss challenges related to expressing equivalence in the face of 
 \input{fitting/hide_delegate}
 \subsection{Object Creation}\label{sec:objectcreation}
 \input{objectcreation}
+
+\section{Potential Future Improvements}\label{sec:future}
+In the previous section, we have established that relational verification using abstract execution
+must take care of general effects of language semantics outside the abstract statements.
+In this section, we illustrate a different obstacle to practical abstract execution, which touches on its core specification principles: sequences of side effects and events.
 
 \subsection{Trace Properties}\label{sec:traces}
 \input{traces}
