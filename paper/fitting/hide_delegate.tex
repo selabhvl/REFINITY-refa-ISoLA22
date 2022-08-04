@@ -74,8 +74,8 @@ In order to prove the specified \rname{Hide Delegate} refactoring in the publish
 that exceptions thrown are both instances of NPE or equal.
 This is owing to the fact that \Refinity{} does not consider occurences of \jcode{new NullPointerException()}, or any other newly created objects, to be equal.
 
-In our modified version of \Refinity{} this is no longer an issue and we may use the default postcondition that simply matches return results and exceptions;
-\Refinity{} will automatically manage prove the shown \rname{Hide Delegate} refactoring to be correct wrt. the given postconditions.
+\OA{We have produced a modified version of \Refinity{} where this is no longer an issue such that we may keep the default postcondition that simply matches return results and exceptions:
+\Refinity{} will automatically manage prove the shown \rname{Hide Delegate} refactoring to be correct wrt. the given postconditions. In the following section we will detail the changes need to accomplish this.}
 
 
 %%% Local Variables:
