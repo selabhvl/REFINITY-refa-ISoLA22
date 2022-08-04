@@ -24,7 +24,7 @@ but in that case we can reach the considered pattern through applications of \rn
 The refactoring can enable less coupling as the class that contained the call chain afterwards does not need to know the return type of \jcode{f()}.
 
 \OA{
-Also of note is the scenario shown in the sequence diagram in Fig.~\ref{fig:NPEs} where we assume the call to \jcode{f()} returns \jcode{null} causing the call to \jcode{g()} to result in a \jcode{NullPointerException} (NPE)}. In the strictest sense of behavioral preservation
+Note the scenario shown in the sequence diagram in Fig.~\ref{fig:NPEs} where we assume the call to \jcode{f()} returns \jcode{null} causing the call to \jcode{g()} to result in a \jcode{NullPointerException} (NPE)}. In the strictest sense of behavioral preservation
 we will observe a difference as the NPE thrown before refactoring Fig.~\ref{fig:hd-npe-before} will show a different stacktrace than the one thrown after refactoring Fig.~\ref{fig:hd-npe-before}.
 Thus we consider a behavioral equivalence that allows for disagreement in stacktraces for such matching exceptions; in fact one is unable to make any other distinction in \Refinity{}.
 
