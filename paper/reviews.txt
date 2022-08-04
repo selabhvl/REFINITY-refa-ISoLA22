@@ -86,9 +86,9 @@ least, introduce a fresh main Section after 3.2.
 
 Details:
 
-* p1: E_bool in the example must be E_Boolean
+[FIXED] * p1: E_bool in the example must be E_Boolean
 * usage of "resp." is always wrong, please consult a grammar
-* "Steinhöfel in their Ph.D.thesis"
+[FIXED] * "Steinhöfel in their Ph.D.thesis"
 * Section 2 is hard to follow, please improve clarity and logical flow
 * p3: "are not evaluated in a Kripke": seems wrong
 * "the leap changes" ?
