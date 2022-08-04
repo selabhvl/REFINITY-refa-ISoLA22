@@ -23,8 +23,9 @@ We note that a pattern usually considered is also \jcode{X x = o.f(); Y y = x.g(
 but in that case we can reach the considered pattern through applications of \rname{Slide Statement} and finally \rname{Inline Variable} on \jcode{x}.
 The refactoring can enable less coupling as the class that contained the call chain afterwards does not need to know the return type of \jcode{f()}.
 
-Also of note is the scenario shown in Fig.~\ref{fig:NPEs} where the call to \jcode{f()} returns \jcode{null}. In the strictest sense of behavioral preservation
-we will observe a difference as the \jcode{NullPointerException} (NPE) thrown before Fig.~\ref{fig:hd-npe-before} will show a different stacktrace than the one thrown after Fig.~\ref{fig:hd-npe-before}.
+\OA{
+Also of note is the scenario shown in the sequence diagram in Fig.~\ref{fig:NPEs} where we assume the call to \jcode{f()} returns \jcode{null} causing the call to \jcode{g()} to result in a \jcode{NullPointerException} (NPE)}. In the strictest sense of behavioral preservation
+we will observe a difference as the NPE thrown before refactoring Fig.~\ref{fig:hd-npe-before} will show a different stacktrace than the one thrown after refactoring Fig.~\ref{fig:hd-npe-before}.
 Thus we consider a behavioral equivalence that allows for disagreement in stacktraces for such matching exceptions; in fact one is unable to make any other distinction in \Refinity{}.
 
 %\vsnote{Three things on the nature of encoding things in R.: i) this is an example that R. is bad at \textit{names}: we need concrete names \texttt{f/g} (with concrete parameters), but want placeholders. ii) we don't really remove/replace anything, since we need all the code that we want to use in the same class, i.e., the ``new'' method \jcode{hideDelegate()} was already present before -- but that's okay because it's obviously correct to introduce methods that are not called -- another example of syntactical requirements on encodings in R. iii) This is the example for our abuse of R.\ for OO-based refactorings.}
@@ -71,7 +72,7 @@ That means the abstract statements may for instance throw exceptions; for instan
 
 In order to prove the specified \rname{Hide Delegate} refactoring in the published version (v0.9.7) of \Refinity{} one must write a postcondition that consists of a conjunction of return values of the before and after programs being identical and
 that exceptions thrown are both instances of NPE or equal.
-This is owing to the fact that \Refinity{} does not consider occurances of \jcode{new NullPointerException()}, or any other newly created objects, to be equal.
+This is owing to the fact that \Refinity{} does not consider occurences of \jcode{new NullPointerException()}, or any other newly created objects, to be equal.
 
 In our modified version of \Refinity{} this is no longer an issue and we may use the default postcondition that simply matches return results and exceptions;
 \Refinity{} will automatically manage prove the shown \rname{Hide Delegate} refactoring to be correct wrt. the given postconditions.
