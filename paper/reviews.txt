@@ -90,15 +90,15 @@ Details:
 * usage of "resp." is always wrong, please consult a grammar
 [FIXED] * "Steinhöfel in their Ph.D.thesis"
 * Section 2 is hard to follow, please improve clarity and logical flow
-* p3: "are not evaluated in a Kripke": seems wrong
+[FIXED] * p3: "are not evaluated in a Kripke": seems wrong
 * "the leap changes" ?
 * Listing 1,2 and explanations in text: clarify relation between N and n()
-* p6: "inbetween", "an behavioral"
+[FIXED] * p6: "inbetween", "an behavioral"
 * p6f: f() returns null, but sequence diagram (Fig. 1) seems to suggest
   it returns o -- this is quite confusing; also, second cross ref. to Fig 1a
   should probably be Fig. 1b?
 * p7, Listing 7a: shouldn't hDelegate() be declared *after*?
-* p8: "occurances", please use a spell checker
+[FIXED] * p8: "occurances", please use a spell checker
 * p8: "modified version of REFINITY" suddenly pops up from nowhere
 * p9: insert paragraph before "Continuing our investigation"
 * p9: "suffices to show the simple equivalence": explain why, and also
