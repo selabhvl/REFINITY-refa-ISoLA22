@@ -19,7 +19,7 @@ where the call chain is extracted to a new method on \jcode{o}, say \jcode{h()} 
   \label{fig:NPEs}
 \end{figure}
 
-We note that a pattern usually considered is also \jcode{X x = o.f(); Y y = x.g()} potentially with non-interfering intermediate statements inbetween the two statements,
+We note that a pattern usually considered is also \jcode{X x = o.f(); Y y = x.g()} potentially with non-interfering intermediate statements in between the two statements,
 but in that case we can reach the considered pattern through applications of \rname{Slide Statement} and finally \rname{Inline Variable} on \jcode{x}.
 The refactoring can enable less coupling as the class that contained the call chain afterwards does not need to know the return type of \jcode{f()}.
 
