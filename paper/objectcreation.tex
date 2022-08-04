@@ -98,6 +98,7 @@ whose interpretation must adhere to $\mathcal{I}(\mathtt{allocate})(h) = o_h$. T
 \end{definition}
 The modification is the addition of $v = \mathtt{allocate(heap)}$ to the antecedent.
 The modified rule suffices to show the simple equivalence of \codein{return new C()} to itself from above.
+
 Continuing our investigation of when objects are considered equal, 
 where the two allocations are independent from each other, i.e., any side-effects of the constructors are not visible to each other, \codein{C} is not a subtype of \codein{D} and vice versa.
 Again the question where the two \codein{C} (resp.\ \codein{D}) objects are equal arises.
