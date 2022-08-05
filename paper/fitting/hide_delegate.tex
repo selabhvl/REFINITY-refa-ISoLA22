@@ -69,8 +69,8 @@ Thus we consider a behavioral equivalence that allows for disagreement in stackt
 We specify the Before and After program fragment for a \rname{Hide Delegate} refactoring in Listing~\ref{lst:HideDelegate-nofields-refinity} which faithfully captures the previously sketched out refactoring.
 The classes and methods used in the refactoring appear in Listing~\ref{lst:HideDelegate-nofields-classes-refinity} and show that we minimally specify the contents of the involved methods by using abstract
 statements in their bodies.
-Note that we \vsnote*{Double negation: ``allow''}{do not require} that the abstract statements \rcode{F} and \rcode{G} in the methods \rcode{getOwner()} and \rcode{getResource} \vsnote*{}{\sout{cannot}} complete abruptly.
-That means the abstract statements may for instance throw exceptions; for instance the sketched out scenario considered in Fig.~\ref{fig:NPEs} where \rcode{getResource()} will return \rcode{null} and cause the following call to throw a NPE is a possibility.
+Note that we allow abrupt completion in the abstract statements \rcode{F} and \rcode{G} in the methods \rcode{getOwner()} and \rcode{getResource}.
+That means the abstract statements may for instance throw exceptions; the sketched out scenario considered in Fig.~\ref{fig:NPEs} where \rcode{getResource()} will return \rcode{null} and cause the following call to throw a NPE is a possibility.
 
 In order to prove the specified \rname{Hide Delegate} refactoring in the published version (v0.9.7) of \Refinity{} we need a postcondition that consists of a conjunction of return values of the before- and after-programs being identical and
 that any thrown exceptions are both instances of NPE or otherwise equal.
