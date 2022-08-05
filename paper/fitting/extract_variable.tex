@@ -39,10 +39,14 @@ Free program variables, here \rcode{x}; abstract location sets, here \rcode{frN}
 the desired precondition, here empty, and the desired postcondition.
 
 The pre- and postcondition are specified in terms of equations that may relate the effects of the before and after side such as return values, exceptions thrown and any of the relevant locations declared.
-In our case we use the default postcondition REFINITY provides which is simply \rcode{\\result\_1 == \\result\_2} which are two sequences that contain for each respective side in this order:
-The return value if any, otherwise null; exceptions thrown if any, otherwise null; and \vsnote*{Unclear (yes, I know what is meant). More constructive: ``an assertion that the values for all locations as per the relevant set are identical''?}{the final values at the relevant abstract locations specified}.
+\OA{Here we use the default postcondition REFINITY provides which is simply \rcode{\\result\_1 == \\result\_2} where \rcode{\\result\_1} and \rcode{\\result\_2}
+are each respectively a sequence of results for the abstract execution of the Before and After program.
+Each sequence contain in this order:
+The return value if any, otherwise null; exceptions thrown if any, otherwise null; and the values at specified abstract location sets (that the user selects as relevant).}
 
-Thus the default postcondition in our case will be that \rcode{x} returned in Before must be identical to \rcode{temp} returned in After and that any exception thrown must be identical for the two sides.
+%\vsnote*{Unclear (yes, I know what is meant). More constructive: ``an assertion that the values for all locations as per the relevant set are identical''?}{the values at relevant abstract location sets}.
+\OA{The default postcondition in our case will be that \rcode{x} returned in Before must be identical to \rcode{temp} returned in After and that any exception thrown must be identical for the
+Before and After program. When not left empty, as done here and so trivially true, equality wrt. the last component of the result sequences is an assertion that the values at all abstract location set selected as relevant are identical.}
 
 We use an assertion to ensure we consider only the refactoring when \rcode{x} is an instance of its intended type.
 A current limitation of the implementation of REFINITY necessitate the casting \rcode{(X)x} as free program variables may only be declared to be of type Object.
