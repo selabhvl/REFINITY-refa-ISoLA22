@@ -1,11 +1,9 @@
-\EK{Refactoring is a fundamental activity in software engineering to reorganize code while preserving its observable behavior, 
+Refactoring is a fundamental activity in software engineering to reorganize code while preserving its observable behavior, 
 but improving the structure of the code, e.g., to simplify maintenance.
 A refactoring can be defined as a pattern it matches on, and a subsequent program transformation on the matched part.
 To ensure that the transformed program indeed has the same observable behavior one can either compare the transformed program with the 
 original or %through, e.g., regression testing~\cite{regression} or relational verification~\cite{relate}, or 
 reason about the program transformation itself.
-}
-
 
 Relational verification through dynamic logic is a promising approach for verification of refactoring patterns in object oriented programs.
 Recent advances from symbolic to Abstract Execution (AE)~\cite{steinhoefel:ae} have enabled reasoning about incomplete/abstract versions of such programs.
@@ -16,26 +14,26 @@ AE introduces abstract statements (and expressions), which act as named and spec
 A refactoring proof is a relational verification proof that compares two programs which can have abstract program elements.
 Consider relating ``\jmcode{if ($E_{boolean}$) \{$S_1$;\} else \{$S_2;$\}return;}'' and ``\jmcode{if(!$E_{\mathit{boolean}}$) \{$S_2$;return;\} $S_1$;return;}'' where
 $E_{\mathit{boolean}}$ represents an arbitrary boolean expression, $S_1$ and $S_2$ represent arbitrary statements.
-One of the programs represents the schema of the code before the refactoring, and the other one the code afterwards, with respect to some relational post-condition that defines the notion of \emph{program equivalence}. \EK{This reasoning about abstract programs is exactly the aforementioned reasoning about the program transformation behind the refactoring.}
+One of the programs represents the schema of the code before the refactoring, and the other one the code afterwards, with respect to some relational post-condition that defines the notion of \emph{program equivalence}. This reasoning about abstract programs is exactly the aforementioned reasoning about the program transformation behind the refactoring.
 
-\EK{Despite the promising results due to AE, it has only been applied to \emph{statement-level} refactorings, that
+Despite the promising results due to AE, it has only been applied to \emph{statement-level} refactorings, that
 change the body of a single method.
 However, refactorings are not limited to single methods or statement-blocks, but may also restructure classes and data structures \cite{fowler:refactoring}.
 In this paper we investigate the role of AE for verification of refactorings beyond statement-level.
-}
+
 
 \paragraph{Challenges.}
 More complex refactorings need more elaborate specification and verification techniques for relational verification. 
 The reason is that the programs surrounding the abstract statements, as well as the notion of equivalence, become more involved.
 This holds for both structure and behaviour.
-\EK{Following the general approach of AE,} \Refinity{} \cite{steinhoefel:ae}, the tool supporting verification on top of the KeY system, an automated theorem prover for Java~\cite{DBLP:conf/aplas/Steinhofel20},
+Following the general approach of AE, \Refinity{} \cite{steinhoefel:ae}, the tool supporting verification on top of the KeY system, an automated theorem prover for Java~\cite{DBLP:conf/aplas/Steinhofel20},
 has been primarily designed to verify the correctness of refactorings that are based on moving code within a method, or on extracting some statements into their own method (i.e., the \rname{Extract Method} refactoring).
 
-\EK{To investigate the use of AE for refactorings on the class-level, we investigate the \rname{Hide Delegate} refactoring that moves code between classes and show how it can be encoded in \Refinity{}.
+To investigate the use of AE for refactorings on the class-level, we investigate the \rname{Hide Delegate} refactoring that moves code between classes and show how it can be encoded in \Refinity{}.
 As for specification, we discuss the interpretation of \textit{equivalence} from the perspective of the user and how to encode this --- for example, if the surrounding programs throw exceptions, under which conditions are the exceptions considered equivalent?
 This issue goes beyond exceptions, but touches on a fundamental problem:
 there are several possible choices for when newly created objects (and exceptions, which are objects in Java) are considered equal in relational verification using dynamic logic.
-This was first investigated by Beckert et al.~\cite{DBLP:conf/lopstr/BeckertBKSSU13} and we discuss alternatives here.}
+This was first investigated by Beckert et al.~\cite{DBLP:conf/lopstr/BeckertBKSSU13} and we discuss alternatives here.
 
 
 For exceptions and object creation, we describe several possibilities when newly created objects (resp.\ thrown exceptions) are considered equal
