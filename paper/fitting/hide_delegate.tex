@@ -27,11 +27,10 @@ we can reach the considered pattern through applications of \rname{Slide Stateme
 The scenarios shown in the sequence diagrams in Fig.~\ref{fig:NPEs} will both result in \jcode{NullPointerException} (NPE)} when the call to \jcode{f()} returns \jcode{null}.
 In the strictest sense of behavioral preservation
 we will observe a difference as the NPE thrown before refactoring (Fig.~\ref{fig:hd-npe-before}) will show a different stacktrace than the one thrown after refactoring (Fig.~\ref{fig:hd-npe-after}).
-Thus we consider a behavioral equivalence that allows for disagreement in stacktraces for such matching exceptions; in fact one is unable to make any other distinction in \Refinity{}.
-\vsnote{Something about post-condition missing here? I don't remember, does R. not actually model the stacktrace in an exc. anyways or did we need something explicit in the post-cond?}
-
-%\vsnote{Three things on the nature of encoding things in R.: i) this is an example that R. is bad at \textit{names}: we need concrete names \texttt{f/g} (with concrete parameters), but want placeholders. ii) we don't really remove/replace anything, since we need all the code that we want to use in the same class, i.e., the ``new'' method \jcode{hideDelegate()} was already present before -- but that's okay because it's obviously correct to introduce methods that are not called -- another example of syntactical requirements on encodings in R. iii) This is the example for our abuse of R.\ for OO-based refactorings.}
-%\vsnote{TODO @Ole: check that in HD we explain the ``equivalence'' of the NPEs --- I don't see this yet in the example in 3.1}
+Thus we consider a behavioral equivalence that allows for disagreement in stacktraces for such matching exceptions; in fact one is unable to make any other distinction in \Refinity{}
+as it does not consider such effects.
+%\vsnote{Something about post-condition missing here? I don't remember, does R. not actually model the stacktrace in an exc. anyways or did we need something explicit in the post-cond?}
+% Ole: post-condition mention comes below the figure below
 
 \begin{figure}[tbp]
   \captionsetup{type=lstlisting}
@@ -80,7 +79,6 @@ This is owing to the fact that \Refinity{} does not consider occurrences of \jco
 \OA{We have improved  \Refinity{} such that this is no longer an issue; we may keep the default postcondition that simply matches return results and exceptions and
 \Refinity{} automatically manages to prove the shown \rname{Hide Delegate} refactoring to be correct wrt. the given postconditions.
 In the following section we will detail the changes needed to accomplish this.}
-
 
 %%% Local Variables:
 %%% mode: latex
