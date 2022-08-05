@@ -100,7 +100,7 @@ Details:
 * p7, Listing 7a: shouldn't hDelegate() be declared *after*?
 [FIXED] * p8: "occurances", please use a spell checker
 [FIXED] * p8: "modified version of REFINITY" suddenly pops up from nowhere
-* p9: insert paragraph before "Continuing our investigation"
+[FIXED] * p9: insert paragraph before "Continuing our investigation"
 * p9: "suffices to show the simple equivalence": explain why, and also
   what is "simple" about it; likewise, below explain "distinguishable ...
   due to the term representation"
