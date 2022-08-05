@@ -77,8 +77,9 @@ that any thrown exceptions are both instances of NPE or otherwise equal.
 This is owing to the fact that \Refinity{} does not consider occurrences of \jcode{new NullPointerException()}, or any other newly created objects, to be equal.
 \vsnote{Is object-creation the only issue; see ``stacktraces'' above? I can't remember. In any, case it's probably JavaDL/KeY, not R's ``fault''.}
 
-\OA{We have \vsnote*{}{improved \sout{produced a modified version of}} \Refinity{} where this is no longer an issue such that we may keep the default postcondition that simply matches return results and exceptions:
-\Refinity{} automatically manages to prove the shown \rname{Hide Delegate} refactoring to be correct wrt. the given postconditions. In the following section we will detail the changes needed to accomplish this.}
+\OA{We have improved  \Refinity{} such that this is no longer an issue; we may keep the default postcondition that simply matches return results and exceptions and
+\Refinity{} automatically manages to prove the shown \rname{Hide Delegate} refactoring to be correct wrt. the given postconditions.
+In the following section we will detail the changes needed to accomplish this.}
 
 
 %%% Local Variables:
