@@ -80,10 +80,10 @@ After the aforementioned change REFINITY manages to automatically prove that the
 \rcode{x} and \rcode{temp} will hold identical references and any exceptions thrown will be identical.
 \vsnote{New, please check.}{Note that it remains for any concrete application of this refactoring to prove that any code matching abstract statements fulfils their annotated constraints.}
 
-\vsnote*{Unclear. Why ``partial''?}{One can consider what we have managed to encode and prove a partial success.}
-\vsnote{Unclear/can't follow.}{Yet this is a slightly unnatural encoding if we are to consider concrete instantiations of what we have expressed here.
-What we would somehow want to express is to have after the first call to \rcode{n()} on each side abstract statements that are related by a substitution of \rcode{x} and \rcode{temp}.}
-
+%\vsnote*{Unclear. Why ``partial''?}{One can consider what we have managed to encode and prove a partial success.}
+%\vsnote{Unclear/can't follow.}{Yet this is a slightly unnatural encoding if we are to consider concrete instantiations of what we have expressed here.
+\OA{Although we succesfully prove the refactoring we have encoded here the required scaffolding of return statements leave something to be desired:
+Finding intended concrete instances of the abstract programs now involve, potentially, ignoring the return statements.}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../main"
