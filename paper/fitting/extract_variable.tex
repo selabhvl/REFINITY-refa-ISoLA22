@@ -46,7 +46,7 @@ The return value if any, otherwise null; exceptions thrown if any, otherwise nul
 
 %\vsnote*{Unclear (yes, I know what is meant). More constructive: ``an assertion that the values for all locations as per the relevant set are identical''?}{the values at relevant abstract location sets}.
 \OA{The default postcondition in our case will be that \rcode{x} returned in Before must be identical to \rcode{temp} returned in After and that any exception thrown must be identical for the
-Before and After program. When left empty, as done here and so trivially true, equality wrt. the last component of the result sequences is an assertion that the values at all abstract location set selected as relevant are identical.}
+Before and After program. When left empty, as done here and so trivially true, equality wrt. the last component of the result sequences is an assertion that the values at all abstract location sets selected as relevant are identical.}
 
 We use an assertion to ensure we consider only the refactoring when \rcode{x} is an instance of its intended type.
 A current limitation of the implementation of REFINITY necessitate the casting \rcode{(X)x} as free program variables may only be declared to be of type Object.
