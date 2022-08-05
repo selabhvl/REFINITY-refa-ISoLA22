@@ -95,7 +95,7 @@ They are, however, distinguishable in the proof system due to the term-represent
 If we choose to consider them equal, we must adapt our \codein{allocate} mechanism:
 first, it must be able to distinguish between the allocation of different classes and, second, it must be able to simplify the heap to ignore irrelevant operations on it.
 % \vsnote{@EK: on the one hand I agree, on the other, the way I see it, it's not that we want to ignore something, but we want the implicit partial order of independent changes? Anyway, no action required, and ignoring achieves this.}
-We adapt the previous definition to take into account the types of objects, \EK{by having a \emph{set} of orders $<_h$, one for each class.}
+We adapt the previous definition to take into account the types of objects, by having a \emph{set} of orders $<_h$, one for each class.
 
 \begin{definition}
 We assume that in every state of the Kripke structure, for every heap $h$ and every class $C$, all objects of type $C$ are ordered by some total order $<_h^C$, such that there is some
