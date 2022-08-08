@@ -1,34 +1,37 @@
+\subsection{Abstract Execution}
 Succinctly, as stated by Steinhöfel in their Ph.D. thesis, ``Abstract Execution'' denotes the idea to process abstract programs by symbolic execution (SE)~\cite{steinhoefel-20}.
 SE~\cite{DBLP:journals/csur/BaldoniCDDF18,DBLP:journals/ac/YangFBCW19} abstracts concrete execution by means of symbolic representations of language runtime
 state in place of concrete machine representations of such artefacts.
-Thus, e.g., values, a store or a program counter all have a symbolic representation in SE.
-Branching points, such as encountered when symbolically executing e.g., an if-then-else statement splits an execution path into new paths for each possible branch arm, and for each such
-path e.g., the symbolic store may be preserved in the new paths, but different conditions may also be carried through such that in the path where the symbolic program counter refers
-to the then branch the evaluation of the boolean expression in the if statement must be valid whereas it is not valid in the path where the symbolic program counter refers to the else branch.
+Thus, a store, a program counter, values, and so on, all have a symbolic representation in SE.
+Branching points, such as encountered when symbolically executing e.g., an if-then-else statement that splits an execution path into new paths for each possible branch arm.
+For each of these paths, for instance, the symbolic store may be preserved in the new paths, but different conditions may also be carried through such that in the path where the symbolic program counter refers
+to the then-branch the evaluation of the boolean expression in the if statement must be valid, whereas it is not valid in the path where the symbolic program counter refers to the else-branch.
 Possible executions are not just captured through branching paths, but along a path itself through the symbolic store; a symbolic value represents any valid concrete substitution.
 
-The SE found in KeY and \Refinity{} operate on a dynamic logic JavaDL, for a restricted subset of Java.
-Syntactically JavaDL is an extension of first-order logic with program variables and program modalities.
-Semantically JavaDL formulas are evaluated in a Kripke structure; a collection of first-order structures \cite[sec. 3.3]{DBLP:series/lncs/10001}.
+The SE found in KeY and \Refinity{} operates on a dynamic logic, JavaDL, for a restricted subset of Java.
+Syntactically, JavaDL is an extension of first-order logic with program variables and program modalities.
+Semantically, JavaDL formulas are evaluated in a Kripke structure, which is a collection of first-order structures \cite[Sec.~3.3]{DBLP:series/lncs/10001}.
 
 The use of SE to potentially explore every possible execution a program can have is a popular program analysis technique. AE extends SE by
 introducing abstract program elements (APEs) to the base language that is symbolically executed.
-For statements and expressions a corresponding abstract statement and abstract expression are introduced.
-APEs represent any possible substitution with concrete program elements, be it statements or expressions, from the base language being symbolically executed.
-Execution of APEs is then the leap taken in AE over traditional SE and requires the introduction of abstract state changes, SE branching for
+For statements and expressions, a corresponding abstract statement and abstract expression are introduced.
+APEs represent any possible substitution with concrete program elements, which can be statements or expressions, from the base language being symbolically executed.
+Execution of APEs is then the leap taken in AE over traditional SE.  It requires the introduction of abstract state changes, SE branching for
 any abrupt completion an APE may have (e.g. exceptions thrown),
-over-approximation of returned values and thrown exceptions by symbols created ``dependently fresh'' for identifiers of abstract program placeholders and a way to specify the behavior of APEs ~\cite{steinhoefel-20}.
+over-approximation of returned values and thrown exceptions by symbols created ``dependently fresh'' for identifiers of abstract program placeholders, and a way to specify the behavior of APEs~\cite{steinhoefel-20}.
 
 We summarize how AE is implemented in \Refinity{} by showing how to specify a method \rcode{void n()} with a mostly unknown method body.
-We want to specify it can possibly assign to some abstract locations (its frame), access some abstract locations (its footprint) and that no exceptions will be thrown by the method body.
-We achieve such a specification in \Refinity{} by supplying it a definition of \rcode{n()} as seen in Listing \ref{lst:ExtractVariable-refinity-method}.
-A method is specified and its only content is an abstract statement \rcode{\\abstract\_statement N} preceded by a Java Modelling Language (JML) like\footnote{We say ``like'' as JML does not deal with abstract Java programs.} specification~\cite{HuismanAhrendtBruns2014_1000041881}.
+Listing \ref{lst:ExtractVariable-refinity-method} shows a specification in \Refinity{}, in which a method \rcode{n()} is specified and its only content is an abstract statement \rcode{\\abstract\_statement N} preceded by a Java Modelling Language (JML) like\footnote{We say ``like'' as JML does not deal with abstract Java programs.} specification~\cite{HuismanAhrendtBruns2014_1000041881}.
+%
+The specification indicates that the method can possibly assign to some abstract locations (its frame) and can access some abstract locations (its footprint), and that no exceptions will be thrown by the method body.
+% We want to specify it can possibly assign to some abstract locations (its frame), access some abstract locations (its footprint) and that no exceptions will be thrown by the method body.
+% We achieve such a specification in \Refinity{} by supplying it with a definition of \rcode{n()} as shown in Listing \ref{lst:ExtractVariable-refinity-method}.
 %for it embedded in the comment (every line in the comment beginning with a \rcode{@}-character).
-The specification is straightforward with no surprises: abstract statement \rcode{N} may assign to the abstract location set \rcode{frN}, access the abstract location set \rcode{fpN} and may not throw any exceptions.
+The specification is straightforward: abstract statement \rcode{N} may assign to the abstract location set \rcode{frN}, access the abstract location set \rcode{fpN} and may not throw any exceptions.
 
-An abstract location set represents a fixed set of memory locations that a (part of a) program may read or write to.
+An abstract location set represents a fixed set of memory locations that (a part of) a program may read from or write to.
 The set is fixed through a program's duration but the values at these locations may change.
-When an abstract location set occurs in an assignable or accessible specification it is to be understood as an upper bound;
+When an abstract location set occurs in an assignable or accessible specification, it is to be understood as an upper bound;
 the locations may possibly all be accessed or assigned to, not at all or anything in between.
 
 \begin{figure}[tbp]
@@ -50,7 +53,9 @@ the locations may possibly all be accessed or assigned to, not at all or anythin
 %\item 1-2 sentences on ``instantiation-problem'', i.e. avoid giving specs that can't be implemented (example: assignable nothing) although technically Dom covered this already.
 %\end{itemize}
 
-In the following, we show an example of how AE can be used to prove a refactoring correct with \Refinity{}. 
+\subsection{Proving Refactoring Correction with Abstract Execution}
+
+In the following, we use an example to show how AE can be used to prove a refactoring correct with \Refinity{}. 
 
 %%% Local Variables:
 %%% mode: latex
