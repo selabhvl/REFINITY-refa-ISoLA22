@@ -41,7 +41,10 @@ This was first investigated by Beckert et al.~\cite{DBLP:conf/lopstr/BeckertBKSS
 
 
 For exceptions and object creation, we describe several possibilities when newly created objects (resp.\ thrown exceptions) are considered equal
-and how this information can be used in dynamic logic proofs. The different possibilities are implemented as \vsnote*{Unclear, at least that early in the paper. Why ``different''? Also see my later point about why using the new rule(s) should be optional.}{different rule sets} and do not have to be encoded explicitly in the relational post-condition.
+and how this information can be used in dynamic logic proofs. The different possibilities are implemented as 
+%\vsnote*{Unclear, at least that early in the paper. Why ``different''? Also see my later point about why using the new rule(s) should be optional.}{different rule sets} 
+\EK{multiple (sets of) rules, from which the developer chooses the one corresponding to his assumptions on object allocations -- this choice
+does not have to be encoded explicitly in the relational post-condition.}
 This reduces the size of the required specification, which is an advantage, since it is a notorious bottleneck in formal verification~\cite{DBLP:journals/corr/abs-1211-6186,DBLP:series/lncs/HahnleH19}.
 
 
