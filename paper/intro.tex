@@ -1,43 +1,42 @@
-Refactoring is a fundamental activity in software engineering to reorganize code while preserving its observable behavior, 
-but improving the structure of the code, e.g., to simplify maintenance.
+Refactoring is a fundamental activity in software engineering to reorganize code to improve its structure, e.g., to simplify maintenance, while preserving its observable behavior of the program.
 A refactoring can be defined as a pattern it matches on, and a subsequent program transformation on the matched part.
 To ensure that the transformed program indeed has the same observable behavior one can either compare the transformed program with the 
 original or %through, e.g., regression testing~\cite{regression} or relational verification~\cite{relate}, or 
 reason about the program transformation itself.
 
-Relational verification through dynamic logic is a promising approach for verification of refactoring patterns in object oriented programs.
+Relational verification through dynamic logic is a promising approach to verification of refactoring patterns in object oriented programs.
 Recent advances from symbolic to Abstract Execution (AE)~\cite{steinhoefel:ae} have enabled reasoning about incomplete/abstract versions of such programs.
 This has proven fruitful in the exploration of correctness of refactorings primarily related to code blocks in Java:
 %In this paper we explore further types of equivalent transformations and refactorings and discuss the challenges that still need to be overcome for full round-trip correctness of refactorings in object-oriented languages.
 %
 AE introduces abstract statements (and expressions), which act as named and specified placeholders for statement-sequences of the host language.
 A refactoring proof is a relational verification proof that compares two programs which can have abstract program elements.
-Consider relating\\
+Consider relating
 \begin{center}
-\jmcode{if (E$_{\mathit{boolean}}$) \{S$_1$;\} else \{S$_2$;\} return;}\\
-and\\
+\jmcode{if (E$_{\mathit{boolean}}$) \{S$_1$;\} else \{S$_2$;\} return;}\\[0.3em]
+and\\[0.3em]
 \jmcode{if (!E$_{\mathit{boolean}}$) \{S$_2$; return;\} S$_1$; return;}
 \end{center}
-where \jmcode{E$_{\mathit{boolean}}$} represents an arbitrary boolean expression, \jmcode{S$_1$} and \jmcode{S$_2$} represent arbitrary statements.
+where \jmcode{E$_{\mathit{boolean}}$} is an arbitrary boolean expression, \jmcode{S$_1$} and \jmcode{S$_2$} correspond to arbitrary statements.
 One of the programs represents the schema of the code before the refactoring, and the other one the code afterwards, with respect to some relational post-condition that defines the notion of \emph{program equivalence}. This reasoning about abstract programs is exactly the aforementioned reasoning about the program transformation behind the refactoring.
 
-Despite the promising results due to AE, it has only been applied to \emph{statement-level} refactorings, that
+Despite the promising results due to AE, it has only been applied to \emph{statement-level} refactorings that
 change the body of a single method.
 However, refactorings are not limited to single methods or statement-blocks, but may also restructure classes and data structures \cite{fowler:refactoring}.
 In this paper we investigate the role of AE for verification of refactorings beyond statement-level.
 
 
 \paragraph{Challenges.}
-More complex refactorings need more elaborate specification and verification techniques for relational verification. 
+More complex refactorings require more elaborate specification and verification techniques for relational verification. 
 The reason is that the programs surrounding the abstract statements, as well as the notion of equivalence, become more involved.
 This holds for both structure and behaviour.
 Following the general approach of AE, \Refinity{} \cite{steinhoefel:ae}, the tool supporting verification on top of the KeY system, an automated theorem prover for Java~\cite{DBLP:conf/aplas/Steinhofel20},
-has been primarily designed to verify the correctness of refactorings that are based on moving code within a method, or on extracting some statements into their own method (i.e., the \rname{Extract Method} refactoring).
+has been primarily designed to verify the correctness of refactorings that are based on moving code within a method, or on extracting some statements into their own method (i.e., the \vpnote*{cite?}{\rname{Extract Method} refactoring}).
 
-To investigate the use of AE for refactorings on the class-level, we investigate the \rname{Hide Delegate} refactoring that moves code between classes and show how it can be encoded in \Refinity{}.
+To investigate the use of AE for refactorings on the class-level, we investigate the \vpnote*{cite?}{\rname{Hide Delegate} refactoring} that moves code between classes and show how it can be encoded in \Refinity{}.
 As for specification, we discuss the interpretation of \textit{equivalence} from the perspective of the user and how to encode this --- for example, if the surrounding programs throw exceptions, under which conditions are the exceptions considered equivalent?
-This issue goes beyond exceptions, but touches on a fundamental problem:
-there are several possible choices for when newly created objects (and exceptions, which are objects in Java) are considered equal in relational verification using dynamic logic.
+The equivalence interpretation goes beyond exceptions, but touches on a fundamental problem:
+there are several possible choices for when newly created objects (and exceptions, which are objects in Java) are considered to be equal in relational verification using dynamic logic.
 This was first investigated by Beckert et al.~\cite{DBLP:conf/lopstr/BeckertBKSSU13} and we discuss alternatives here.
 
 
@@ -46,20 +45,20 @@ and how this information can be used in dynamic logic proofs. The different poss
 This reduces the size of the required specification, which is an advantage, since it is a notorious bottleneck in formal verification~\cite{DBLP:journals/corr/abs-1211-6186,DBLP:series/lncs/HahnleH19}.
 
 
-Furthermore, we discuss the necessary extensions needed to prove equivalent behaviour where one data structure is replaced by another, e.g. an array or any primitive type by a class.
+Furthermore, we discuss the necessary extensions needed to prove equivalent behaviour where one data structure is replaced by another, e.g., an array or any primitive type by a class.
 Here, the main challenge lies in the encoding that the structures are used correctly throughout the execution.
 This could, for example, be handled by coupled invariants~\cite{DBLP:conf/birthday/BeckertU18}, whose connection to AE is yet unclear. 
 Lastly, we discuss the challenge to apply AE to novel specification approaches for \emph{traces} which aim to simplify the specification of temporal properties for expressive properties, but whose use for relational verification is unexplored.
 
 \paragraph{Contributions and Structure.}
-Our contributions are firstly an investigation into the necessary side conditions to be able to proof of the correctness of the \rname{Extract Local Variable}- and \rname{Hide Delegate} refactorings, extending the collection of proven refactorings.
+Our contributions include an investigation into the necessary side conditions to be able to proof of the correctness of the \rname{Extract Local Variable}- and \rname{Hide Delegate} refactorings, extending the collection of proven refactorings.
 The latter is a refactoring beyond code motion within a method and highlights the interaction of AE with general relational verification challenges.
-Secondly, we discuss possible extensions that would be required to address further refactorings with AE.
+Then, we discuss possible extensions that would be required to address further refactorings with AE.
 
 %This paper is structured as follows. 
-We first describe AE and relational verification using the \rname{Extract Local Variable} refactoring in Sec.~\ref{sec:prelim}, before we show necessary conditions for the \rname{Hide Delegate} refactoring to be correct  and then discuss the challenges for AE in Sec.~\ref{sec:challenges}.
+We first describe AE and relational verification using the \rname{Extract Local Variable} refactoring in Section~\ref{sec:prelim}, before we show necessary conditions for the \rname{Hide Delegate} refactoring to be correct  and then discuss the challenges for AE in Section~\ref{sec:challenges}.
 \vsnote*{@ALL}{Sec.~\ref{sec:future} proposes future directions for improvements in REFINITY and AE which most likely require major development effort.}
-Sec.~\ref{sec:discussion} discusses our results and Sec.~\ref{sec:related} gives the related work. Lastly, Sec.~\ref{sec:conclusion} concludes.
+In Section~\ref{sec:discussion}, we discuss our results. We discuss the related work in  Section~\ref{sec:related}, and lastly conclude in Section~\ref{sec:conclusion}.
 
 
 
