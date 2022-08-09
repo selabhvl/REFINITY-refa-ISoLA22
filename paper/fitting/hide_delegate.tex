@@ -1,6 +1,6 @@
-\subsection{Encoding the Hide Delegate refactoring}\label{sec:hideDelegate}
+\subsection{Encoding the \rname{Hide Delegate} refactoring}\label{sec:hideDelegate}
 
-The \rname{Hide Delegate} refactoring can be described as an \rname{Extract Method} refactoring on a call chain such as seen in \jcode{Y y = o.f().g()}
+The \rname{Hide Delegate} refactoring can be described as an \rname{Extract Method} refactoring on a call chain. Consider the statement \jcode{Y y = o.f().g()},
 where the call chain is extracted to a new method on \jcode{o}, say \jcode{h()}, which contains the extraction \jcode{Y h() \{ return this.f().g(); \}}, such that we can replace the chain above with \jcode{Y y = o.h()}.
 The refactoring can enable less coupling as the class that contained the call chain afterwards does not need to know the return type of \jcode{f()}.
 
@@ -8,29 +8,40 @@ The refactoring can enable less coupling as the class that contained the call ch
   \centering
   \begin{subfigure}{.3\linewidth}
     \input{tikz/hd-npe-before}
+    \vspace{-5mm}
     \caption{Before}
     \label{fig:hd-npe-before}
   \end{subfigure}
+  \hspace{1.5cm}
   \begin{subfigure}{.3\linewidth}
     \input{tikz/hd-npe-after}
+    \vspace{-5mm}
     \caption{After}
     \label{fig:hd-npe-after}    
   \end{subfigure}
-  \caption{NPEs}
+  \caption{Null Pointer Exceptions (NPEs)}
   \label{fig:NPEs}
 \end{figure}
 
-We note that in the case of the more general pattern \jcode{X x = o.f(); Y y = x.g()} with non-interfering intermediate statements in between the two statements,
+Note that in the case of the more general pattern \jcode{X x = o.f(); Y y = x.g()} with non-interfering intermediate statements between the two statements,
 we can reach the considered pattern through applications of \rname{Slide Statement} and finally \rname{Inline Variable} on \jcode{x}.
+
+
 
 \OA{
 The scenarios shown in the sequence diagrams in Fig.~\ref{fig:NPEs} will both result in \jcode{NullPointerException} (NPE)} when the call to \jcode{f()} returns \jcode{null}.
-In the strictest sense of behavioral preservation
-we will observe a difference as the NPE thrown before refactoring (Fig.~\ref{fig:hd-npe-before}) will show a different stacktrace than the one thrown after refactoring (Fig.~\ref{fig:hd-npe-after}).
-Thus we consider a behavioral equivalence that allows for disagreement in stacktraces for such matching exceptions; in fact one is unable to make any other distinction in \Refinity{}
+In the strictest sense of behavioral preservation,
+we will observe a difference in the behaviour before and after the refactoring.  Concretely, the NPE thrown in Fig.~\ref{fig:hd-npe-before} (before) will show a different stacktrace than the one thrown in Fig.~\ref{fig:hd-npe-after} (after).
+Thus, we consider a behavioral equivalence that allows for disagreement in stacktraces for such matching exceptions. In fact one is unable to make any other distinction in \Refinity{}
 as it does not consider such effects.
 %\vsnote{Something about post-condition missing here? I don't remember, does R. not actually model the stacktrace in an exc. anyways or did we need something explicit in the post-cond?}
 % Ole: post-condition mention comes below the figure below
+
+We specify the before- and after-program fragment for a \rname{Hide Delegate} refactoring in Listing~\ref{lst:HideDelegate-nofields-refinity} which faithfully captures the previously sketched out refactoring.
+The classes and methods used in the refactoring are presented in Listing~\ref{lst:HideDelegate-nofields-classes-refinity} and show that we minimally specify the contents of the involved methods by using abstract
+statements in their bodies.
+Note that we allow abrupt completion in the abstract statements \rcode{F} and \rcode{G} in the methods \rcode{getOwner()} and \rcode{getResource}.
+That means the abstract statements may for instance throw exceptions.  For instance, the sketched out scenario considered in Fig.~\ref{fig:NPEs}, where \rcode{getResource()} will return \rcode{null} and cause the following call to throw a NPE, is a possibility.
 
 \begin{figure}[tbp]
   \captionsetup{type=lstlisting}
@@ -45,7 +56,7 @@ as it does not consider such effects.
     \caption{After}
     \label{lst:HideDelegate-nofields-after-refinity}
   \end{sublstlisting}
-\caption{Hide Delegate in REFINITY}
+\caption{Program fragments for \rname{Hide Delegate} refactoring in REFINITY}
 \label{lst:HideDelegate-nofields-refinity}
 \end{figure}
 
@@ -62,21 +73,18 @@ as it does not consider such effects.
     \caption{After}
     \label{lst:HideDelegate-nofields-owner-refinity}
   \end{sublstlisting}
-\caption{Hide Delegate Classes in REFINITY}
+\caption{Classes in \rname{Hide Delegate} refactoring in REFINITY}
 \label{lst:HideDelegate-nofields-classes-refinity}
 \end{figure}
-We specify the Before and After program fragment for a \rname{Hide Delegate} refactoring in Listing~\ref{lst:HideDelegate-nofields-refinity} which faithfully captures the previously sketched out refactoring.
-The classes and methods used in the refactoring appear in Listing~\ref{lst:HideDelegate-nofields-classes-refinity} and show that we minimally specify the contents of the involved methods by using abstract
-statements in their bodies.
-Note that we allow abrupt completion in the abstract statements \rcode{F} and \rcode{G} in the methods \rcode{getOwner()} and \rcode{getResource}.
-That means the abstract statements may for instance throw exceptions; the sketched out scenario considered in Fig.~\ref{fig:NPEs} where \rcode{getResource()} will return \rcode{null} and cause the following call to throw a NPE is a possibility.
 
-In order to prove the specified \rname{Hide Delegate} refactoring in the published version (v0.9.7) of \Refinity{} we need a postcondition that consists of a conjunction of return values of the before- and after-programs being identical and
+
+
+To prove the specified \rname{Hide Delegate} refactoring in the published version (v0.9.7) of \Refinity{}, we need a postcondition consisting of a conjunction of return values of the before- and after-programs being identical and
 that any thrown exceptions are both instances of NPE or otherwise equal.
 This is owing to the fact that \Refinity{} does not consider occurrences of \jcode{new NullPointerException()}, or any other newly created objects, to be equal.
 \vsnote{Is object-creation the only issue; see ``stacktraces'' above? I can't remember. In any, case it's probably JavaDL/KeY, not R's ``fault''.}
 
-\OA{We have improved  \Refinity{}\footnote{available at \tiny \url{https://github.com/selabhvl/REFINITY-abstractallocate}} such that this is no longer an issue; we may keep the default postcondition that simply matches return results and exceptions and
+\OA{We have improved  \Refinity{}\footnote{Available at \footnotesize \url{https://github.com/selabhvl/REFINITY-abstractallocate}} to resolve this issue; we may keep the default postcondition that simply matches return results and exceptions and
 \Refinity{} automatically manages to prove the shown \rname{Hide Delegate} refactoring to be correct wrt. the given postconditions.
 In the following section we will detail the changes needed to accomplish this.}
 

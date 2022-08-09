@@ -14,10 +14,10 @@ host language into account.
 At its core, the challenge lies in the fact that, as both programs/versions are executed in the same proof, objects created within them are not equal to each other: it is not possible to prove that the program \lstinline[style=refinity]|return new C();| is equivalent to itself.
 Indeed, it is not obvious whether the program should be considered equivalent to itself in the first place.
 The program is executed twice from the same state, but this does not suffice for the two created objects to be equal -- the allocation must, additionally, be deterministic.
-In the following we make the assumption that this is indeed the case and use this information in the symbolic execution.
+In the following, we make the assumption that this is indeed the case and use this information in the symbolic execution.
 
 
-\paragraph{Approach.}
+\paragraph{\textbf{Approach.}}
 To formalize this assumption, we first need to express the determinism of object creation.
 
 We assume that the program semantics is expressed as a Kripke structure, where the domain of each Kripke state is constant.
@@ -29,33 +29,35 @@ All objects before $o$ are allocated, and all objects after $o$ are not allocate
 Allocation then uses $o$ as the next object to create. 
 As the order is fixed for the Kripke structure, two allocations in different states, but with the same pivot object $o$, will allocate the same object next: $o$.
 
-\paragraph{Formalization.}
+\paragraph{\textbf{Formalization.}}
 As the next step of formalization, we express this as a sequent calculus rule in JavaDL.
 We give the basic concepts behind JavaDL next, 
 for a formal treatment we refer to an introduction to KeY and JavaDL~\cite{DBLP:series/lncs/10001}.
 
-A sequent has the form $\Gamma \Rightarrow \Delta$, where the antecedent $\Gamma$ and the succedent $\Delta$ are sets of JavaDL formulas.
-JavaDL is a typed first-order dynamic logic with program variables and updates: its operators are the usual first-order operators, a modality $[\mathtt{s}]\phi$
-that expresses that formula $\phi$ holds after executing statement $\mathtt{s}$, and updates.
+A sequent has the form $\Gamma \Rightarrow \Delta$, where the antecedent $\Gamma$ and the succedent~$\Delta$ are sets of JavaDL formulas.
+JavaDL is a typed first-order dynamic logic with program variables and updates.
+Its operators are the usual first-order operators, a modality $[\mathtt{s}]\phi$
+expressing that formula $\phi$ holds after executing statement~$\mathtt{s}$, and updates.
 An update is a syntactic representation of a substitution on a program variable. A simple update, which is the only form of update we require here, 
 has the form $\mathtt{v} := \mathtt{t}$ and expresses that the value of program variable $\mathtt{v}$ is set to the value of term $\mathtt{t}$.
-To express the truth value of a formula $\phi$ after the substitution expressed by update $U$, an update is applied, notated ${U}\phi$.
+The truth value of a formula $\phi$ after the substitution expressed by update $U$ is expressed by applying the update to the formula, denoted by~${U}\phi$.
+% To express the truth value of a formula $\phi$ after the substitution expressed by update $U$, an update is applied, notated ${U}\phi$.
 
-Semantically, JavaDL is evaluated over a Kripke structure and an interpretation $I$. The interpretation assigns value to predicate and function symbols, 
-while the Kripke structure is a set of state: assignments for the program variables. The semantics of a modality is the transition from one state to another,
+Semantically, JavaDL is evaluated over a Kripke structure and an interpretation~$I$. The interpretation assigns values to predicates and function symbols, 
+while the Kripke structure is a set of states: assignments for the program variables. The semantics of a modality is the transition from one state to another,
 according to the semantics of the program. The semantics of an update is the transition from one state to another, according to the substitution expressed by it.
 The sequent calculus for JavaDL realizes symbolic execution by reducing modalities to updates (under certain side-conditions, added to the premise/path-condition).
 
 To handle objects, JavaDL uses a special program variable $\mathtt{heap}$, which maps from objects and fields to their value.
 The heap is written and read with the usual theory of arrays~\cite{DBLP:conf/ifip/McCarthy62}, where fields are used as indices, following the approach by Wei\ss~\cite{DBLP:phd/dnb/Weiss11}.
-The special function $\mathtt{create}$ sets the $\mathtt{<allocate>}$ field to true. It cannot be set otherwise (as one cannot de-allocate an object within JavaDL).
+The special function $\mathtt{create}$ sets the \codein{<allocate>} field to true. It cannot be set otherwise (as one cannot de-allocate an object within JavaDL).
 The function $\mathtt{C\!::\!exactInstance}$ maps each term to true, that is a member of class $\mathtt{C}$ and none of its subclasses.  
 
 This is formalized in the following definition, where we model our assumption directly in the model and extend the \texttt{allocateInstance} taclet in KeY.
 \begin{definition}
 We assume that in every state of the Kripke structure, for every heap $h$, all objects are ordered by some total order $<_h$, such that there is some
-object $o_h$, such that (1) for all $o' <_h o_h$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
-(2) for all $o_h \leq_h o''$ the object $o''$ is not allocated. 
+object $o_h$, such that (1) for all $o' <_h o_h$, the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
+(2) for all $o_h \leq_h o''$, the object $o''$ is not allocated. 
 We introduce a unary function symbol $\mathtt{allocate}$ with the signature $\mathtt{Heap} \rightarrow \mathtt{Object}$,
 whose interpretation must adhere to $\mathcal{I}(\mathtt{allocate})(h) = o_h$. The (slightly prettified) rule is as follows:
 
@@ -93,15 +95,14 @@ that counts all allocations, they get the same number from this counter. They ar
 
 They are, however, distinguishable in the proof system due to the term-representation of the heap.
 If we choose to consider them equal, we must adapt our \codein{allocate} mechanism:
-first, it must be able to distinguish between the allocation of different classes and, second, it must be able to simplify the heap to ignore irrelevant operations on it.
+firstly, it must be able to distinguish between the allocation of different classes and, secondly, it must be able to simplify the heap to ignore irrelevant operations on it.
 % \vsnote{@EK: on the one hand I agree, on the other, the way I see it, it's not that we want to ignore something, but we want the implicit partial order of independent changes? Anyway, no action required, and ignoring achieves this.}
 We adapt the previous definition to take into account the types of objects, by having a \emph{set} of orders $<_h$, one for each class.
 
 \begin{definition}
-We assume that in every state of the Kripke structure, for every heap $h$ and every class $C$, all objects of type $C$ are ordered by some total order $<_h^C$, such that there is some
-object $o_h^C$, such that (1) for all $o' <^C_h o_h^C$ the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
-(2) for all $o_h^C \leq_h^C o''$ the object $o''$ is not allocated. Additionally, if $D$ is a subtype of $C$ then $<_h^D$ must be a suborder of $<_h^C$.
-For each class $C$, we introduce a unary function symbol \codein{C::allocate} with the signature $\mathtt{Heap} \rightarrow \mathtt{Object}$,
+We assume that in every state of the Kripke structure, for every heap $h$ and every class $C$, all objects of type $C$ are ordered by some total order~$<_h^C$, such that there is some object $o_h^C$, such that (1) for all $o' <^C_h o_h^C$, the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
+(2) for all $o_h^C \leq_h^C o''$, the object $o''$ is not allocated. Additionally, if $D$ is a subtype of $C$, then~$<_h^D$ must be a suborder of $<_h^C$.
+For each class $C$, we introduce a unary function symbol $\mathtt{C::allocate}$ with the signature $\mathtt{Heap} \rightarrow \mathtt{Object}$,
 whose interpretation must adhere to $\mathcal{I}(C::\mathtt{allocate})(h) = o_h^C$.
 We obtain:
 
@@ -113,20 +114,21 @@ We obtain:
 \end{prooftree}
 Additionally, we give two simplification rules for heaps within any \codein{allocate} function application.
 Let $\sqsubseteq$ be the subtype relation and $T(t)$ the type of a term.
+
 \begin{align*}
-\mathtt{C::allocate(store(h, o, f, v))}\rightsquigarrow\mathtt{C::allocate(h)}& &&\text{if $f \neq$ \codein{<allocated>}}\\
-\mathtt{C::allocate(create(h, o))}\rightsquigarrow\mathtt{C::allocate(h)}& &&\text{if $C \not\sqsubseteq T(o)$}
+&\mathtt{C::allocate(store(h, o, f, v))}\rightsquigarrow\mathtt{C::allocate(h)}&& \text{if $f \neq$ \codein{<allocated>}}\\
+&\mathtt{C::allocate(create(h, o))}\rightsquigarrow\mathtt{C::allocate(h)}&& \text{if $C \not\sqsubseteq T(o)$}
 \end{align*}
 \end{definition}
 
 \begin{figure}[tbp]
   \captionsetup{type=lstlisting}
   \centering
-  \begin{sublstlisting}{.2\linewidth}
+  \begin{sublstlisting}{.25\linewidth}
     \lstinputlisting[style=refinity]{ObjectCreation/REFINITY/before.refinity}
     \caption{Before}
-  \end{sublstlisting}\hspace{1cm}
-  \begin{sublstlisting}{.2\linewidth}
+  \end{sublstlisting}\hspace{1.5cm}
+  \begin{sublstlisting}{.25\linewidth}
     \lstinputlisting[style=refinity]{ObjectCreation/REFINITY/after.refinity}
     \caption{After}
   \end{sublstlisting}
@@ -134,13 +136,14 @@ Let $\sqsubseteq$ be the subtype relation and $T(t)$ the type of a term.
   \label{lst:ObjectCreation-refinity}
 \end{figure}
 
-The first rule uses the assumption that the orders are only sensitive to the \codein{<allocated>} field and the second one that they are independent, besides the subtyping relation.
+\noindent
+The first rule uses the assumption that the orders are only sensitive to the \codein{<allocated>} field, and the second one that they are independent, besides the subtyping relation.
 Intuitively, this implements a different counter for each class in the type hierarchy and two objects are considered equal if the counters of their classes are equal.
 Creating an object of a class increases the counter of this class and all its superclasses.
 This suffices to prove the programs in Listing~\ref{lst:ObjectCreation-refinity} to be equivalent.
 Interestingly, Steinhöfel already proved the general \rname{Slide Statement} refactoring correct for abstract statements under the right constraints (\cite{steinhoefel-20}, p.231), yet KeY needs additional rules for these concrete statements.
-If~\codein{C} is a sub type of~\codein{D}, then the proof fails.
-The second rule is able to remove some intermittent operations that are symbolically represented on the heap, e.g.\ a call to an imaginary setter in \lstinline{x = new C(); x.set(1); y = new D()} versus \lstinline{y = new D(); x = new C(); x.set(1)}, if they are not relevant to object creation.
+If~\codein{C} is a subtype of~\codein{D}, then the proof fails.
+The second rule is able to remove some intermittent operations that are symbolically represented on the heap, e.g.,\ a call to an imaginary setter in \lstinline{x = new C(); x.set(1); y = new D()} versus \lstinline{y = new D(); x = new C(); x.set(1)}, if they are not relevant to object creation.
 
 \begin{figure}[tbp]
 \captionsetup{type=lstlisting}
@@ -172,10 +175,10 @@ return new C(2);
 \label{lst:ObjectCreation-refinity-2}
 \end{figure}
 
-Note that we ignore the state of fields in the heap, meaning that equivalence of two objects is determined only by their counters. 
+Note that we ignore the state of fields in the heap, meaning that the equivalence of two objects is determined only by their counters. 
 %\vsnote*{@EK: Unclear what the takeaway is from the following sentences.}{%
 This requires to be careful with specification: it does not suffice for each notion of equivalence to specify that two objects are equal, but also \emph{their fields} must be equal.
-For example, consider the class and programs in Listing~\ref{lst:ObjectCreation-refinity-2}.
+Consider the class and programs in Listing~\ref{lst:ObjectCreation-refinity-2}.
 The returned objects are identical, but in the post states the heap assigns different values to their field.
 %To weaken the assumption and take the whole into account to determine  \vsnote*{@EK}{incomplete sentence}.
 %}
@@ -190,39 +193,40 @@ The returned objects are identical, but in the post states the heap assigns diff
 %Similar to KeY's \keyrule{dropUpdate_2}, we can easily eliminate these operations on the heap on unrelated \textit{types} and obtain equivalent programs.
 %\vsnote*{TODO: Eduard to elaborate a bit here.}{Unrelated types are of course only a shortcut, dropUpdate2 is much more specific, VS thinks -- but I can't decode the side conditions on the rule}.
 
-Let us close with three remarks. First, the solutions we described here are enabling the programmer (or refactoring designer) to fine tune their notion of equivalence, which must be specified additionally to the refactoring itself.
+Let us close with three remarks.
+Firstly, the solutions we described here are enabling the programmer (or refactoring designer) to fine tune their notion of equivalence, which must be specified in addition to the refactoring itself.
 Realizing the choice, however, is rather simple by enabling and disabling rules, resp.\ taclets. 
 Thus, we avoid to put even more burden on the first-order specification of the relational post-condition, and merely require the programmer to select from a number of options.
 \vsnote{@Eduard: why ``select'' -- shouldn't those rules be always on?}
-We stress that the taclets for the different options are not \emph{unsound}, but merely switch between different version of assumptions about the (in this case underspecified) Java object model.
+We emphasise that the taclets for the different options are not \emph{unsound}, but merely switch between different version of assumptions about the (in this case underspecified) Java object model.
 %\vsnote{VERY interesting point, I completely disagree! Maybe what you're saying is that adding potentially unsound/not capturing taclets is easier than formulating an adequate post-condition? Having unsound taclets is the only reason I can see for disabling them -- that any strategy-search could be misguided is a different issue.}
 
-Second, while we only discussed object creation here, the same solution also handles \emph{exceptions}, which must be created before being thrown. 
+Secondly, while we only discussed object creation here, the same solution also handles \emph{exceptions}, which must be created before being thrown. 
 Exceptions are special in the sense that they have access to the program beyond the parts that are exposed to (non-reflective) programs.
 For example, they can access the line number of the throwing statement for their stack trace.
 %Thus, to consider two thrown exceptions equivalent, one may want \vsnote*{}{a complete sentence}.
-As the stack trace is not modeled in JavaDL, its treatment for verification is an open research question in itself, and because we consider exhibiting the stack trace
+As the stack trace is not modelled in JavaDL, its treatment for verification is an open research question in itself, and because we consider exhibiting the stack trace
 within the program a dubious practice in the first place, we chose to ignore it in this paper.
 %\vsnote{Agreed.}
 
-Third, one could argue that we have not so much proven the refactoring to be correct,
+Thirdly, one could argue that we have not so much proven the refactoring to be correct,
 but rather moved this decision further down the chain: unlike in a full formalization of the Java object model from ground up, 
 we do not have a way of proving the taclets correct (i.e.\ derive them as lemmas) within KeY, as they model our assumptions about object identity when running two Java programs in the exact same state, which is not described by the Java semantics.
 
 %\paragraph{Abstract Object Allocation Sites.}
 %As discussed, the above solutions interact with abstract execution only indirectly by providing techniques to handle equivalences in the program surrounding the abstract statements and abstract expressions. 
 
-\paragraph*{Excursus: Dead Code Elimination}
+\paragraph*{\textbf{Excursus: Dead Code Elimination.}}
 Similar considerations of equivalent heap manipulations need to be considered also in the are of optimizations, whose soundness proofs rely on relation verification as well.
-Take for example the program in Listing~\ref{lst:xisnewxisnew}.
+For example, consider the program in Listing~\ref{lst:xisnewxisnew}.
 \begin{figure}[tbp]
   \captionsetup{type=lstlisting}
   \centering
-  \begin{sublstlisting}[b]{.2\linewidth}
+  \begin{sublstlisting}[b]{.25\linewidth}
     \lstinputlisting[style=refinity]{DeadCode/Java/before.java}
     \caption{Before}
-  \end{sublstlisting}\hspace{1cm}
-  \begin{sublstlisting}[b]{.2\linewidth}
+  \end{sublstlisting}\hspace{1.5cm}
+  \begin{sublstlisting}[b]{.25\linewidth}
     \lstinputlisting[style=refinity]{DeadCode/Java/after.java}
     \caption{After}
   \end{sublstlisting}

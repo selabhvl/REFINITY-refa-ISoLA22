@@ -1,7 +1,7 @@
 \begin{tikzpicture}[node distance=1cm,auto,>=stealth']
-    \node[] (this) {this};
-    \node[right = of this] (o) {o};
-    \node[right = of o] (null) {null};
+    \node[] (this) {\jcode{this}};
+    \node[right = of this] (o) {\jcode{o}};
+    \node[right = of o] (null) {\jcode{null}};
     
     \node[below of=this, node distance=3cm] (thisb) {};
     \node[below of=o, node distance=3cm] (ob) {};
@@ -11,6 +11,6 @@
     \draw (o) -- (ob);
     \draw (null) -- (nullb);
 
-    \draw[->] ($(this)!0.25!(thisb)$) -- node[above,scale=1,pos=0.2]{f()} ($(o)!0.25!(ob)$);
-    \draw[->] ($(this)!0.45!(thisb)$) -- node[above,scale=1,pos=0.1]{g()} node[below,scale=1,near start]{NPE} ($(null)!0.45!(nullb)$);
+    \draw[->] ($(this)!0.25!(thisb)$) -- node[above,scale=1,pos=0.2]{\jcode{f()}} ($(o)!0.25!(ob)$);
+    \draw[->] ($(this)!0.45!(thisb)$) -- node[above,scale=1,pos=0.1]{\jcode{g()}} node[below,scale=1,near start]{NPE} ($(null)!0.45!(nullb)$);
 \end{tikzpicture}

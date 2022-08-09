@@ -1,4 +1,4 @@
-Let us consider the Extract Local Variable refactoring seen in Listing~\ref{lst:ExtractVariable-java}.
+Let us consider the \rname{Extract Local Variable} refactoring seen in Listing~\ref{lst:ExtractVariable-java}.
 The example is an instance of a more general case, where preserving the behaviour of the program depends on other parts of the code.
 The behaviour of the program changes if the method call \jcode{n()} has access to the attribute \jcode{x} and overwrites it.
 
@@ -9,15 +9,15 @@ In this case if, e.g., \jcode{n()} simply prints \jcode{this.toString()}, we wil
 \begin{figure}[tbp]
   \captionsetup{type=lstlisting}
   \centering
-  \begin{sublstlisting}{.2\linewidth}
+  \begin{sublstlisting}[b]{.2\linewidth}
     \lstinputlisting[style=refinity]{ExtractVariable/Java/before.java}
     \caption{Before}
-  \end{sublstlisting}\hspace{1cm}
-  \begin{sublstlisting}{.3\linewidth}
+  \end{sublstlisting}\hspace{1.5cm}
+  \begin{sublstlisting}[b]{.34\linewidth}
     \lstinputlisting[style=refinity]{ExtractVariable/Java/after.java}
     \caption{After}
   \end{sublstlisting}
-  \caption{Extract Local Variable}
+  \caption{\rname{Extract Local Variable} refactoring}
   \label{lst:ExtractVariable-java}
 \end{figure}
 
@@ -30,6 +30,25 @@ We essentially ask REFINITY: \emph{given these preconditions does the postcondit
 %REFINITY accepts a restricted
 %subset of Java, the same restrictions present in KeY, with extensions for abstract program fragments; pieces that are ``placeholders'' for concrete Java code.
 A proof of correctness in REFINITY is a proof for any concrete Java programs that can be \emph{instantiated} to adhere to the abstract specification given in REFINITY.
+
+\begin{figure}[tbp]
+  \captionsetup{type=lstlisting}
+  \centering
+  \begin{sublstlisting}[b]{.34\linewidth}
+    \lstinputlisting[linerange={2-5},style=refinity]{ExtractVariable/REFINITY/before.refinity}
+    \vspace{-2mm}
+    \caption{Before}
+    \label{lst:ExtractVariable-refinity-before}
+  \end{sublstlisting}\hspace{1cm}
+  \begin{sublstlisting}[b]{.34\linewidth}
+    \lstinputlisting[linerange={2-6},style=refinity]{ExtractVariable/REFINITY/after.refinity}
+    \vspace{-2mm}
+    \caption{After}
+    \label{lst:ExtractVariable-refinity-after}
+  \end{sublstlisting}
+\caption{Extract Local Variable in REFINITY}
+\label{lst:ExtractVariable-refinity}
+\end{figure}
 
 We describe the refactoring to REFINITY as shown with a left side (Before) in Listing~\ref{lst:ExtractVariable-refinity-before},
 a right side (After) in Listing~\ref{lst:ExtractVariable-refinity-after} and a method level context which contains the method we have already shown in Listing~\ref{lst:ExtractVariable-refinity-method}.
@@ -52,24 +71,7 @@ Before and After program. When left empty, as done here and so trivially true, e
 
 We use an assertion to ensure we consider only the refactoring when \rcode{x} is an instance of its intended type.
 A current limitation of the implementation of REFINITY necessitate the casting \rcode{(X)x} as free program variables may only be declared to be of type Object.
-\begin{figure}[tbp]
-  \captionsetup{type=lstlisting}
-  \centering
-  \begin{sublstlisting}[b]{.34\linewidth}
-    \lstinputlisting[linerange={2-5},style=refinity]{ExtractVariable/REFINITY/before.refinity}
-    \vspace{-2mm}
-    \caption{Before}
-    \label{lst:ExtractVariable-refinity-before}
-  \end{sublstlisting}\hspace{1cm}
-  \begin{sublstlisting}[b]{.34\linewidth}
-    \lstinputlisting[linerange={2-6},style=refinity]{ExtractVariable/REFINITY/after.refinity}
-    \vspace{-2mm}
-    \caption{After}
-    \label{lst:ExtractVariable-refinity-after}
-  \end{sublstlisting}\vspace{4mm}
-\caption{Extract Local Variable in REFINITY}
-\label{lst:ExtractVariable-refinity}
-\end{figure}
+
 With only the specification shown in Listing~\ref{lst:ExtractVariable-refinity}, REFINITY is unable to prove that \rcode{x} will be identical to \rcode{temp} after AE of both sides.
 We get several instances of SE resulting in the reference \rcode{x} being changed by the abstract statement \rcode{N} in \rcode{n()}.
 
