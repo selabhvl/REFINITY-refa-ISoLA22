@@ -20,7 +20,7 @@ Execution of APEs is then the leap taken in AE over traditional SE.  It requires
 any abrupt completion an APE may have (e.g. exceptions thrown),
 over-approximation of returned values and thrown exceptions by symbols created ``dependently fresh'' for identifiers of abstract program placeholders, and a way to specify the behavior of APEs~\cite{steinhoefel-20}.
 
-We summarize how AE is implemented in \Refinity{} by showing how to specify a method \rcode{void n()} with a mostly unknown method body.
+We summarise how AE is implemented in \Refinity{} by showing how to specify a method \rcode{void n()} with a mostly unknown method body.
 Listing \ref{lst:ExtractVariable-refinity-method} shows a specification in \Refinity{}, in which a method \rcode{n()} is specified and its only content is an abstract statement \rcode{\\abstract\_statement N} preceded by a Java Modelling Language (JML) like\footnote{We say ``like'' as JML does not deal with abstract Java programs.} specification~\cite{HuismanAhrendtBruns2014_1000041881}.
 %
 The specification indicates that the method can possibly assign to some abstract locations (its frame) and can access some abstract locations (its footprint), and that no exceptions will be thrown by the method body.

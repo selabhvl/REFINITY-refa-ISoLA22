@@ -2,7 +2,7 @@ Let us consider the \rname{Extract Local Variable} refactoring seen in Listing~\
 The example is an instance of a more general case, where preserving the behaviour of the program depends on other parts of the code.
 The behaviour of the program changes if the method call \jcode{n()} has access to the attribute \jcode{x} and overwrites it.
 
-Before we would have potentially methd calls to different objects \jmcode{o$_1$.n()} and then \jmcode{o$_2$.n()}, whereas after applying the refactoring we would
+Before we would have potentially method calls to different objects \jmcode{o$_1$.n()} and then \jmcode{o$_2$.n()}, whereas after applying the refactoring we would
 have \jmcode{o$_1$.n()} followed by \jmcode{o$_1$.n()}.
 In this case if, e.g., \jcode{n()} simply prints \jcode{this.toString()}, we will observe a difference in the two programs.
 
@@ -67,7 +67,8 @@ and 3) the values at specified abstract location sets (that the user selects as 
 
 %\vsnote*{Unclear (yes, I know what is meant). More constructive: ``an assertion that the values for all locations as per the relevant set are identical''?}{the values at relevant abstract location sets}.
 \OA{The default postcondition in our case will be that \rcode{x} returned in Before must be identical to \rcode{temp} returned in After, and that any exception thrown must be identical for the
-Before and After program. When left empty, as done here and so trivially true, equality wrt. the last component of the result sequences is an assertion that the values at all abstract location sets selected as relevant are identical.}
+Before and After program. When left empty, as done here and so
+trivially true, equality with respect to the last component of the result sequences is an assertion that the values at all abstract location sets selected as relevant are identical.}
 
 We use an assertion to ensure we consider only the refactoring when \rcode{x} is an instance of its intended type.
 A current limitation of the implementation of REFINITY necessitate the casting \rcode{(X)x} as free program variables may only be declared to be of type Object.
@@ -87,7 +88,7 @@ After the aforementioned change, REFINITY manages to automatically prove that th
 
 %\vsnote*{Unclear. Why ``partial''?}{One can consider what we have managed to encode and prove a partial success.}
 %\vsnote{Unclear/can't follow.}{Yet this is a slightly unnatural encoding if we are to consider concrete instantiations of what we have expressed here.
-\OA{Although we succesfully prove the refactoring we have encoded here, the required scaffolding of return statements leaves something to be desired:
+\OA{Although we successfully prove the refactoring we have encoded here, the required scaffolding of return statements leaves something to be desired:
 Finding intended concrete instances of the abstract programs now involve, potentially, ignoring the return statements.}
 %%% Local Variables:
 %%% mode: latex

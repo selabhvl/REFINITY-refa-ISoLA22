@@ -65,7 +65,6 @@ need to be overcome for full round-trip correctness of refactorings in object-or
 \section{Preliminaries}\label{sec:prelim}
 In this section, we will first briefly describe AE and how it extends symbolic execution.  Then, we will show how AE can be used to prove refactoring correctness with an example.
 \input{preliminaries}
-
 \input{fitting/extract_variable}
 
 \section{Challenges}\label{sec:challenges}
@@ -75,20 +74,20 @@ In particular, we are interested in moving away from statement-based refactoring
 The first new refactoring, \rname{Hide Delegate}, expresses the desired behaviour of \Refinity{} in a straight-forward manner
 and KeY automatically completes the proof once the right preconditions are identified.
 
-After that, we present a refactoring that is related to Dead Code Elimination.
+After that, we present a refactoring that is related to \rname{Dead Code Elimination}.
 This requires introducing additional constructs for object-creation within the underlying KeY system,
 which are then harnessed in \emph{taclets} expressing that certain non-identical heaps guarantee equivalent behaviour.
 
 We continue our wishlist for further flexibility in expressing equivalent program behaviour based on the execution history of user-defined observable actions,
 and finally discuss challenges related to expressing equivalence in the face of different data types.
-
 \input{fitting/hide_delegate}
+
 \subsection{Object Creation}\label{sec:objectcreation}
 \input{objectcreation}
 
 \section{Potential Future Improvements}\label{sec:future}
 In the previous section, we have established that relational verification using abstract execution
-must take care of general effects of language semantics outside the abstract statements.
+must take care of the general effects of language semantics outside the abstract statements.
 In this section, we illustrate a different obstacle to practical abstract execution, which touches on its core specification principles: sequences of side effects and events.
 
 \subsection{Trace Properties}\label{sec:traces}
@@ -101,7 +100,6 @@ In this section, we illustrate a different obstacle to practical abstract execut
 \input{discussion}
 
 \section{Related Work}\label{sec:related}
-
 \input{related}
 
 \section{Conclusion}\label{sec:conclusion}
@@ -118,12 +116,12 @@ For example, while traces over observable behaviour could be explicitly encoded 
 We also point out the difficulties due to a naming issue in the current encoding from Refinity to KeY proof-obligations for refactorings that change the class hierarchies or in general attempt to relate behaviour across different types.
 
 \paragraph{Future Work.} 
-To investigate the discussed problems with refactoring using AE wrt.\ trace properties, we are currently implementing AE for BPL in the Crowbar tool~\cite{crowbar} as a starting point, a symbolic execution engine to prototype behavioral symbolic execution.
+To investigate the discussed problems with refactoring using AE wrt.\ trace properties, we are currently implementing AE for BPL in the Crowbar tool~\cite{crowbar} as a starting point, a symbolic execution engine to prototype behavioural symbolic execution.
 
 We are also working on contributing further encodings of common refactorings that can already now be handled by \Refinity{}.
 In addition, we are particularly interested in additional taclets for KeY that would enable automation of proofs
 that currently are stuck on the explicit symbolic encoding of program state although it would be indistinguishable from equivalent states in pratice.
-The latter is of relevance e.g. for proving common optimizations as in our \rname{Dead Code Elimination} example.
+The latter is of relevance e.g. for proving common optimisations as in our \rname{Dead Code Elimination} example.
 
 \subsubsection*{Acknowledgements}
 This work was partially supported by the Research Council of Norway via \texttt{SIRIUS} (237898), \texttt{PeTWIN} (294600) and \texttt{CROFLOW} (326249).

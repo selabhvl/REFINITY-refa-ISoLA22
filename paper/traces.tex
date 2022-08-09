@@ -2,7 +2,7 @@
 %In practice, 
 Following Fowler's persuasion of what constitutes correct refactorings, developers are content if refactored code gives the same observable behavior~\cite{fowler:refactoring2nd}.
 
-This behavior is first and foremost encoded through unit-tests, but also on tests on side-effects and their order (e.g.\ output via \texttt{print}-statements).
+This behavior is first and foremost encoded through unit-tests, but also on tests through side-effects and their order (e.g.\ output via \texttt{print}-statements).
 Here we then have a much more relaxed setting where equivalence is decoupled from the fine-grained program semantics.
 More realistically, one may want to establish that after refactoring, certain operations happened in the same order.
 
@@ -17,7 +17,7 @@ However, first-order specifications of temporal properties have been proven to b
 %This places even more burden on the developer, as they have to make sure that their chosen encoding of events in the data structure captures the salient part of equivalence.
 %Clearly, this data structure is sensitive to order and any object identities very much in the same way as is the syntactic representation of heap manipulations.
 This led to the development of other dynamic logics which interact with novel trace specifications, such as BPL~\cite{DBLP:conf/tableaux/Kamburjan19} and symbolic traces~\cite{DBLP:conf/tableaux/BubelDHN15}, where the post-condition of a modality is a \emph{trace formula} without quantifiers over indices, whose models are single traces.
-It has neither been investigated how such logics can be used for relational verification, nor how abstract statements can be specified wrt.\ such trace properties.
+It has neither been investigated how such logics can be used for relational verification, nor how abstract statements can be specified with respect to such trace properties.
 %, as well as the
 %integration of other, more standard trace specification into dynamic logic, such as LTL~\cite{beckert} or session types~\cite{ifm}.
 %For none of these approaches, abstract statements have been investigated, but . %it is clear how abstract statement can be specified.
@@ -31,8 +31,8 @@ Models for such formulas are traces: sequences of states and events.
 
 Consider the two programs in Listing~\ref{lst:sth}.
 It shows a refactoring of some program using a \codein{File}, where we only give the trace specification.
-The first program specifies that some initialization happens that is guaranteed to call \codein{f.open}, then the file is read and written,
-and then some finalization happens that calls \codein{f.close}.
+The first program specifies that some initialisation happens that is guaranteed to call \codein{f.open}, then the file is read and written,
+and then some finalisation happens that calls \codein{f.close}.
 The second program switches the order of read and write.
 The programs are, obviously, not equivalent in a strict sense, but if the trace property we are interested in is only concerned with the order of operations on the file 
 (\codein{open}, \codein{write}, \codein{read} and \codein{open}), for example to express that only opened files are read and written to, then we need to specify a notion of equivalences.
@@ -53,6 +53,7 @@ f.write(s);
 \abstract_statement B;     
 \end{lstlisting}
 \caption{Before}
+\hspace{0.5em}
 \end{sublstlisting}
 \begin{sublstlisting}{.8\linewidth}\vspace{1mm}
 \begin{lstlisting}[style=refinity]

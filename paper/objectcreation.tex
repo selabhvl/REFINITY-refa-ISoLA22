@@ -29,7 +29,7 @@ All objects before $o$ are allocated, and all objects after $o$ are not allocate
 Allocation then uses $o$ as the next object to create. 
 As the order is fixed for the Kripke structure, two allocations in different states, but with the same pivot object $o$, will allocate the same object next: $o$.
 
-\paragraph{\textbf{Formalization.}}
+\paragraph{\textbf{Formalisation.}}
 As the next step of formalization, we express this as a sequent calculus rule in JavaDL.
 We give the basic concepts behind JavaDL next, 
 for a formal treatment we refer to an introduction to KeY and JavaDL~\cite{DBLP:series/lncs/10001}.
@@ -53,7 +53,7 @@ The heap is written and read with the usual theory of arrays~\cite{DBLP:conf/ifi
 The special function $\mathtt{create}$ sets the \codein{<allocate>} field to true. It cannot be set otherwise (as one cannot de-allocate an object within JavaDL).
 The function $\mathtt{C\!::\!exactInstance}$ maps each term to true, that is a member of class $\mathtt{C}$ and none of its subclasses.  
 
-This is formalized in the following definition, where we model our assumption directly in the model and extend the \texttt{allocateInstance} taclet in KeY.
+This is formalised in the following definition, where we model our assumption directly in the model and extend the $\mathtt{allocateInstance}$ taclet in KeY.
 \begin{definition}
 We assume that in every state of the Kripke structure, for every heap $h$, all objects are ordered by some total order $<_h$, such that there is some
 object $o_h$, such that (1) for all $o' <_h o_h$, the object $o'$ is allocated (i.e., its \codein{<allocated>} field is set to true), and
@@ -142,7 +142,7 @@ Intuitively, this implements a different counter for each class in the type hier
 Creating an object of a class increases the counter of this class and all its superclasses.
 This suffices to prove the programs in Listing~\ref{lst:ObjectCreation-refinity} to be equivalent.
 Interestingly, Steinhöfel already proved the general \rname{Slide Statement} refactoring correct for abstract statements under the right constraints (\cite{steinhoefel-20}, p.231), yet KeY needs additional rules for these concrete statements.
-If~\codein{C} is a subtype of~\codein{D}, then the proof fails.
+\vpnote*{}{If~\codein{C} is a subtype of~\codein{D}, then the proof fails.}
 The second rule is able to remove some intermittent operations that are symbolically represented on the heap, e.g.,\ a call to an imaginary setter in \lstinline{x = new C(); x.set(1); y = new D()} versus \lstinline{y = new D(); x = new C(); x.set(1)}, if they are not relevant to object creation.
 
 \begin{figure}[tbp]
@@ -195,7 +195,7 @@ The returned objects are identical, but in the post states the heap assigns diff
 
 Let us close with three remarks.
 Firstly, the solutions we described here are enabling the programmer (or refactoring designer) to fine tune their notion of equivalence, which must be specified in addition to the refactoring itself.
-Realizing the choice, however, is rather simple by enabling and disabling rules, resp.\ taclets. 
+Realising the choice, however, is rather simple by enabling and disabling rules, resp.\ taclets. 
 Thus, we avoid to put even more burden on the first-order specification of the relational post-condition, and merely require the programmer to select from a number of options.
 %
 \vsnote{@Eduard: why ``select'' -- shouldn't those rules be always on?}
@@ -211,8 +211,8 @@ within the program a dubious practice in the first place, we chose to ignore it 
 %\vsnote{Agreed.}
 
 Thirdly, one could argue that we have not so much proven the refactoring to be correct,
-but rather moved this decision further down the chain: unlike in a full formalization of the Java object model from ground up, 
-we do not have a way of proving the taclets correct (i.e.\ derive them as lemmas) within KeY, as they model our assumptions about object identity when running two Java programs in the exact same state, which is not described by the Java semantics.
+but rather moved this decision further down the chain: unlike in a full formalisation of the Java object model from ground up, 
+we do not have a way of proving the taclets correct (i.e.,\ derive them as lemmas) within KeY, as they model our assumptions about object identity when running two Java programs in the exact same state, which is not described by the Java semantics.
 
 %\paragraph{Abstract Object Allocation Sites.}
 %As discussed, the above solutions interact with abstract execution only indirectly by providing techniques to handle equivalences in the program surrounding the abstract statements and abstract expressions. 
@@ -238,9 +238,9 @@ For example, consider the program in Listing~\ref{lst:xisnewxisnew}.
 Again, we assume that the constructor of \codein{C} has no side-effects except object creation on the heap.
 In this case, the first object creation is of no consequence.
 The additional rules above however will not yet be sufficient to prove that this version is equivalent to the version without the redundant object creation and assignment.
-The location-set mechanism would still insist that the second object created  in the redundant version is a different object from the first (and only) object created in the optimized version.
+The location-set mechanism would still insist that the second object created  in the redundant version is a different object from the first (and only) object created in the optimised version.
 On the one hand this can be addressed through a relaxed post-condition where we accept that we only need \textit{some} object of the right type and arguments, but it relies on the side-condition of the constructor not having side-effects, which requires a very restrictive method contract for the constructor.
-Alternatively, the notion of equivalence becomes even more specification-heavy for optimizations, as it may be more fine-grained.
+Alternatively, the notion of equivalence becomes even more specification-heavy for optimisations, as it may be more fine-grained.
 We foresee that such and other instances will give rise to various further taclets in the future.
 
 %%% Local Variables:
