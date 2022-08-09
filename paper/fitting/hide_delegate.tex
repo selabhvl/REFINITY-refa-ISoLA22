@@ -23,8 +23,8 @@ The refactoring can enable less coupling as the class that contained the call ch
 We note that in the case of the more general pattern \jcode{X x = o.f(); Y y = x.g()} with non-interfering intermediate statements in between the two statements,
 we can reach the considered pattern through applications of \rname{Slide Statement} and finally \rname{Inline Variable} on \jcode{x}.
 
-\OA{
-The scenarios shown in the sequence diagrams in Fig.~\ref{fig:NPEs} will both result in \jcode{NullPointerException} (NPE)} when the call to \jcode{f()} returns \jcode{null}.
+
+The scenarios shown in the sequence diagrams in Fig.~\ref{fig:NPEs} will both result in \jcode{NullPointerException} (NPE) when the call to \jcode{f()} returns \jcode{null}.
 In the strictest sense of behavioral preservation
 we will observe a difference as the NPE thrown before refactoring (Fig.~\ref{fig:hd-npe-before}) will show a different stacktrace than the one thrown after refactoring (Fig.~\ref{fig:hd-npe-after}).
 Thus we consider a behavioral equivalence that allows for disagreement in stacktraces for such matching exceptions; in fact one is unable to make any other distinction in \Refinity{}
