@@ -46,7 +46,7 @@ A proof of correctness in REFINITY is a proof for any concrete Java programs tha
     \caption{After}
     \label{lst:ExtractVariable-refinity-after}
   \end{sublstlisting}
-\caption{Extract Local Variable in REFINITY}
+\caption{\rname{Extract Local Variable} refactoring in REFINITY}
 \label{lst:ExtractVariable-refinity}
 \end{figure}
 
@@ -70,11 +70,11 @@ and 3) the values at specified abstract location sets (that the user selects as 
 Before and After program. When left empty, as done here and so
 trivially true, equality with respect to the last component of the result sequences is an assertion that the values at all abstract location sets selected as relevant are identical.}
 
-We use an assertion to ensure we consider only the refactoring when \rcode{x} is an instance of its intended type.
+We use an assertion to ensure that we consider only the refactoring when~\rcode{x} is an instance of its intended type.
 A current limitation of the implementation of REFINITY necessitate the casting \rcode{(X)x} as free program variables may only be declared to be of type Object.
 
 With only the specification shown in Listing~\ref{lst:ExtractVariable-refinity}, REFINITY is unable to prove that \rcode{x} will be identical to \rcode{temp} after AE of both sides.
-We get several instances of SE resulting in the reference \rcode{x} being changed by the abstract statement \rcode{N} in \rcode{n()}.
+We get several instances of SE resulting in the reference \rcode{x} being changed by the abstract statement~\rcode{N} in~\rcode{n()}.
 
 To prohibit this, we specify that the execution of the abstract statement \rcode{N} cannot interfere with \rcode{x}.
 A constraint on the frame \rcode{frN} of abstract statement \rcode{N},
