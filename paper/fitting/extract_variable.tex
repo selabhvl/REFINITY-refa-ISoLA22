@@ -58,17 +58,17 @@ Free program variables, here \rcode{x}; abstract location sets, here \rcode{frN}
 the desired precondition, here empty, and the desired postcondition.
 
 The pre- and postcondition are specified in terms of equations that may relate to the effects of the before and after side, such as return values, exceptions thrown and any of the relevant locations declared.
-\OA{Here we use the default postcondition REFINITY provides which is simply \rcode{\\result\_1 == \\result\_2}, where \rcode{\\result\_1} and \rcode{\\result\_2}
+Here we use the default postcondition REFINITY provides which is simply \rcode{\\result\_1 == \\result\_2}, where \rcode{\\result\_1} and \rcode{\\result\_2}
 are each respectively a sequence of results for the abstract execution of the Before and After program.
 Each sequence contain in this order:
 1) The return value if any, otherwise null;
 2) exceptions thrown if any, otherwise null;
-and 3) the values at specified abstract location sets (that the user selects as relevant).}
+and 3) the values at specified abstract location sets (that the user selects as relevant).
 
 %\vsnote*{Unclear (yes, I know what is meant). More constructive: ``an assertion that the values for all locations as per the relevant set are identical''?}{the values at relevant abstract location sets}.
-\OA{The default postcondition in our case will be that \rcode{x} returned in Before must be identical to \rcode{temp} returned in After, and that any exception thrown must be identical for the
+The default postcondition in our case will be that \rcode{x} returned in Before must be identical to \rcode{temp} returned in After, and that any exception thrown must be identical for the
 Before and After program. When left empty, as done here and so
-trivially true, equality with respect to the last component of the result sequences is an assertion that the values at all abstract location sets selected as relevant are identical.}
+trivially true, equality with respect to the last component of the result sequences is an assertion that the values at all abstract location sets selected as relevant are identical.
 
 We use an assertion to ensure that we consider only the refactoring when~\rcode{x} is an instance of its intended type.
 A current limitation of the implementation of REFINITY necessitate the casting \rcode{(X)x} as free program variables may only be declared to be of type Object.
@@ -84,12 +84,10 @@ will be assumed not to be in \rcode{frN}.
 
 After the aforementioned change, REFINITY manages to automatically prove that the postcondition holds after abstract execution of both sides;
 \rcode{x} and \rcode{temp} will hold identical references and any exceptions thrown will be identical.
-\vsnote{New, please check.}{Note that it remains for any concrete application of this refactoring to prove that any code matching abstract statements fulfils their annotated constraints.}
+Note that it remains for any concrete application of this refactoring to prove that any code matching abstract statements fulfills their annotated constraints.
 
-%\vsnote*{Unclear. Why ``partial''?}{One can consider what we have managed to encode and prove a partial success.}
-%\vsnote{Unclear/can't follow.}{Yet this is a slightly unnatural encoding if we are to consider concrete instantiations of what we have expressed here.
-\OA{Although we successfully prove the refactoring we have encoded here, the required scaffolding of return statements leaves something to be desired:
-Finding intended concrete instances of the abstract programs now involve, potentially, ignoring the return statements.}
+Although we successfully prove the refactoring we have encoded here, the required scaffolding of return statements leaves something to be desired:
+Finding intended concrete instances of the abstract programs now involve, potentially, ignoring the return statements.
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../main"
