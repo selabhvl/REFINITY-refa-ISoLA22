@@ -31,9 +31,9 @@ More complex refactorings require more elaborate specification and verification 
 The reason is that the programs surrounding the abstract statements, as well as the notion of equivalence, become more involved.
 This holds for both structure and behaviour.
 Following the general approach of AE, \Refinity{} \cite{steinhoefel:ae}, the tool supporting verification on top of the KeY system, an automated theorem prover for Java~\cite{DBLP:conf/aplas/Steinhofel20},
-has been primarily designed to verify the correctness of refactorings that are based on moving code within a method, or on extracting some statements into their own method (i.e., the \vpnote*{cite?}{\rname{Extract Method} refactoring}).
+has been primarily designed to verify the correctness of refactorings that are based on moving code within a method, or on extracting some statements into their own method (i.e., the \rname{Extract Method} refactoring~\cite[p. 106]{fowler:refactoring2nd}).
 
-To investigate the use of AE for refactorings on the class-level, we investigate the \vpnote*{cite?}{\rname{Hide Delegate} refactoring} that moves code between classes and show how it can be encoded in \Refinity{}.
+To investigate the use of AE for refactorings on the class-level, we investigate the \rname{Hide Delegate} refactoring~\cite[p. 189]{fowler:refactoring2nd} that moves code between classes and show how it can be encoded in \Refinity{}.
 As for specification, we discuss the interpretation of \textit{equivalence} from the perspective of the user and how to encode this --- for example, if the surrounding programs throw exceptions, under which conditions are the exceptions considered equivalent?
 The equivalence interpretation goes beyond exceptions, but touches on a fundamental problem:
 there are several possible choices for when newly created objects (and exceptions, which are objects in Java) are considered to be equal in relational verification using dynamic logic.
