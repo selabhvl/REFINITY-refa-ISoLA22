@@ -28,18 +28,15 @@ we can reach the considered pattern through applications of \rname{Slide Stateme
 
 
 
-\OA{
-The scenarios shown in the sequence diagrams in Fig.~\ref{fig:NPEs} will both result in \jcode{NullPointerException} (NPE)} when the call to \jcode{f()} returns \jcode{null}.
+The scenarios shown in the sequence diagrams in Fig.~\ref{fig:NPEs} will both result in \jcode{NullPointerException} (NPE) when the call to \jcode{f()} returns \jcode{null}.
 In the strictest sense of behavioral preservation,
 we will observe a difference in the behaviour before and after the refactoring.  Concretely, the NPE thrown in Fig.~\ref{fig:hd-npe-before} (before) will show a different stacktrace than the one thrown in Fig.~\ref{fig:hd-npe-after} (after).
-Thus, we consider a behavioral equivalence that allows for disagreement in stacktraces for such matching exceptions. In fact one is unable to make any other distinction in \Refinity{}
-as it does not consider such effects.
+Thus we consider a behavioral equivalence that allows for disagreement in stacktraces for such matching exceptions. In fact one is unable to make any other distinction in \Refinity{} as it does not consider such effects.
 %\vsnote{Something about post-condition missing here? I don't remember, does R. not actually model the stacktrace in an exc. anyways or did we need something explicit in the post-cond?}
 % Ole: post-condition mention comes below the figure below
 
 We specify the before- and after-program fragment for a \rname{Hide Delegate} refactoring in Listing~\ref{lst:HideDelegate-nofields-refinity} which faithfully captures the previously sketched out refactoring.
-The classes and methods used in the refactoring are presented in Listing~\ref{lst:HideDelegate-nofields-classes-refinity} and show that we minimally specify the contents of the involved methods by using abstract
-statements in their bodies.
+The classes and methods used in the refactoring are presented in Listing~\ref{lst:HideDelegate-nofields-classes-refinity} and show that we minimally specify the contents of the involved methods by using abstract statements in their bodies.
 Note that we allow abrupt completion in the abstract statements \rcode{F} and \rcode{G} in the methods \rcode{getOwner()} and \rcode{getResource}.
 That means the abstract statements may for instance throw exceptions.  For instance, the sketched out scenario considered in Fig.~\ref{fig:NPEs}, where \rcode{getResource()} will return \rcode{null} and cause the following call to throw a NPE, is a possibility.
 
@@ -78,14 +75,13 @@ That means the abstract statements may for instance throw exceptions.  For insta
 \end{figure}
 
 
-
-To prove the specified \rname{Hide Delegate} refactoring in the published version (v0.9.7) of \Refinity{}, we need a postcondition consisting of a conjunction of return values of the before- and after-programs being identical and
+To prove the specified \rname{Hide Delegate} refactoring in the \vsnote*{Confusing, is this is ours or the historic version}{published} version (v0.9.7) of \Refinity{}, we need a postcondition that consists of a conjunction of return values of the before- and after-programs being identical and
 that any thrown exceptions are both instances of NPE or otherwise equal.
 This is owing to the fact that \Refinity{} does not consider occurrences of \jcode{new NullPointerException()}, or any other newly created objects, to be equal.
 \vsnote{Is object-creation the only issue; see ``stacktraces'' above? I can't remember. In any, case it's probably JavaDL/KeY, not R's ``fault''.}
 
-\OA{We have improved  \Refinity{}\footnote{Available at \footnotesize \url{https://github.com/selabhvl/REFINITY-abstractallocate}} to resolve this issue; we may keep the default postcondition that simply matches return results and exceptions and
-\Refinity{} automatically manages to prove the shown \rname{Hide Delegate} refactoring to be correct wrt. the given postconditions.
+\OA{We have improved  \Refinity{}\footnote{Available at \footnotesize \url{https://github.com/selabhvl/REFINITY-abstractallocate}} to resolve this issue; we may keep the default postcondition that simply matches return results and exceptions, and
+\Refinity{} automatically manages to prove the shown \rname{Hide Delegate} refactoring to be correct \vsnote*{@Ole: isn't that just the default one?}{wrt. the given postconditions}.
 In the following section we will detail the changes needed to accomplish this.}
 
 %%% Local Variables:
