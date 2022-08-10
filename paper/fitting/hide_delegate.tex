@@ -75,14 +75,14 @@ That means the abstract statements may for instance throw exceptions.  For insta
 \end{figure}
 
 
-To prove the specified \rname{Hide Delegate} refactoring in the \vsnote*{Confusing, is this is ours or the historic version}{published} version (v0.9.7) of \Refinity{}, we need a postcondition that consists of a conjunction of return values of the before- and after-programs being identical and
+To prove the specified \rname{Hide Delegate} refactoring in an original published version (v0.9.7) of \Refinity{}, we need a postcondition that consists of a conjunction of return values of the before- and after-programs being identical and
 that any thrown exceptions are both instances of NPE or otherwise equal.
 This is owing to the fact that \Refinity{} does not consider occurrences of \jcode{new NullPointerException()}, or any other newly created objects, to be equal.
-\vsnote{Is object-creation the only issue; see ``stacktraces'' above? I can't remember. In any, case it's probably JavaDL/KeY, not R's ``fault''.}
+In particular we remark that although strictly speaking certain exceptions before and after a refactoring may be distinguished by different stacktraces, we may want to consider them to be equal even so.
 
-\OA{We have improved  \Refinity{}\footnote{Available at \footnotesize \url{https://github.com/selabhvl/REFINITY-abstractallocate}} to resolve this issue; we may keep the default postcondition that simply matches return results and exceptions, and
-\Refinity{} automatically manages to prove the shown \rname{Hide Delegate} refactoring to be correct \vsnote*{@Ole: isn't that just the default one?}{wrt. the given postconditions}.
-In the following section we will detail the changes needed to accomplish this.}
+We have improved  \Refinity{}\footnote{Available at \footnotesize \url{https://github.com/selabhvl/REFINITY-abstractallocate}} to resolve this issue; we may keep the default postcondition that simply matches return results and exceptions, and
+\Refinity{} automatically manages to prove the shown \rname{Hide Delegate} refactoring to be correct.
+In the following section we will detail the changes needed to accomplish this.
 
 %%% Local Variables:
 %%% mode: latex
