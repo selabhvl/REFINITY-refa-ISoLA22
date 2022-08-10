@@ -30,6 +30,10 @@
 \FXRegisterAuthor{ek}{EK}{\color{brown}\scriptsize{\bf EK}}
 %%%%%%%%%%%%%%%%%%%%%%%% fixme
 
+\makeatletter
+\newcommand{\onelettername}[1]{#1\aftergroup\@gobble}
+\makeatother
+
 \input{defs}
 
 \pagestyle{plain}

@@ -140,9 +140,10 @@ Let $\sqsubseteq$ be the subtype relation and $T(t)$ the type of a term.
 The first rule uses the assumption that the orders are only sensitive to the \codein{<allocated>} field, and the second one that they are independent, besides the subtyping relation.
 Intuitively, this implements a different counter for each class in the type hierarchy and two objects are considered equal if the counters of their classes are equal.
 Creating an object of a class increases the counter of this class and all its superclasses.
+If~\codein{C} is a subtype of~\codein{D}, then the proof fails.
 This suffices to prove the programs in Listing~\ref{lst:ObjectCreation-refinity} to be equivalent.
-Interestingly, Steinhöfel already proved the general \rname{Slide Statement} refactoring correct for abstract statements under the right constraints (\cite{steinhoefel-20}, p.231), yet KeY needs additional rules for these concrete statements.
-\vpnote*{}{If~\codein{C} is a subtype of~\codein{D}, then the proof fails.}
+Interestingly, Steinh{\"o}fel already proved the general \rname{Slide Statement} refactoring correct for abstract statements under the right constraints (\cite{steinhoefel-20}, p.231), yet KeY needs additional rules for these concrete statements.
+\vpnote*{}{}
 The second rule is able to remove some intermittent operations that are symbolically represented on the heap, e.g.,\ a call to an imaginary setter in \lstinline{x = new C(); x.set(1); y = new D()} versus \lstinline{y = new D(); x = new C(); x.set(1)}, if they are not relevant to object creation.
 
 \begin{figure}[tbp]
