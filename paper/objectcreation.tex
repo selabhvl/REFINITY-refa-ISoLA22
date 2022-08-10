@@ -7,7 +7,7 @@ This, in combination with the symbolic execution of both programs, creates a hur
 An object allocation in JavaDL is, roughly sketched, symbolically executed by creating a fresh function symbol for the allocated object and storing it on the symbolic heap.
 
 The question of equivalence for created objects is not specific to abstract execution, yet important for its practicability: 
-abstract statements are embedded in concrete programs which change \vsnote*{}{what?} as well, and more complex and application-specific refactorings must take all language features of the
+abstract statements are embedded in concrete programs which affect state as well, and more complex and application-specific refactorings must take all language features of the
 host language into account.
 
 
