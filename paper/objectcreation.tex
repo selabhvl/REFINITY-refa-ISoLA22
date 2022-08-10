@@ -199,7 +199,7 @@ Realising the choice, however, is rather simple by enabling and disabling rules,
 Thus, we avoid to put even more burden on the first-order specification of the relational post-condition, and merely require the programmer to select from a number of options.
 %
 % \vsnote{@Eduard: why ``select'' -- shouldn't those rules be always on?}
-We emphasise that the taclets for the different options are not \emph{unsound}, but merely switch between different version of assumptions about the (in this case underspecified) Java object model. \EK{Of course, the default version is not using the new taclets and stick with the originals, i.e., not assuming deterministic allocation.}
+We emphasise that the taclets for the different options are not \emph{unsound}, but merely switch between different version of assumptions about the (in this case underspecified) Java object model. Of course, the default version is not using the new taclets and stick with the originals, i.e., not assuming deterministic allocation.
 %\vsnote{VERY interesting point, I completely disagree! Maybe what you're saying is that adding potentially unsound/not capturing taclets is easier than formulating an adequate post-condition? Having unsound taclets is the only reason I can see for disabling them -- that any strategy-search could be misguided is a different issue.}
 
 Secondly, while we only discussed object creation here, the same solution also handles \emph{exceptions}, which must be created before being thrown. 
