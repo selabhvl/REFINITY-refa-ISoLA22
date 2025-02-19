@@ -1,0 +1,48 @@
+\nexthint{A fundamental relational property} 
+\begin{frame}{Refactoring and relational verification} 
+  \begin{block}{Refactoring:}
+  Improve structure of code, preserve behavior of executions
+  \begin{center}
+    {\scriptsize \texttt{\textbf{if}(E\tikzmark{OE}) \{S1\tikzmark{OS1};\} \textbf{else} \{S2\tikzmark{OS2};\} \textbf{return};}} \quad \tikzmark{center}\sim \quad {\scriptsize \texttt{\textbf{if}(!E\tikzmark{RE}) \{S2\tikzmark{RS2};\textbf{return};\} S1\tikzmark{RS1}; \textbf{return};}}
+    \begin{tikzpicture}[remember picture,overlay]
+      \draw (pic cs:center) ++ (0,-8mm) node (root) {\scriptsize placeholders};
+      \draw[->,shorten >= 2mm] (root) edge[bend left=25] (pic cs:OS2);
+      \draw[->,shorten >= 2mm] (root) edge[bend left=25] (pic cs:OS1);
+      \draw[->,shorten >= 2mm] (root) edge[bend right=25] (pic cs:RE);      
+    \end{tikzpicture}
+  \end{center}
+  \end{block}
+  \vspace{5mm}
+  \begin{block}{Relational verification:}
+  Relate pairs of executions, given initial state satisfy $\Phi$ then final state satisfy $\Psi$
+  \begin{center}
+  $\text{original} \sim \text{refactored} : \Phi \implies \Psi$ 
+  \end{center}
+  \end{block}
+\end{frame}
+
+
+\nexthint{Relational verification in practice}
+\begin{frame}{A fundamental relational property}
+\begin{block}{Program equivalence}
+  Two programs are equivalent iff they produce the same output when executed on the same input.
+\\[2ex]
+{\bf Here:} let's look at Java fragments that we consider equivalent.
+\end{block}
+\vspace{0.5cm}
+\begin{itemize}
+     \item How far can current tool support take us?
+     \item Other definitions of equivalence?
+\end{itemize}
+% \vspace{0.5cm}
+
+%  See our work in ``Refactoring and Active Object Languages'' from
+%  ISoLA'20 for actor languages\ldots
+
+\end{frame}
+
+
+%%% Local Variables:
+%%% mode: plain-tex
+%%% TeX-master: "../p"
+%%% End:

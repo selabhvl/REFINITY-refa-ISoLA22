@@ -1,0 +1,95 @@
+% Auriga theme
+% https://github.com/anishathalye/auriga
+\def\hint{}
+\newcommand{\nexthint}[1]{\renewcommand{\hint}{#1}}
+
+\documentclass[14pt,aspectratio=169]{beamer}
+\usepackage{pgfpages}
+\usepackage{fancyvrb}
+\usepackage{tikz}
+\usetikzlibrary{tikzmark}
+\usepackage{pgfplots}
+\usepackage{listings}
+\lstset{basicstyle=\small\ttfamily}
+\renewcommand{\ttdefault}{pcr}
+\usepackage{xcolor}
+\usepackage{emoji}
+\useoutertheme{miniframes}
+
+\newcommand\refa[1]{{\rmfamily\scshape {#1}}}
+
+\ifnotes
+\setbeamertemplate{note page}[plain]
+\setbeameroption{show notes on second screen=right}
+\fi
+
+\usetheme{auriga}
+\usecolortheme{auriga}
+
+% define some colors for a consistent theme across slides
+\definecolor{red}{RGB}{181, 23, 0}
+\definecolor{blue}{RGB}{0, 118, 186}
+\definecolor{gray}{RGB}{146, 146, 146}
+
+\title{A Notion of Equivalence for Refactoring with Abstract Execution}
+
+\author{\underline{Ole Jørgen Abusdal} \inst{1}\vspace{5mm}\\ \and Eduard Kamburjan \inst{2} \and Violet Ka I Pun \inst{1} \and Volker Stolz \inst{1}}
+
+\institute[shortinst]{\inst{1} Western Norway University of Applied Sciences \samelineand \inst{2} University of Oslo}
+
+\begin{document}
+
+{
+  \nexthint{Refactoring and Relational Verification}
+  % rather than use the frame options [noframenumbering,plain], we make the
+  % color match, so that the indicated page numbers match PDF page numbers
+  \setbeamercolor{page number in head/foot}{fg=background canvas.bg}
+  \begin{frame}
+    \titlepage
+
+   \begin{center}
+     \includegraphics[width=2.5cm]{qr.png} ~~~~~ \small
+     $\longleftarrow$ Our KeY updates --- for the paper, see ISoLA (2)!
+   \end{center}
+  \end{frame}
+}
+
+
+% Mention refactoring and relational verification
+\section{Intro}
+\input{slides/introduction}
+
+\section{REFINITY}
+\input{slides/REFINITY}
+
+% Go through how the object  problem was tackled
+\section{Object Creation}
+\input{slides/object-creation}
+
+% The wishful thinking bits: substitute datastructure, mention trace properties for the 
+\section{Future Challenges}
+\input{slides/filler}
+
+\begin{frame}
+  \frametitle{Summary}
+
+  \begin{itemize}
+  \item REFINITY/KeY excellent foundation
+  \item Contributed a few more example refactoring:\\
+    \refa{Extract Local Variable}, \refa{Hide Delegate}\\[-7ex]
+  \item[] 
+    \begin{itemize}
+    \item abstract code + side conditions
+    \item needed more taclets for proof support on the way
+    \end{itemize}
+  \item To Do:
+    \begin{itemize}
+    \item more intermediate taclets (e.g.\ for dead code)
+    \item more refactorings (within our means)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+\end{document}
